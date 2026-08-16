@@ -20,7 +20,7 @@ const localBindingConfig = {
     {
       binding: "VISIT_METRICS",
       database_name: "dsh-plugin-hub-visits",
-      database_id: "bfbef53b-3de8-41ee-987f-8e11bc71a08a",
+      database_id: "f69c6615-317c-474a-b01b-153304add033",
       migrations_dir: "migrations",
     },
   ],
@@ -32,7 +32,11 @@ const localBindingConfig = {
   },
   routes: [
     {
-      pattern: "dsh.lanshuagent.com",
+      pattern: "dsh-plugin.store",
+      custom_domain: true,
+    },
+    {
+      pattern: "www.dsh-plugin.store",
       custom_domain: true,
     },
   ],
