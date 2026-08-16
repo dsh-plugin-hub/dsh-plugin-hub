@@ -2416,7 +2416,7 @@ html[data-theme="dark"] body {
   width: 28px;
   height: 28px;
   border-radius: 9px;
-  background: url("/dsh-plugin-icon.png") center / contain no-repeat;
+  background: url("/favicon.svg") center / contain no-repeat;
   color: transparent;
   font-family: "Montserrat", var(--ds-font-sans);
   font-weight: 700;
