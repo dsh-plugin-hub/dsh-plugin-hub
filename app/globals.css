@@ -2371,6 +2371,31 @@ html[data-theme="dark"] body {
   gap: var(--ds-space-1);
 }
 
+/* Hero 两套主题都保持暗色；仅在首页顶部把 header 控件切到反色，滚动后恢复主题 token。 */
+.ds-page[data-page="home"] .ds-header:not(.is-scrolled) .ds-brand,
+.ds-page[data-page="home"] .ds-header:not(.is-scrolled) .ds-nav__link,
+.ds-page[data-page="home"] .ds-header:not(.is-scrolled) .ds-icon-btn,
+.ds-page[data-page="home"] .ds-header:not(.is-scrolled) .ds-fav-count {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.ds-page[data-page="home"] .ds-header:not(.is-scrolled) .ds-locale-toggle,
+.ds-page[data-page="home"] .ds-header:not(.is-scrolled) .ds-visit {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ds-page[data-page="home"] .ds-header:not(.is-scrolled) .ds-locale-toggle button,
+.ds-page[data-page="home"] .ds-header:not(.is-scrolled) .ds-visit span,
+.ds-page[data-page="home"] .ds-header:not(.is-scrolled) .ds-visit strong {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.ds-page[data-page="home"] .ds-header:not(.is-scrolled) .ds-locale-toggle button.is-active,
+.ds-page[data-page="home"] .ds-header:not(.is-scrolled) .ds-nav__link.is-active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
 .ds-brand {
   display: inline-flex;
   align-items: center;
@@ -2391,8 +2416,8 @@ html[data-theme="dark"] body {
   width: 28px;
   height: 28px;
   border-radius: 9px;
-  background: linear-gradient(135deg, var(--ds-color-brand), var(--ds-color-brand-deep));
-  color: var(--ds-color-static-white);
+  background: url("/dsh-plugin-icon.png") center / contain no-repeat;
+  color: transparent;
   font-family: "Montserrat", var(--ds-font-sans);
   font-weight: 700;
   font-size: 11px;
@@ -2697,6 +2722,9 @@ html[data-theme="dark"] body {
   width: 100%;
   min-height: 100svh;
   overflow: hidden;
+  isolation: isolate;
+  background: #07101c;
+  color: #fff;
 }
 
 @media (min-width: 768px) {
@@ -2709,15 +2737,74 @@ html[data-theme="dark"] body {
 
 .ds-hero__bg {
   position: absolute;
-  inset: 0;
+  inset: -2%;
   z-index: 0;
   overflow: hidden;
+  pointer-events: none;
+  mask: linear-gradient(#000 0%, #000 68%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0%, #000 68%, transparent 100%);
+}
+
+.ds-hero__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 9, 18, 0.28) 0%, transparent 48%, rgba(3, 9, 18, 0.12) 100%),
+    linear-gradient(180deg, rgba(3, 9, 18, 0.06) 0%, rgba(4, 10, 18, 0.16) 62%, #0a0a0a 100%);
+}
+
+.ds-hero__matrix {
+  position: absolute;
+  top: 17%;
+  left: 38%;
+  z-index: 5;
+  display: none;
+  width: min(58vw, 760px);
+  height: min(50vw, 500px);
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.62;
+  transform: rotate(-3deg);
+  filter: drop-shadow(0 0 20px rgba(139, 180, 255, 0.14));
+  mask: radial-gradient(ellipse 64% 48% at 50% 50%, #000 6%, rgba(0, 0, 0, 0.82) 46%, transparent 74%);
+  -webkit-mask: radial-gradient(ellipse 64% 48% at 50% 50%, #000 6%, rgba(0, 0, 0, 0.82) 46%, transparent 74%);
+}
+
+.ds-hero__matrix::before,
+.ds-hero__matrix::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(211, 226, 255, 0.86) 1.15px, transparent 1.45px);
+  background-size: 10px 10px;
+}
+
+.ds-hero__matrix::before {
+  animation: ds-matrix-drift 15s ease-in-out infinite alternate;
+}
+
+.ds-hero__matrix::after {
+  opacity: 0.25;
+  transform: translate(5px, 5px) scale(1.04);
+  animation: ds-matrix-drift 19s ease-in-out -8s infinite alternate-reverse;
+}
+
+@keyframes ds-matrix-drift {
+  from { transform: translate3d(-10px, 5px, 0) skewX(-2deg); }
+  to { transform: translate3d(12px, -8px, 0) skewX(2deg); }
+}
+
+@media (min-width: 768px) {
+  .ds-hero__matrix {
+    display: block;
+  }
 }
 
 .ds-hero__glow {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 1;
   display: none;
   mix-blend-mode: screen;
   pointer-events: none;
@@ -2739,21 +2826,31 @@ html[data-theme="dark"] body {
 }
 
 .ds-hero__glow::before {
-  width: 560px;
-  height: 560px;
-  left: 6%;
-  bottom: -160px;
-  background: radial-gradient(circle, #1a3870 0%, transparent 70%);
-  opacity: 0.55;
+  width: 520px;
+  height: 520px;
+  left: -8%;
+  bottom: -220px;
+  background: radial-gradient(circle, #193c78 0%, transparent 70%);
+  opacity: 0.42;
 }
 
 .ds-hero__glow::after {
-  width: 720px;
-  height: 460px;
-  right: 2%;
-  bottom: -140px;
-  background: radial-gradient(ellipse at center, #2d5f9e 0%, #1a3870 42%, transparent 72%);
-  opacity: 0.5;
+  width: 640px;
+  height: 420px;
+  right: -4%;
+  bottom: -190px;
+  background: radial-gradient(ellipse at center, #295b96 0%, #152f5d 40%, transparent 72%);
+  opacity: 0.36;
+}
+
+.ds-hero__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 48% 58% at 20% 46%, rgba(4, 10, 18, 0.18), transparent 78%),
+    linear-gradient(180deg, rgba(2, 8, 16, 0.06) 0%, transparent 52%, rgba(7, 9, 13, 0.44) 78%, #0a0a0a 100%);
 }
 
 .ds-hero__content {
@@ -2774,18 +2871,52 @@ html[data-theme="dark"] body {
 
 .ds-hero__inner h1 {
   margin: 0;
+  color: #fff;
 }
 
 .ds-hero__inner p {
   margin: 0;
+  color: rgba(255, 255, 255, 0.56);
   font-size: 16px;
   line-height: 160%;
-  color: var(--ds-color-text-description);
   text-wrap: pretty;
+}
+
+.ds-hero .ds-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.ds-hero__status-dot {
+  width: 7px;
+  height: 7px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: #77a7ff;
+  box-shadow: 0 0 0 5px rgba(103, 153, 254, 0.12), 0 0 18px rgba(103, 153, 254, 0.7);
 }
 
 .ds-hero__search {
   margin-top: var(--ds-space-3);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.ds-hero__search:hover,
+.ds-hero__search:focus-within {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.ds-hero__search input {
+  color: #fff;
+}
+
+.ds-hero__search input::placeholder {
+  color: rgba(255, 255, 255, 0.36);
 }
 
 .ds-hero__actions {
@@ -2794,6 +2925,18 @@ html[data-theme="dark"] body {
   justify-content: center;
   gap: var(--ds-space-3);
   margin-top: var(--ds-space-3);
+}
+
+.ds-hero .ds-btn--primary {
+  background: #fff;
+  color: #0a0a0a;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.ds-hero .ds-btn--secondary {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
 }
 
 /* hero 入场（DESIGN-SPEC 7） */
@@ -4330,7 +4473,3 @@ html[data-theme="dark"] body {
     gap: 2px;
   }
 }
-
-
-
-

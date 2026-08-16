@@ -13,8 +13,12 @@ export const metadata: Metadata = {
     description: "基于 GitHub 真实数据的 DeepSeek Harness 社区插件目录与安装证据索引。",
     keywords: ["DeepSeek Harness", "DSH", "dsh-plugin", "插件目录", "AI Agent"],
     icons: {
-      icon: [{ url: "/favicon.svg", type: "image/svg+xml", sizes: "any" }],
-      shortcut: "/favicon.svg",
+      icon: [
+        { url: "/dsh-plugin-icon.png", type: "image/png", sizes: "512x512" },
+        { url: "/favicon.svg", type: "image/svg+xml", sizes: "any" },
+      ],
+      shortcut: "/dsh-plugin-icon.png",
+      apple: [{ url: "/dsh-plugin-icon.png", type: "image/png", sizes: "512x512" }],
     },
     openGraph: {
       type: "website",

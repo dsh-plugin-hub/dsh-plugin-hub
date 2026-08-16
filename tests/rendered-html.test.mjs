@@ -72,13 +72,13 @@ test("server-renders the complete plugin hub", async () => {
   const html = await response.text();
   // 站点名与主题（P1-T1/T8：默认深色）
   assert.match(html, /<title>dsh-plugin · DSH 插件目录<\/title>/i);
-  assert.match(html, /rel="icon"[^>]+href="\/favicon\.svg"/i);
+  assert.match(html, /rel="icon"[^>]+href="\/dsh-plugin-icon\.png"/i);
   assert.match(html, /<html[^>]+data-theme="dark"/i);
   // hero 文案与动态背景（P1-T7/T8）
   assert.match(html, /一切皆插件/);
   assert.match(html, /先看证据/);
-  assert.match(html, /blur\(20px\)/);
-  assert.match(html, /mask:linear-gradient/);
+  assert.match(html, /ds-hero__matrix/);
+  assert.match(html, /ds-hero__shade/);
   assert.match(html, new RegExp(String(registry.summary.listed)));
   // 官网风格组件类名
   for (const cls of ["ds-header", "ds-hero__bg", "ds-container", "ds-footer", "ds-btn--primary", "growth-chart"]) {

@@ -814,7 +814,7 @@ export function PluginHub({
     : text(lang, "内置数据兜底", "Bundled fallback");
 
   return (
-    <div className="ds-page" data-lang={lang}>
+    <div className="ds-page" data-lang={lang} data-page={page}>
       <header className={`ds-header${scrolled ? " is-scrolled" : ""}`}>
         <div className="ds-header__bar">
           <button className="ds-brand" type="button" onClick={() => go("home")} aria-label={text(lang, "返回首页", "Back home")}>
@@ -907,35 +907,48 @@ export function PluginHub({
         {page === "home" && (
           <>
             <section className="ds-hero">
-              {/* L1 z-0：AuroraBackground WebGL 渐变层（DESIGN-SPEC 8.1 遮罩公式 + blur(20px)，JS 淡入） */}
+              {/* 暗色 fluid shader + 局部点阵 + 底部渐隐；保留本站原有居中信息布局。 */}
               <div
                 className="ds-hero__bg"
                 aria-hidden="true"
                 style={{
-                  mask: "linear-gradient(#000000fc 0%, #000000e8 8.98%, transparent 100%)",
-                  filter: "blur(20px)",
                   opacity: heroVisible ? 1 : 0,
-                  transition: "opacity 1.2s ease",
+                  transition: "opacity 1.4s ease",
                 }}
               >
-                <AuroraBackground />
+                <AuroraBackground
+                  type="fluid"
+                  colors={["#02060D", "#16386D", "#2869AE", "#9ABEFF", "#05070C"]}
+                  glowColors={["#D9E8FF", "#5E9DF1", "#5347D9"]}
+                  speed={28}
+                  scale={1.77}
+                  mouseRadius={0.09}
+                  mouseStrength={1.8}
+                  mouseSmoothing={0.1}
+                  mouseVelocity={0.2}
+                  decay={0.925}
+                  distortBoost={2.2}
+                  noiseBoost={0.3}
+                  swirlBoost={0.8}
+                  glowIntensity={0.13}
+                  offset={[-1.24, -0.48]}
+                  grain={0.005}
+                  lightPos={[0.89, 0.46]}
+                  lightCore={0.14}
+                  lightHalo={0.2}
+                  vignette={0.38}
+                  bloomThreshold={0.61}
+                  bloomRange={0.18}
+                  bloomStrength={0.4}
+                />
               </div>
-              {/* L3 z-2：CSS 发光体（md+，mix-blend-mode screen） */}
+              <div className="ds-hero__matrix" aria-hidden="true" />
               <div className="ds-hero__glow" aria-hidden="true" />
+              <div className="ds-hero__shade" aria-hidden="true" />
               <div className="ds-hero__content">
                 <div className="ds-container ds-hero__inner">
                   <p className="ds-eyebrow ds-hero-enter ds-hero-enter--label">
-                    <span
-                      style={{
-                        display: "inline-block",
-                        width: 8,
-                        height: 8,
-                        borderRadius: "50%",
-                        background: "var(--ds-color-brand)",
-                        marginRight: 8,
-                        verticalAlign: "baseline",
-                      }}
-                    />
+                    <span className="ds-hero__status-dot" aria-hidden="true" />
                     DSH PLUGIN DIRECTORY · {automationLabel} · {channelLabel} · 30 MIN
                   </p>
                   <h1 className="ds-text-hero ds-hero-enter ds-hero-enter--title">
