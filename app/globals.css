@@ -3128,19 +3128,19 @@ html[data-theme="dark"] body {
 /* ---------- 插件卡片（DESIGN-SPEC 6.3：24px 圆角 + 深色 inset 描边） ---------- */
 .ds-card-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--ds-space-5);
 }
 
 @media (min-width: 768px) {
   .ds-card-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1080px) {
   .ds-card-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -3149,6 +3149,7 @@ html[data-theme="dark"] body {
   display: flex;
   flex-direction: column;
   gap: var(--ds-space-3);
+  min-width: 0;
   padding: var(--ds-space-5);
   border-radius: var(--ds-radius-card);
   border: 1px solid var(--ds-color-border-subtle);
