@@ -662,7 +662,10 @@ function compileShader(
 ): WebGLShader | null {
   const shader = gl.createShader(type);
   if (!shader) return null;
-  gl.shaderSource(shader, source);
+  // GLSL 要求 #version 指令位于第一行：模板字面量常以换行开头，统一剥掉前导空白行
+  // （否则 shader 静默编译失败，组件会降级到静态 CSS 光斑，失去流动与鼠标互动效果）。
+  const normalized = source.replace(/^\s*\n+/, "");
+  gl.shaderSource(shader, normalized);
   gl.compileShader(shader);
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
     console.error('[AuroraBackground] shader compile error:', gl.getShaderInfoLog(shader));
