@@ -96,7 +96,9 @@ test("server-renders the complete plugin hub", async () => {
   // hero 文案与动态背景（P1-T7/T8）
   assert.match(html, /一切皆插件/);
   assert.match(html, /先看证据/);
-  assert.match(html, /ds-hero__matrix/);
+  assert.match(html, /ds-hero__streams/);
+  assert.match(html, /ds-hero__spotlight/);
+  assert.doesNotMatch(html, /ds-hero__matrix/);
   assert.match(html, /ds-hero__shade/);
   assert.match(html, new RegExp(String(registry.summary.listed)));
   // 官网风格组件类名

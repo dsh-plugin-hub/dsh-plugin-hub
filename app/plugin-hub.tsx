@@ -9,8 +9,7 @@ import type {
 } from "@/lib/plugin-data";
 import { installCommandFor } from "@/lib/plugin-screening.mjs";
 import { buildGrowthSeries, type GrowthPoint } from "@/lib/growth";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import AuroraBackground from "@/components/aurora-background";
+import { type PointerEvent as ReactPointerEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type PageId = "home" | "catalog" | "rank" | "submit" | "guide";
 type SortId = "curated" | "stars" | "updated" | "added" | "name";
@@ -463,6 +462,65 @@ export function PluginHub({
   const loadingRef = useRef(false);
   const itemsRef = useRef<PluginRecord[]>([]);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const heroSpotlightRef = useRef<{
+    element: HTMLElement | null;
+    frame: number | null;
+    x: number;
+    y: number;
+    targetX: number;
+    targetY: number;
+  }>({ element: null, frame: null, x: 0, y: 0, targetX: 0, targetY: 0 });
+
+  const moveHeroSpotlight = useCallback((event: ReactPointerEvent<HTMLElement>) => {
+    if (event.pointerType === "touch") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const spotlight = heroSpotlightRef.current;
+    const targetX = event.clientX - bounds.left;
+    const targetY = event.clientY - bounds.top;
+
+    if (spotlight.element !== event.currentTarget) {
+      spotlight.element = event.currentTarget;
+      spotlight.x = targetX;
+      spotlight.y = targetY;
+    }
+    spotlight.targetX = targetX;
+    spotlight.targetY = targetY;
+    event.currentTarget.style.setProperty("--ds-spot-opacity", "1");
+
+    if (spotlight.frame !== null) return;
+    const follow = () => {
+      const state = heroSpotlightRef.current;
+      if (!state.element) {
+        state.frame = null;
+        return;
+      }
+
+      state.x += (state.targetX - state.x) * 0.085;
+      state.y += (state.targetY - state.y) * 0.085;
+      state.element.style.setProperty("--ds-spot-x", `${state.x}px`);
+      state.element.style.setProperty("--ds-spot-y", `${state.y}px`);
+
+      if (Math.abs(state.targetX - state.x) > 0.2 || Math.abs(state.targetY - state.y) > 0.2) {
+        state.frame = requestAnimationFrame(follow);
+      } else {
+        state.frame = null;
+      }
+    };
+    spotlight.frame = requestAnimationFrame(follow);
+  }, []);
+
+  const hideHeroSpotlight = useCallback((event: ReactPointerEvent<HTMLElement>) => {
+    event.currentTarget.style.setProperty("--ds-spot-opacity", "0");
+    const spotlight = heroSpotlightRef.current;
+    if (spotlight.frame !== null) cancelAnimationFrame(spotlight.frame);
+    spotlight.frame = null;
+    spotlight.element = null;
+  }, []);
+
+  useEffect(() => () => {
+    const frame = heroSpotlightRef.current.frame;
+    if (frame !== null) cancelAnimationFrame(frame);
+  }, []);
 
   useEffect(() => {
     const onHash = () => setPage(pageFromHash());
@@ -867,8 +925,13 @@ export function PluginHub({
       <main className={page === "home" ? "" : "ds-main--page"}>
         {page === "home" && (
           <>
-            <section className="ds-hero">
-              {/* 暗色 fluid shader + 局部点阵 + 底部渐隐；保留本站原有居中信息布局。 */}
+            <section
+              className="ds-hero"
+              onPointerEnter={moveHeroSpotlight}
+              onPointerMove={moveHeroSpotlight}
+              onPointerLeave={hideHeroSpotlight}
+            >
+              {/* 插件轨道：纯 CSS 分层光带与模块流动；保留本站原有居中信息布局。 */}
               <div
                 className="ds-hero__bg"
                 aria-hidden="true"
@@ -877,35 +940,14 @@ export function PluginHub({
                   transition: "opacity 1.4s ease",
                 }}
               >
-                <AuroraBackground
-                  type="fluid"
-                  colors={["#02060D", "#16386D", "#2869AE", "#9ABEFF", "#05070C"]}
-                  glowColors={["#D9E8FF", "#5E9DF1", "#5347D9"]}
-                  speed={28}
-                  scale={1.77}
-                  mouseRadius={0.09}
-                  mouseStrength={1.8}
-                  mouseSmoothing={0.1}
-                  mouseVelocity={0.2}
-                  decay={0.925}
-                  distortBoost={2.2}
-                  noiseBoost={0.3}
-                  swirlBoost={0.8}
-                  glowIntensity={0.13}
-                  offset={[-1.24, -0.48]}
-                  grain={0.005}
-                  lightPos={[0.89, 0.46]}
-                  lightCore={0.14}
-                  lightHalo={0.2}
-                  vignette={0.38}
-                  bloomThreshold={0.61}
-                  bloomRange={0.18}
-                  bloomStrength={0.4}
-                />
+                <div className="ds-hero__streams">
+                  <span className="ds-hero__stream ds-hero__stream--one" />
+                  <span className="ds-hero__stream ds-hero__stream--two" />
+                  <span className="ds-hero__stream ds-hero__stream--three" />
+                </div>
               </div>
-              <div className="ds-hero__matrix" aria-hidden="true" />
-              <div className="ds-hero__glow" aria-hidden="true" />
               <div className="ds-hero__shade" aria-hidden="true" />
+              <div className="ds-hero__spotlight" aria-hidden="true" />
               <div className="ds-hero__content">
                 <div className="ds-container ds-hero__inner">
                   <p className="ds-eyebrow ds-hero-enter ds-hero-enter--label">
