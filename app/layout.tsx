@@ -5,7 +5,7 @@ import "./globals.css";
 // 主题：默认深色（html data-theme="dark"），--ds-* token 由 globals.css 的 :root / html[data-theme="dark"] 两层定义。
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://dsh.lanshuagent.com"),
+    metadataBase: new URL("https://dsh-plugin.store"),
     title: {
       default: "dsh-plugin · DeepSeek Harness 插件目录",
       template: "%s · dsh-plugin",

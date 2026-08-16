@@ -840,7 +840,7 @@ export function PluginHub({
             </button>
             <a
               className="ds-icon-btn ds-icon-btn--github"
-              href="https://github.com/cclank/dsh-plugin-hub"
+              href="https://github.com/dsh-plugin-hub/dsh-plugin-hub"
               target="_blank"
               rel="noreferrer"
               aria-label={text(lang, "在 GitHub 查看开源代码", "View source on GitHub")}
@@ -1333,7 +1333,7 @@ export function PluginHub({
             <a href="/api/visits">VISIT API</a>
             <a href={data.sources.curated.repository} target="_blank" rel="noreferrer">{text(lang, "数据源", "Data source")} ↗</a>
             <a href="https://github.com/topics/dsh-plugin" target="_blank" rel="noreferrer">topic:dsh-plugin ↗</a>
-            <a href="https://github.com/cclank/dsh-plugin-hub" target="_blank" rel="noreferrer">GitHub ↗</a>
+            <a href="https://github.com/dsh-plugin-hub/dsh-plugin-hub" target="_blank" rel="noreferrer">GitHub ↗</a>
           </nav>
           <p className="ds-footer__meta ds-muted-note">
             {text(lang, "社区索引 · 仅展示 GitHub 公开事实，不构成安全背书 · 与 DeepSeek AI 无隶属关系", "Community index · public GitHub facts only, no security endorsement · not affiliated with DeepSeek AI")}

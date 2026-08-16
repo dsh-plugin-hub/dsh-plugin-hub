@@ -5,15 +5,15 @@
 <h1 align="center">DSH Plugin Hub</h1>
 
 <p align="center">
-  面向 DeepSeek Harness 社区的插件目录、安装证据索引与轻量安全筛查站。
+  面向 DeepSeek Harness 社区的插件目录与安装证据索引 —— 全量收录，不做安全筛查。
   <br />
-  Discover community plugins with real GitHub metadata, manifest evidence, and transparent risk signals.
+  Discover community plugins with real GitHub metadata and manifest evidence — full coverage, no screening.
 </p>
 
 <p align="center">
-  <a href="https://dsh.lanshuagent.com/"><img alt="Live site" src="https://img.shields.io/website?url=https%3A%2F%2Fdsh.lanshuagent.com&amp;label=site&amp;up_message=online&amp;down_message=offline&amp;style=flat-square" /></a>
-  <a href="https://dsh.lanshuagent.com/api/registry/status"><img alt="Listed plugins" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdsh.lanshuagent.com%2Fapi%2Fregistry%2Fstatus&amp;query=%24.summary.listed&amp;label=plugins&amp;color=0f766e&amp;cacheSeconds=300&amp;style=flat-square" /></a>
-  <a href="https://github.com/cclank/dsh-plugin-hub/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/cclank/dsh-plugin-hub/actions/workflows/ci.yml/badge.svg" /></a>
+  <a href="https://dsh-plugin.store/"><img alt="Live site" src="https://img.shields.io/website?url=https%3A%2F%2Fdsh-plugin.store&amp;label=site&amp;up_message=online&amp;down_message=offline&amp;style=flat-square" /></a>
+  <a href="https://dsh-plugin.store/api/registry/status"><img alt="Listed plugins" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdsh-plugin.store%2Fapi%2Fregistry%2Fstatus&amp;query=%24.summary.listed&amp;label=plugins&amp;color=0f766e&amp;cacheSeconds=300&amp;style=flat-square" /></a>
+  <a href="https://github.com/dsh-plugin-hub/dsh-plugin-hub/actions/workflows/deploy.yml"><img alt="CI" src="https://github.com/dsh-plugin-hub/dsh-plugin-hub/actions/workflows/deploy.yml/badge.svg" /></a>
   <a href="./LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-22c55e?style=flat-square" /></a>
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D22.13-339933?logo=nodedotjs&amp;logoColor=white&amp;style=flat-square" />
   <img alt="Cloudflare Workers" src="https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&amp;logoColor=white&amp;style=flat-square" />
@@ -21,11 +21,11 @@
 </p>
 
 <p align="center">
-  <a href="https://dsh.lanshuagent.com/">在线访问</a>
+  <a href="https://dsh-plugin.store/">在线访问</a>
   ·
-  <a href="https://dsh.lanshuagent.com/api/plugins">JSON API</a>
+  <a href="https://dsh-plugin.store/api/plugins">JSON API</a>
   ·
-  <a href="https://dsh.lanshuagent.com/plugins.json">静态快照</a>
+  <a href="https://dsh-plugin.store/plugins.json">静态快照</a>
   ·
   <a href="https://github.com/topics/dsh-plugin">GitHub Topic</a>
 </p>
@@ -37,7 +37,7 @@
 DeepSeek Harness 的插件生态增长很快，但仓库描述、安装命令和真实权限边界经常散落在不同位置。DSH Plugin Hub 将这些公开证据汇总成一个可搜索目录，帮助用户在安装前先确认：
 
 - 项目是否真的声明了 `dsh.bundle`、`dsh.plugin`、`dsh.profile` 或 `dsh.client`；
-- 安装命令是否绑定到完成静态检查的不可变 Git commit；
+- 推荐安装命令（`dsh plugin --profile web add github:owner/repo`）与仓库当前状态；
 - 仓库是否活跃、是否有许可证和锁文件；
 - 是否存在生命周期脚本、网络访问、文件写入、凭据读取或动态代码执行信号；
 - 当前结果来自自动发现、社区精选，还是离线快照。
@@ -50,8 +50,8 @@ DeepSeek Harness 的插件生态增长很快，但仓库描述、安装命令和
 | --- | --- |
 | 真实插件数据 | 合并社区精选列表、GitHub `topic:dsh-plugin` 元数据和仓库根目录 manifest。 |
 | 自动收录 | Cloudflare Cron 每 30 分钟发现新仓库，增量检查后写入 KV。 |
-| 安装证据 | 只有在同一 Git commit 上完成 manifest 与入口源码检查后，才展示锁定 commit 的安装命令。 |
-| 轻量筛查 | 检查许可证、锁文件、生命周期脚本和有限源码信号，并公开展示发现项。 |
+| 安装命令 | 为每个仓库生成 `dsh plugin --profile web add github:owner/repo` 推荐命令，不锁定 commit。 |
+| 公开事实 | 展示 manifest、许可证、锁文件与生命周期脚本等 GitHub 公开事实，不筛查、不背书，用户自行判断。 |
 | 插件浏览 | 支持搜索、分类、证据筛选、排序、卡片/列表视图和本地收藏。 |
 | 双语与主题 | 支持中文、English、浅色和深色界面。 |
 | 开放数据 | 提供动态 JSON API、运行状态接口和构建时静态快照。 |
@@ -61,7 +61,7 @@ DeepSeek Harness 的插件生态增长很快，但仓库描述、安装命令和
 
 ```text
 awesome-dsh-plugin ─┐
-                    ├─> 元数据归一化 ─> manifest / 源码信号检查 ─> 插件注册表
+                    ├─> 元数据归一化 ─> manifest / 仓库事实采集 ─> 插件注册表
 GitHub dsh-plugin ──┘                                          │
                                                                ├─> Web UI
 Cloudflare Cron (30 min) ─> 增量复查 ─> Cloudflare KV ──────────┼─> JSON API
@@ -79,27 +79,23 @@ Cloudflare 历史请求 ─> historical_root_views ─┐
 - 各候选仓库的公开 README、`package.json`、manifest 声明、锁文件与有限源码文件；
 - `data/curated.snapshot.json`：GitHub 暂时不可用时的离线回退。
 
-### 筛查状态
+### 收录原则
 
-| 状态 | 含义 |
-| --- | --- |
-| `clear` | 当前检查范围内未发现需要人工复核的信号。 |
-| `review` / `pending` | 证据不足或发现了需要理解用途的权限/行为。 |
-| `blocked` | 命中高风险信号，自动目录不会给出直接安装建议。 |
+本站全量收录所有可发现的 DSH 插件（社区精选列表 + GitHub `dsh-plugin` topic 全量扫描），**不做安全筛查、不做筛选、不为任何插件背书**——是否安装由用户自行判断。
 
-筛查结果只覆盖公开静态证据，不能替代完整代码审计、依赖审计或运行时沙箱验证。站点不会安装、构建或执行被收录插件。
+公开事实只覆盖 GitHub 公开元数据，不能替代完整代码审计、依赖审计或运行时沙箱验证。站点不会安装、构建或执行被收录插件。
 
 ## 公开 API
 
 | 接口 | 用途 |
 | --- | --- |
-| [`GET /api/plugins`](https://dsh.lanshuagent.com/api/plugins) | 当前动态注册表，优先读取 Cloudflare KV。 |
-| [`GET /api/registry/status`](https://dsh.lanshuagent.com/api/registry/status) | 最近同步时间、收录数量和筛查状态汇总。 |
-| [`GET /api/visits`](https://dsh.lanshuagent.com/api/visits) | 真实访问、历史基线、展示倍率和访问热度。响应禁止缓存。 |
-| [`GET /plugins.json`](https://dsh.lanshuagent.com/plugins.json) | 随构建发布的静态回退快照。 |
+| [`GET /api/plugins`](https://dsh-plugin.store/api/plugins) | 当前动态注册表，优先读取 Cloudflare KV。 |
+| [`GET /api/registry/status`](https://dsh-plugin.store/api/registry/status) | 最近同步时间与收录数量汇总。 |
+| [`GET /api/visits`](https://dsh-plugin.store/api/visits) | 真实访问、历史基线、展示倍率和访问热度。响应禁止缓存。 |
+| [`GET /plugins.json`](https://dsh-plugin.store/plugins.json) | 随构建发布的静态回退快照。 |
 
 ```bash
-curl -sS https://dsh.lanshuagent.com/api/registry/status
+curl -sS https://dsh-plugin.store/api/registry/status
 ```
 
 `/api/plugins` 允许跨域读取，并带有短时公共缓存头，适合做社区机器人、插件推荐器或二次目录的数据源。
@@ -114,7 +110,7 @@ curl -sS https://dsh.lanshuagent.com/api/registry/status
 - npm（使用仓库内的 `package-lock.json`）
 
 ```bash
-git clone https://github.com/cclank/dsh-plugin-hub.git
+git clone https://github.com/dsh-plugin-hub/dsh-plugin-hub.git
 cd dsh-plugin-hub
 npm ci
 npm run data:sync
@@ -149,7 +145,7 @@ Token 只需要读取公开仓库的权限，请勿提交到 Git。
 - KV binding：`PLUGIN_REGISTRY`
 - D1 binding：`VISIT_METRICS`
 - Cron：`*/30 * * * *`
-- 默认自定义域名：`dsh.lanshuagent.com`
+- 默认自定义域名：`dsh-plugin.store`（含 `www.dsh-plugin.store`）
 
 Fork 后请先替换自定义域名，并创建自己的 D1 数据库，将返回的 `database_id` 写入 `vite.config.ts`：
 
@@ -189,8 +185,8 @@ prototype/                 最初的设计原型，保留作视觉对照
 
 欢迎提交以下类型的改进：
 
-- 修正插件元数据、分类或安装证据；
-- 补充可解释、低误报的筛查规则；
+- 修正插件元数据、分类或安装命令；
+- 补充可解释、低误报的仓库事实采集规则；
 - 改善移动端、无障碍、双语文案和数据可视化；
 - 为自动同步、API 和 Cloudflare 运行链路补测试。
 
@@ -201,12 +197,12 @@ npm run lint
 npm test
 ```
 
-涉及筛查规则的改动，请同时增加最小正例和反例测试。请勿在 Issue、日志或测试夹具中提交真实 Token、私有仓库内容或用户配置。
+涉及事实采集规则的改动，请同时增加最小正例和反例测试。请勿在 Issue、日志或测试夹具中提交真实 Token、私有仓库内容或用户配置。
 
 ## 安全与责任边界
 
 - 自动检查不会运行第三方插件，也不会代表项目作者为插件背书；
-- 安装命令绑定到已检查的 Git commit，仍不代表插件已经获得完整安全审计；
+- 推荐安装命令不锁定 commit，安装前请自行查看目标仓库当前状态；本站不做安全审计与背书；
 - README 声明与静态信号可能过期，安装前仍应查看目标仓库源码和发布记录；
 - 发现本站漏洞时，请优先使用 GitHub Private Vulnerability Reporting，避免公开敏感复现细节。
 
@@ -215,8 +211,6 @@ npm test
 - [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)
 - [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
 - 所有公开插件、文档和安全边界的社区维护者
-
-项目作者：[岚叔](https://github.com/cclank)
 
 ## 许可证
 
