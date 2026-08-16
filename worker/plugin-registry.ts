@@ -44,11 +44,14 @@ const MAX_SPLIT_DEPTH = 10;
 const FULL_SCAN_INTERVAL_MS = 7 * 24 * 60 * 60 * 1_000;
 const PUSHED_FIRST_RUN_WINDOW_MS = 24 * 60 * 60 * 1_000;
 const INCREMENTAL_CREATED_WINDOW_MS = 48 * 60 * 60 * 1_000;
-const MAX_SEARCH_CALLS_PER_RUN = 60;
+// 免费档每次 Worker 调用的子请求硬上限为 50（search + facts + KV 读写共享），
+// 单轮总预算必须留足余量（26 search + 8 facts + ~6 KV ≈ 40），否则平台直接
+// 以 "Too many subrequests" 掐断整轮，巡检永远无法完成。
+const MAX_SEARCH_CALLS_PER_RUN = 26;
 const MAX_SEARCH_RETRIES = 2;
 const MAX_RATE_WAIT_MS = 30_000;
 const SECONDARY_BACKOFF_MS = 13_000;
-const MAX_FACT_FETCHES_PER_RUN = 20;
+const MAX_FACT_FETCHES_PER_RUN = 8;
 const MAX_JSON_BYTES = 6_000_000;
 const MAX_TEXT_BYTES = 140_000;
 

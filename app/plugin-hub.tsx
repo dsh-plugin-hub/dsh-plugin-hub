@@ -76,7 +76,7 @@ const EMPTY_FACTS: PluginFacts = {
 /** 目录分页页大小（与 /api/plugins 服务端契约一致；Worker 侧上限 100） */
 const PAGE_SIZE = 60;
 
-/** /api/plugins 分页响应（P1-T5 服务端契约：{schemaVersion, generatedAt, total, page, pageSize, items, categories, summary}） */
+/** /api/plugins 分页响应（P1-T5 服务端契约：{schemaVersion, generatedAt, total, page, pageSize, items, categories, summary, automation}） */
 interface CatalogPageResponse {
   schemaVersion?: number;
   generatedAt?: string | null;
@@ -694,6 +694,7 @@ export function PluginHub({
           generatedAt: next.generatedAt ?? prev.generatedAt,
           categories: next.categories ?? prev.categories,
           summary: next.summary ?? prev.summary,
+          automation: next.automation ?? prev.automation,
         }));
         const source = response.headers.get("x-registry-source");
         setRegistrySource(source === "cloudflare-d1" || source === "cloudflare-kv" ? "live" : "bundled");
@@ -827,7 +828,8 @@ export function PluginHub({
     ? text(lang, "云端巡检正常", "Cloud scan healthy")
     : data.automation.state === "degraded"
       ? text(lang, "巡检部分降级", "Scan partially degraded")
-      : text(lang, "等待首次云端巡检", "Awaiting first cloud scan");
+      // bundled 快照是 CI 每次部署重建的最新数据，不是"从未巡检"
+      : text(lang, "部署快照已同步", "Deployment snapshot synced");
   const channelLabel = registrySource === "live"
     ? text(lang, "KV 实时目录", "Live KV registry")
     : text(lang, "内置数据兜底", "Bundled fallback");

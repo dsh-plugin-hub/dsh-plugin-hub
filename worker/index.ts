@@ -122,6 +122,7 @@ interface PluginsPageResponse {
   items: PluginRecord[];
   categories: PluginRegistryData["categories"];
   summary: PluginRegistryData["summary"];
+  automation: PluginRegistryData["automation"];
 }
 
 function pluginsApiHeaders(source: string): HeadersInit {
@@ -367,6 +368,8 @@ async function queryPluginsPage(
     items,
     categories: registry.categories ?? ({} as PluginRegistryData["categories"]),
     summary: registrySummary(registry),
+    // 前端据此显示巡检状态（live/degraded/bundled）
+    automation: registry.automation,
   };
 }
 
