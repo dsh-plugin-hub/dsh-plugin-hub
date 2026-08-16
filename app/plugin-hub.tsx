@@ -7,17 +7,10 @@ import type {
   PluginRecord,
   PluginRegistryData,
 } from "@/lib/plugin-data";
-import * as pluginScreening from "@/lib/plugin-screening.mjs";
+import { installCommandFor } from "@/lib/plugin-screening.mjs";
+import { buildGrowthSeries, isoDate, type GrowthPoint } from "@/lib/growth";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AuroraBackground from "@/components/aurora-background";
-
-// lib/plugin-screening.mjs 导出 installCommandFor(repo)：返回
-// "dsh plugin --profile web add github:<owner>/<repo>"，非法 repo 返回 null。
-// 其 .d.mts 声明在 P1-T2 并行改造中滞后于实现，这里通过命名空间桥接取运行时实现，
-// 待声明文件更新后此桥接仍可正常编译。
-const installCommandFor = (pluginScreening as unknown as {
-  installCommandFor: (repo: string | null) => string | null;
-}).installCommandFor;
 
 type PageId = "home" | "catalog" | "rank" | "submit" | "guide";
 type SortId = "curated" | "stars" | "updated" | "added" | "name";
@@ -29,11 +22,6 @@ type VisitStats = {
   realCount: number | null;
   multiplier: number;
   historicalCount: number | null;
-};
-type GrowthPoint = {
-  date: string;
-  added: number;
-  total: number;
 };
 
 const PAGES: Array<{ id: PageId; zh: string; en: string }> = [
@@ -190,18 +178,6 @@ function relativeDate(value: string | null, lang: Language) {
   return text(lang, `${Math.floor(days / 365)} 年前`, `${Math.floor(days / 365)}y ago`);
 }
 
-function isoDate(value: string | null | undefined) {
-  const match = value?.match(/^(\d{4}-\d{2}-\d{2})/u);
-  if (!match) return null;
-  return Number.isFinite(Date.parse(`${match[1]}T00:00:00Z`)) ? match[1] : null;
-}
-
-function shiftIsoDate(value: string, days: number) {
-  const date = new Date(`${value}T00:00:00Z`);
-  date.setUTCDate(date.getUTCDate() + days);
-  return date.toISOString().slice(0, 10);
-}
-
 function shortDate(value: string, lang: Language) {
   return new Intl.DateTimeFormat(lang === "zh" ? "zh-CN" : "en-US", {
     month: "short",
@@ -239,34 +215,6 @@ function manifestSummary(plugin: PluginRecord, lang: Language) {
     return text(lang, "有 package.json，无 dsh 声明", "package.json found, no dsh declaration");
   }
   return plugin.manifest.state;
-}
-
-function buildGrowthSeries(plugins: PluginRecord[], generatedAt: string): GrowthPoint[] {
-  const generatedDate = isoDate(generatedAt) || "1970-01-01";
-  const dailyAdditions = new Map<string, number>();
-
-  for (const plugin of plugins) {
-    const date = isoDate(plugin.discovery.firstSeenAt) || isoDate(plugin.added) || generatedDate;
-    dailyAdditions.set(date, (dailyAdditions.get(date) || 0) + 1);
-  }
-
-  const dates = [...dailyAdditions.keys()].sort();
-  if (!dates.length) return [{ date: generatedDate, added: 0, total: 0 }];
-
-  let total = 0;
-  const series = dates.map((date) => {
-    const added = dailyAdditions.get(date) || 0;
-    total += added;
-    return { date, added, total };
-  });
-  const lastDate = series.at(-1)?.date || generatedDate;
-  const chartEnd = generatedDate > lastDate ? generatedDate : lastDate;
-
-  if (chartEnd > lastDate) series.push({ date: chartEnd, added: 0, total });
-  if (series.length === 1) {
-    series.unshift({ date: shiftIsoDate(series[0].date, -1), added: 0, total: 0 });
-  }
-  return series;
 }
 
 function growthChartGeometry(series: GrowthPoint[]) {
@@ -490,7 +438,19 @@ function GitHubGlyph() {
  * 主组件
  * ------------------------------------------------------------------ */
 
-export function PluginHub({ data: initialData }: { data: PluginRegistryData }) {
+export function PluginHub({
+  data: initialData,
+  preview,
+}: {
+  data: PluginRegistryData;
+  /** 服务端基于全量注册表预计算的聚合与榜单预览（SSR 只内嵌首屏薄切片时使用） */
+  preview?: {
+    growthSeries: GrowthPoint[];
+    topStars: PluginRecord[];
+    topFresh: PluginRecord[];
+    categoryCounts: Record<CategoryId, number>;
+  };
+}) {
   const [data, setData] = useState(initialData);
   const [registrySource, setRegistrySource] = useState<"bundled" | "live">("bundled");
   const [page, setPage] = useState<PageId>("home");
@@ -755,11 +715,14 @@ export function PluginHub({ data: initialData }: { data: PluginRegistryData }) {
     [data.plugins],
   );
 
-  const categoryCounts = useMemo(() => {
-    const counts = Object.fromEntries(CATEGORY_ORDER.map((id) => [id, 0])) as Record<CategoryId, number>;
-    for (const plugin of visiblePlugins) counts[plugin.category] += 1;
-    return counts;
-  }, [visiblePlugins]);
+  const categoryCounts = useMemo(
+    () => preview?.categoryCounts ?? (() => {
+      const counts = Object.fromEntries(CATEGORY_ORDER.map((id) => [id, 0])) as Record<CategoryId, number>;
+      for (const plugin of visiblePlugins) counts[plugin.category] += 1;
+      return counts;
+    })(),
+    [preview?.categoryCounts, visiblePlugins],
+  );
 
   /** 收藏对象池：SSR 快照优先，live 分页中出现的收藏插件也并入（覆盖快照外的新插件） */
   const favoriteObjects = useMemo(() => {
@@ -824,17 +787,17 @@ export function PluginHub({ data: initialData }: { data: PluginRegistryData }) {
   }, [catalog.hasMore, catalog.nextPage, catalogIsCurrent, catalogKey, fetchPage]);
 
   const topStars = useMemo(
-    () => [...visiblePlugins].filter((plugin) => plugin.stars !== null).sort((a, b) => (b.stars || 0) - (a.stars || 0)).slice(0, 20),
-    [visiblePlugins],
+    () => preview?.topStars ?? [...visiblePlugins].filter((plugin) => plugin.stars !== null).sort((a, b) => (b.stars || 0) - (a.stars || 0)).slice(0, 20),
+    [preview?.topStars, visiblePlugins],
   );
   const topFresh = useMemo(
-    () => [...visiblePlugins].filter((plugin) => plugin.pushedAt).sort((a, b) => Date.parse(b.pushedAt || "0") - Date.parse(a.pushedAt || "0")).slice(0, 20),
-    [visiblePlugins],
+    () => preview?.topFresh ?? [...visiblePlugins].filter((plugin) => plugin.pushedAt).sort((a, b) => Date.parse(b.pushedAt || "0") - Date.parse(a.pushedAt || "0")).slice(0, 20),
+    [preview?.topFresh, visiblePlugins],
   );
   const featured = topStars.slice(0, 6);
   const growthSeries = useMemo(
-    () => buildGrowthSeries(visiblePlugins, data.generatedAt),
-    [data.generatedAt, visiblePlugins],
+    () => preview?.growthSeries ?? buildGrowthSeries(visiblePlugins, data.generatedAt),
+    [data.generatedAt, preview?.growthSeries, visiblePlugins],
   );
   const growthChart = useMemo(() => growthChartGeometry(growthSeries), [growthSeries]);
   const currentGrowth = growthSeries.at(-1) || { date: data.generatedAt.slice(0, 10), added: 0, total: data.summary.listed };
@@ -1214,7 +1177,7 @@ export function PluginHub({ data: initialData }: { data: PluginRegistryData }) {
             </div>
             <div className="ds-chips" role="group" aria-label={text(lang, "分类筛选", "Category filter")} style={{ marginTop: "var(--ds-space-4)" }}>
               <button className={category === "all" ? "ds-chip is-active" : "ds-chip"} type="button" onClick={() => setCategory("all")}>
-                {text(lang, "全部", "All")} <small>{visiblePlugins.length}</small>
+                {text(lang, "全部", "All")} <small>{data.summary.listed}</small>
               </button>
               {CATEGORY_ORDER.map((id) => (
                 <button className={category === id ? "ds-chip is-active" : "ds-chip"} type="button" key={id} onClick={() => setCategory(id)}>
