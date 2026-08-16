@@ -16,7 +16,12 @@ jobs:
       - run: npm ci
       - name: Sync data
         run: npm run data:sync
-        env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # 跳过逐仓库 manifest 采集：控制快照体积（完整采集会把 plugins.generated.json
+          # 撑到 ~10MB，vite-plugin-commonjs 处理时栈溢出）。facts 由 Worker cron 实时采集，
+          # 打包快照仅是回退数据。
+          DSH_SKIP_MANIFESTS: '1'
       - run: npm test        # 含 lint + typecheck + build + 集成测试
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
