@@ -1,0 +1,24 @@
+# dsh-plugin.store — DeepSeek Harness 插件目录
+# 全部开放抓取（含搜索引擎与 AI 大模型爬虫），换取最大曝光。
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# AI 大模型与问答引擎爬虫（显式放行，部分默认会尊重 robots）
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: OAI-SearchBot
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: PerplexityBot
+User-agent: Google-Extended
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: Bytespider
+User-agent: Baiduspider
+User-agent: Sogou web spider
+User-agent: 360Spider
+Allow: /
+
+Sitemap: https://dsh-plugin.store/sitemap.xml

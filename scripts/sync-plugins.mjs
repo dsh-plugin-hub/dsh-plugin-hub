@@ -25,6 +25,7 @@ import {
   manifestSummary,
   sanitizeRegistryInstallEvidence,
 } from "../lib/plugin-screening.mjs";
+import { hasPluginDetailRoutes, writeSeoArtifacts } from "./seo-artifacts.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const snapshotPath = path.join(root, "data", "curated.snapshot.json");
@@ -62,6 +63,9 @@ const publicCuratedUrl = (() => {
 })();
 const githubToken = process.env.GITHUB_TOKEN?.trim();
 const skipManifests = process.env.DSH_SKIP_MANIFESTS === "1";
+// --artifacts-only：不扫 GitHub，只基于现有 data/*.generated.json 重建 SEO 工件
+// （sitemap.xml / llms.txt / indexnow-urls.txt），用于本地快速验证与测试。
+const artifactsOnly = process.argv.includes("--artifacts-only");
 // 匿名 Search API 10 次/分 -> 6.5s 间隔；带 token 30 次/分 -> 2.2s 间隔（各留 ~8% 余量）。
 const SEARCH_INTERVAL_MS = githubToken ? 2_200 : 6_500;
 
@@ -871,9 +875,19 @@ async function main() {
       .slice(0, 20),
     growthSeries: buildGrowthSeries(activePlugins, output.generatedAt),
     categoryCounts,
+    // SEO：详情页路由是否存在（= 部署内容），供 sitemap / JSON-LD 指向一致。
+    detailRoutes: hasPluginDetailRoutes(),
   };
   await writeFile(previewPath, `${JSON.stringify(preview, null, 2)}
 `);
+
+  // SEO 工件：sitemap.xml / llms.txt / indexnow-urls.txt（与插件数据同步刷新）。
+  await writeSeoArtifacts({
+    plugins: activePlugins,
+    generatedAt: output.generatedAt,
+    summary: output.summary,
+    categories: output.categories,
+  });
 
   console.log(
     `synced ${livePlugins.length} plugins (${output.summary.curated} curated, ${output.summary.autoDiscovered} topic-only)` +
@@ -882,7 +896,22 @@ async function main() {
   );
 }
 
-main().catch((error) => {
+async function mainArtifactsOnly() {
+  const output = await readJson(generatedPath, null);
+  if (!output?.plugins?.length) {
+    throw new Error("data/plugins.generated.json missing or empty — run a full data:sync first");
+  }
+  const plugins = output.plugins.filter((plugin) => plugin.removed !== true);
+  await writeSeoArtifacts({
+    plugins,
+    generatedAt: output.generatedAt || new Date().toISOString(),
+    summary: output.summary,
+    categories: output.categories,
+  });
+  console.log(`artifacts-only: rebuilt SEO artifacts from ${plugins.length} live plugins`);
+}
+
+(artifactsOnly ? mainArtifactsOnly() : main()).catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });

@@ -35,3 +35,8 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: d1 migrations apply dsh-plugin-hub-visits --remote --config dist/server/wrangler.json
+      - name: Notify search engines (IndexNow)
+        run: node scripts/indexnow-ping.mjs
+        env:
+          # 可选：配置 BAIDU_PUSH_TOKEN secret 后自动启用百度主动推送
+          BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}

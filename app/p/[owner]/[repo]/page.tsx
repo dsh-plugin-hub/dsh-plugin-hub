@@ -42,11 +42,13 @@ export async function generateMetadata({ params }: PluginRouteProps): Promise<Me
       title,
       description,
       url: `/p/${owner}/${repo}`,
+      images: [{ url: "/og.png", width: 1200, height: 630, alt: title }],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title,
       description,
+      images: ["/og.png"],
     },
   };
 }

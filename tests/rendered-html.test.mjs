@@ -84,10 +84,15 @@ test("server-renders the complete plugin hub", async () => {
   assert.equal(response.headers.get("x-frame-options"), "DENY");
 
   const html = await response.text();
-  // 站点名与主题（P1-T1/T8：默认深色）
-  assert.match(html, /<title>dsh-plugin · DSH 插件目录<\/title>/i);
+  // 站点名与主题（P1-T1/T8：默认深色；SEO 标题带实时收录数）
+  assert.match(html, /<title>dsh-plugin · DeepSeek Harness 插件目录｜收录 \d+ 个 GitHub 真实插件<\/title>/i);
   assert.match(html, /rel="icon"[^>]+href="\/favicon\.svg"/i);
   assert.match(html, /<html[^>]+data-theme="dark"/i);
+  // SEO：canonical 指向生产域 + 结构化数据（WebSite/Organization/ItemList）
+  assert.match(html, /rel="canonical" href="https:\/\/dsh-plugin\.store"/i);
+  assert.match(html, /application\/ld\+json/);
+  assert.match(html, /"@type":"WebSite"/);
+  assert.match(html, /"@type":"ItemList"/);
   // hero 文案与动态背景（P1-T7/T8）
   assert.match(html, /一切皆插件/);
   assert.match(html, /先看证据/);
