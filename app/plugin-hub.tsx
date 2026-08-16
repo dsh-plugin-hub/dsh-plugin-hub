@@ -989,9 +989,6 @@ export function PluginHub({
                     <button className="ds-btn ds-btn--primary ds-btn--m" type="button" onClick={() => go("catalog")}>
                       {text(lang, "浏览插件目录", "Browse catalog")} <span aria-hidden="true">→</span>
                     </button>
-                    <a className="ds-btn ds-btn--secondary ds-btn--m" href={data.sources.curated.repository} target="_blank" rel="noreferrer">
-                      {text(lang, "查看数据源", "Open data source")} <span aria-hidden="true">↗</span>
-                    </a>
                   </div>
                 </div>
               </div>
