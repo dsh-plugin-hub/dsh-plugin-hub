@@ -17,7 +17,6 @@
  * 事实采集（可选增强）：每轮最多 20 个仓库 raw 拉 package.json，用 manifestSummary + deriveFacts
  * 填充 facts；未采集的仓库保持保守默认值（hasManifest=false、lifecycleScripts=[]）。
  */
-import bundledRegistryJson from "../data/plugins.generated.json" with { type: "json" };
 import type {
   CategoryId,
   PluginFacts,
@@ -56,6 +55,10 @@ const MAX_TEXT_BYTES = 140_000;
 export interface PluginRegistryEnv {
   PLUGIN_REGISTRY?: KVNamespace;
   GITHUB_TOKEN?: string;
+  /** 静态资源绑定：/plugins.json 全量快照的运行时读取通道 */
+  ASSETS?: {
+    fetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
+  };
 }
 
 interface GithubRepository {
@@ -277,10 +280,56 @@ function safeRepoId(fullName: string): string | null {
   }
 }
 
-function bundledRegistry(): PluginRegistryData {
-  return sanitizeRegistryInstallEvidence(
-    JSON.parse(JSON.stringify(bundledRegistryJson)),
-  ) as PluginRegistryData;
+/** 空注册表兜底（静态快照缺失时，保证 API 不抛错） */
+function emptyRegistry(): PluginRegistryData {
+  return {
+    schemaVersion: 2,
+    generatedAt: new Date(0).toISOString(),
+    automation: {
+      enabled: true,
+      schedule: "*/30 * * * *",
+      state: "bundled",
+      scanVersion: 1,
+      lastRunAt: null,
+      lastSuccessfulRunAt: null,
+      checkedThisRun: 0,
+      discoveredThisRun: 0,
+      admittedThisRun: 0,
+      rejectedTotal: 0,
+      error: null,
+    },
+    sources: {
+      curated: { url: "", repository: "", state: "snapshot", updated: "", count: 0 },
+      topic: { url: "", query: "topic:dsh-plugin", state: "snapshot", total: 0, scanned: 0, matched: 0, error: null },
+    },
+    summary: {
+      curated: 0, listed: 0, autoDiscovered: 0, topicTotal: 0,
+      metadataMatches: 0, manifestMatches: 0, owners: 0, stars: 0,
+    },
+    categories: {} as PluginRegistryData["categories"],
+    plugins: [],
+  };
+}
+
+/**
+ * 全量快照改为运行时从静态资源读取（/plugins.json，由 data:sync 双写），
+ * 不再把 ~6MB 的 JSON 塞进打包产物（vite-plugin-commonjs 会栈溢出）。
+ */
+async function bundledRegistry(env: PluginRegistryEnv): Promise<PluginRegistryData> {
+  try {
+    const response = await env.ASSETS?.fetch(new Request("https://dsh-plugin.store/plugins.json"));
+    if (response?.ok) {
+      const text = await response.text();
+      return sanitizeRegistryInstallEvidence(JSON.parse(text)) as PluginRegistryData;
+    }
+    console.error(JSON.stringify({ event: "registry.bundled.missing", status: response?.status ?? null }));
+  } catch (error) {
+    console.error(JSON.stringify({
+      event: "registry.bundled.read.error",
+      error: error instanceof Error ? error.message : String(error),
+    }));
+  }
+  return emptyRegistry();
 }
 
 function githubHeaders(env: PluginRegistryEnv) {
@@ -840,16 +889,16 @@ function summarize(registry: PluginRegistryData) {
 // ---------------------------------------------------------------------------
 
 export async function readPluginRegistry(env: PluginRegistryEnv): Promise<PluginRegistryData> {
-  if (!env.PLUGIN_REGISTRY) return bundledRegistry();
+  if (!env.PLUGIN_REGISTRY) return bundledRegistry(env);
   try {
     const stored = await env.PLUGIN_REGISTRY.get<PluginRegistryData>(REGISTRY_KEY, "json");
-    return stored ? sanitizeRegistryInstallEvidence(stored) as PluginRegistryData : bundledRegistry();
+    return stored ? sanitizeRegistryInstallEvidence(stored) as PluginRegistryData : bundledRegistry(env);
   } catch (error) {
     console.error(JSON.stringify({
       event: "registry.read.error",
       error: error instanceof Error ? error.message : String(error),
     }));
-    return bundledRegistry();
+    return bundledRegistry(env);
   }
 }
 

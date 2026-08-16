@@ -4,6 +4,16 @@ import test from "node:test";
 
 const root = new URL("../", import.meta.url);
 
+// Worker 的 bundled 回退改为从静态资源 /plugins.json 读取（不再打包进产物），
+// 测试环境用磁盘上的全量快照模拟 ASSETS 绑定。
+let assetsJsonCache = null;
+async function assetsResponse() {
+  if (!assetsJsonCache) {
+    assetsJsonCache = await readFile(new URL("public/plugins.json", root), "utf8");
+  }
+  return new Response(assetsJsonCache, { headers: { "content-type": "application/json" } });
+}
+
 async function request(path = "/", accept = "text/html", envOverrides = {}) {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${Math.random()}`);
@@ -14,7 +24,11 @@ async function request(path = "/", accept = "text/html", envOverrides = {}) {
     new Request(`http://localhost${path}`, { headers: { accept } }),
     {
       ASSETS: {
-        fetch: async () => new Response("Not found", { status: 404 }),
+        fetch: async (input) => {
+          const url = new URL(typeof input === "string" ? input : input.url);
+          if (url.pathname === "/plugins.json") return assetsResponse();
+          return new Response("Not found", { status: 404 });
+        },
       },
       ...envOverrides,
     },
@@ -183,4 +197,19 @@ test("keeps the generated registry internally consistent", async () => {
   assert.ok(removed.every((plugin) => plugin.removed === true));
   assert.doesNotMatch(packageText, /react-loading-skeleton/);
   await assert.rejects(access(new URL("app/_sites-preview", root)));
+
+  // 预览快照：SSR 薄切片与全量数据一致（全量 JSON 不进打包器）
+  const preview = JSON.parse(await readFile(new URL("data/preview.generated.json", root), "utf8"));
+  assert.equal(preview.summary.listed, registry.summary.listed);
+  assert.equal(preview.plugins.length, Math.min(60, registry.summary.listed));
+  assert.equal(preview.topStars.length, 20);
+  assert.equal(preview.topFresh.length, 20);
+  for (let i = 1; i < preview.topStars.length; i++) {
+    assert.ok((preview.topStars[i - 1].stars || 0) >= (preview.topStars[i].stars || 0));
+  }
+  assert.equal(
+    Object.values(preview.categoryCounts).reduce((sum, value) => sum + value, 0),
+    registry.summary.listed,
+  );
+  assert.equal(preview.growthSeries.at(-1).total, registry.summary.listed);
 });

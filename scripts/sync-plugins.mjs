@@ -31,6 +31,8 @@ const snapshotPath = path.join(root, "data", "curated.snapshot.json");
 const scanStatePath = path.join(root, "data", "topic-scan-state.json");
 const generatedPath = path.join(root, "data", "plugins.generated.json");
 const publicPath = path.join(root, "public", "plugins.json");
+const previewPath = path.join(root, "data", "preview.generated.json");
+const PREVIEW_PAGE_SIZE = 60;
 const MAX_JSON_BYTES = 6_000_000;
 const MAX_TEXT_BYTES = 140_000;
 // 全量 union（curated 820 + topic ~4200）pretty-printed 约 6~13 MB；旧 820 条文件约 2.1 MB。
@@ -635,6 +637,43 @@ function curatedRecord(entry, topicMeta, previous, now, index) {
   };
 }
 
+// —— 增长序列（与 lib/growth.ts 同逻辑的纯 JS 副本：脚本在 Node 22 下运行，不能依赖 TS 类型剥离） ——
+function growthIsoDate(value) {
+  const match = value?.match(/^(\d{4}-\d{2}-\d{2})/u);
+  if (!match) return null;
+  return Number.isFinite(Date.parse(`${match[1]}T00:00:00Z`)) ? match[1] : null;
+}
+
+function growthShiftIsoDate(value, days) {
+  const date = new Date(`${value}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+}
+
+function buildGrowthSeries(plugins, generatedAt) {
+  const generatedDate = growthIsoDate(generatedAt) || "1970-01-01";
+  const dailyAdditions = new Map();
+  for (const plugin of plugins) {
+    const date = growthIsoDate(plugin.discovery?.firstSeenAt) || growthIsoDate(plugin.added) || generatedDate;
+    dailyAdditions.set(date, (dailyAdditions.get(date) || 0) + 1);
+  }
+  const dates = [...dailyAdditions.keys()].sort();
+  if (!dates.length) return [{ date: generatedDate, added: 0, total: 0 }];
+  let total = 0;
+  const series = dates.map((date) => {
+    const added = dailyAdditions.get(date) || 0;
+    total += added;
+    return { date, added, total };
+  });
+  const lastDate = series.at(-1)?.date || generatedDate;
+  const chartEnd = generatedDate > lastDate ? generatedDate : lastDate;
+  if (chartEnd > lastDate) series.push({ date: chartEnd, added: 0, total });
+  if (series.length === 1) {
+    series.unshift({ date: growthShiftIsoDate(series[0].date, -1), added: 0, total: 0 });
+  }
+  return series;
+}
+
 async function main() {
   await mkdir(path.dirname(generatedPath), { recursive: true });
   // 用 lib 的字段白名单清洗上次快照（剔除旧 screening/installCommand 等字段）。
@@ -808,6 +847,34 @@ async function main() {
   }
   await writeFile(generatedPath, serialized);
   await writeFile(publicPath, serialized);
+
+  // SSR 预览快照（薄切片）：全量 JSON 不再进打包器，避免 vite-plugin-commonjs
+  // 在 ~6MB 字符串上栈溢出；预览只含首屏所需聚合与榜单。
+  const activePlugins = plugins.filter((plugin) => plugin.removed !== true);
+  const categoryCounts = Object.fromEntries(Object.keys(output.categories).map((id) => [id, 0]));
+  for (const plugin of activePlugins) categoryCounts[plugin.category] = (categoryCounts[plugin.category] ?? 0) + 1;
+  const preview = {
+    schemaVersion: output.schemaVersion,
+    generatedAt: output.generatedAt,
+    automation: output.automation,
+    sources: output.sources,
+    summary: output.summary,
+    categories: output.categories,
+    plugins: activePlugins.slice(0, PREVIEW_PAGE_SIZE),
+    topStars: [...activePlugins]
+      .filter((plugin) => plugin.stars !== null)
+      .sort((a, b) => (b.stars || 0) - (a.stars || 0))
+      .slice(0, 20),
+    topFresh: [...activePlugins]
+      .filter((plugin) => plugin.pushedAt)
+      .sort((a, b) => Date.parse(b.pushedAt || "0") - Date.parse(a.pushedAt || "0"))
+      .slice(0, 20),
+    growthSeries: buildGrowthSeries(activePlugins, output.generatedAt),
+    categoryCounts,
+  };
+  await writeFile(previewPath, `${JSON.stringify(preview, null, 2)}
+`);
+
   console.log(
     `synced ${livePlugins.length} plugins (${output.summary.curated} curated, ${output.summary.autoDiscovered} topic-only)` +
       `${removedCount ? `, ${removedCount} removed` : ""}; ` +

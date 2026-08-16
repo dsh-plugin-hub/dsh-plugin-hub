@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { pluginRegistry } from "@/lib/plugin-data";
-import type { CategoryId } from "@/lib/plugin-data";
-import { buildGrowthSeries } from "@/lib/growth";
+import { previewSnapshot } from "@/lib/plugin-data";
 import { PluginHub } from "./plugin-hub";
 
 export const metadata: Metadata = {
@@ -10,26 +8,27 @@ export const metadata: Metadata = {
   description: "基于 GitHub 真实数据的 DeepSeek Harness 社区插件目录与安装证据索引。",
 };
 
-/** SSR 载荷瘦身：页面只内嵌首屏薄切片，全量聚合与榜单在服务端预计算（见 DESIGN-SPEC/方案 4.2）。 */
-const PREVIEW_PAGE_SIZE = 60;
-const CATEGORY_ORDER: CategoryId[] = ["ui", "theme", "model", "session", "memory", "tools", "skill", "workflow", "notify", "dev", "market", "fun"];
-
+/**
+ * SSR 载荷瘦身：data:sync 生成的 preview.generated.json（薄切片，~200KB）
+ * 已含首屏 60 条、榜单、增长序列与分类计数——这里直接透传，不再计算，
+ * 全量注册表（~6MB）只作为静态资源 /plugins.json 在运行时读取。
+ */
 export default function Home() {
-  const active = pluginRegistry.plugins.filter((plugin) => plugin.removed !== true);
-
   const previewData = {
-    ...pluginRegistry,
-    plugins: active.slice(0, PREVIEW_PAGE_SIZE),
+    schemaVersion: previewSnapshot.schemaVersion,
+    generatedAt: previewSnapshot.generatedAt,
+    automation: previewSnapshot.automation,
+    sources: previewSnapshot.sources,
+    summary: previewSnapshot.summary,
+    categories: previewSnapshot.categories,
+    plugins: previewSnapshot.plugins,
   };
 
-  const categoryCounts = Object.fromEntries(CATEGORY_ORDER.map((id) => [id, 0])) as Record<CategoryId, number>;
-  for (const plugin of active) categoryCounts[plugin.category] += 1;
-
   const preview = {
-    growthSeries: buildGrowthSeries(active, pluginRegistry.generatedAt),
-    topStars: [...active].filter((plugin) => plugin.stars !== null).sort((a, b) => (b.stars || 0) - (a.stars || 0)).slice(0, 20),
-    topFresh: [...active].filter((plugin) => plugin.pushedAt).sort((a, b) => Date.parse(b.pushedAt || "0") - Date.parse(a.pushedAt || "0")).slice(0, 20),
-    categoryCounts,
+    growthSeries: previewSnapshot.growthSeries,
+    topStars: previewSnapshot.topStars,
+    topFresh: previewSnapshot.topFresh,
+    categoryCounts: previewSnapshot.categoryCounts,
   };
 
   return <PluginHub data={previewData} preview={preview} />;

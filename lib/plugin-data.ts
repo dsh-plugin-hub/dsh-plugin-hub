@@ -1,4 +1,4 @@
-import rawData from "@/data/plugins.generated.json";
+import rawPreview from "@/data/preview.generated.json";
 import { sanitizeRegistryInstallEvidence } from "@/lib/plugin-screening.mjs";
 
 export type Language = "zh" | "en";
@@ -129,8 +129,17 @@ export interface PluginRegistryData {
 }
 
 /**
- * 构建期快照：经 sanitizeRegistryInstallEvidence 字段白名单过滤后作为注册表使用。
- * 快照本身不产生 screening 判定；facts/removed 等新字段由 P1-T4 的 data:sync
- * 在生成 JSON 时写入（本文件不补算，缺失即未知）。
+ * SSR 预览快照（~200KB 薄切片）：data:sync 从全量注册表派生，
+ * 包含 summary/categories/首屏 60 条/star 榜/新鲜榜/增长序列/分类计数。
+ * 全量数据不再进打包器（历史教训：vite-plugin-commonjs 在 ~6MB 的
+ * plugins.generated.json 上 String.replace 栈溢出），改为静态资源
+ * /plugins.json 运行时读取。
  */
-export const pluginRegistry = sanitizeRegistryInstallEvidence(rawData) as unknown as PluginRegistryData;
+export interface PreviewSnapshot extends PluginRegistryData {
+  topStars: PluginRecord[];
+  topFresh: PluginRecord[];
+  growthSeries: Array<{ date: string; added: number; total: number }>;
+  categoryCounts: Record<CategoryId, number>;
+}
+
+export const previewSnapshot = rawPreview as unknown as PreviewSnapshot;

@@ -1,0 +1,5862 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-16T05:12:31.215Z",
+  "automation": {
+    "enabled": true,
+    "schedule": "*/30 * * * *",
+    "state": "bundled",
+    "scanVersion": 1,
+    "lastRunAt": null,
+    "lastSuccessfulRunAt": null,
+    "checkedThisRun": 0,
+    "discoveredThisRun": 0,
+    "admittedThisRun": 0,
+    "rejectedTotal": 0,
+    "error": null
+  },
+  "sources": {
+    "curated": {
+      "url": "https://awesome-dsh-plugin.com/plugins.json",
+      "repository": "https://github.com/awesome-dsh-plugin/awesome-dsh-plugin",
+      "state": "live",
+      "updated": "2026-08-16",
+      "count": 839
+    },
+    "topic": {
+      "url": "https://github.com/topics/dsh-plugin",
+      "query": "topic:dsh-plugin created:YYYY-MM-DD..YYYY-MM-DD (month-bucket sweep)",
+      "state": "live",
+      "total": 4301,
+      "scanned": 3159,
+      "matched": 3159,
+      "error": null
+    }
+  },
+  "summary": {
+    "curated": 820,
+    "listed": 3333,
+    "autoDiscovered": 2513,
+    "topicTotal": 4301,
+    "metadataMatches": 3159,
+    "manifestMatches": 759,
+    "owners": 2401,
+    "stars": 390587
+  },
+  "categories": {
+    "ui": {
+      "en": "UI Enhancements",
+      "zh": "UI 增强"
+    },
+    "theme": {
+      "en": "Themes & Appearance",
+      "zh": "主题与外观"
+    },
+    "model": {
+      "en": "Models & Providers",
+      "zh": "模型与账号接入"
+    },
+    "session": {
+      "en": "Sessions & Messages",
+      "zh": "会话与消息"
+    },
+    "memory": {
+      "en": "Memory",
+      "zh": "记忆"
+    },
+    "tools": {
+      "en": "Tools & Capabilities",
+      "zh": "工具与能力"
+    },
+    "skill": {
+      "en": "Skills",
+      "zh": "技能包"
+    },
+    "workflow": {
+      "en": "Workflow & Automation",
+      "zh": "工作流与自动化"
+    },
+    "notify": {
+      "en": "Notifications & Integrations",
+      "zh": "通知与集成"
+    },
+    "dev": {
+      "en": "Development & Runtime",
+      "zh": "开发与运行时"
+    },
+    "market": {
+      "en": "Plugin Markets & Managers",
+      "zh": "插件市场与管理"
+    },
+    "fun": {
+      "en": "Just for Fun",
+      "zh": "娱乐"
+    }
+  },
+  "plugins": [
+    {
+      "id": "limitinfinitude/dsh-right-sidebar",
+      "order": 0,
+      "name": "DSH-Right-Sidebar",
+      "owner": "Limitinfinitude",
+      "repo": "Limitinfinitude/DSH-Right-Sidebar",
+      "url": "https://github.com/Limitinfinitude/DSH-Right-Sidebar",
+      "category": "ui",
+      "description": {
+        "en": "DSH Web right-side output dock that collects session artifacts, previews user-facing files, and preserves tab state per session.",
+        "zh": "DSH Web 原生右侧产物栏，按会话收集用户产物，预览用户可读文件并保存标签状态。"
+      },
+      "added": "2026-08-16",
+      "curated": true,
+      "topic": true,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 0,
+      "pushedAt": "2026-08-16T04:36:56Z",
+      "updatedAt": "2026-08-16T04:37:03Z",
+      "createdAt": "2026-08-15T14:07:12Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-right-sidebar",
+        "version": "0.2.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "no-prm/dsh-explorer",
+      "order": 1,
+      "name": "dsh-explorer",
+      "owner": "No-PRM",
+      "repo": "No-PRM/dsh-explorer",
+      "url": "https://github.com/No-PRM/dsh-explorer",
+      "category": "ui",
+      "description": {
+        "en": "Git-first file-tree sidebar for the DSH web GUI: VS Code-style indent guides, M/A/U/D/R git decorations, HEAD-vs-worktree diff preview, media preview, and drag-to-reference (files/folders/selected code with line numbers) — pure plugin.",
+        "zh": "Git 优先的文件树侧栏：VS Code 风格层级线、M/A/U/D/R git 状态装饰、HEAD 与工作区对照预览、媒体预览、拖拽引用（文件/文件夹/选中代码带行号）—— 纯插件。"
+      },
+      "added": "2026-08-16",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 1,
+      "openIssues": 1,
+      "watchers": 2,
+      "pushedAt": "2026-08-16T04:23:30Z",
+      "updatedAt": "2026-08-16T04:23:40Z",
+      "createdAt": "2026-08-15T18:58:07Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": null,
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "xiaweiliang060035/dsh-opencode-go-usage",
+      "order": 2,
+      "name": "dsh-opencode-go-usage",
+      "owner": "xiaweiliang060035",
+      "repo": "xiaweiliang060035/dsh-opencode-go-usage",
+      "url": "https://github.com/xiaweiliang060035/dsh-opencode-go-usage",
+      "category": "ui",
+      "description": {
+        "en": "Floating widget showing real-time OpenCode Go subscription usage (rolling/weekly/monthly) for every API key, with rate-limit alerts and automatic key-pool discovery.",
+        "zh": "悬浮组件实时显示 OpenCode Go 各 key 用量（滚动/每周/每月），限流预警，自动发现 key 池。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-15T16:04:19Z",
+      "updatedAt": "2026-08-15T16:04:23Z",
+      "createdAt": "2026-08-15T09:48:58Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@xiaweiliang060035/dsh-opencode-go-usage",
+        "version": "0.3.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "index.js",
+          "client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "wx-yss/dsh-message-rail",
+      "order": 3,
+      "name": "dsh-message-rail",
+      "owner": "wx-yss",
+      "repo": "wx-yss/dsh-message-rail",
+      "url": "https://github.com/wx-yss/dsh-message-rail",
+      "category": "ui",
+      "description": {
+        "en": "Codex-style left-side message navigation rail for the Web UI: one tick per user message, hover previews, and click-to-jump across the whole history.",
+        "zh": "Codex 风格左侧消息导航轨道：每条用户消息一个刻度，悬停预览、点击跳转，全历史一次索引。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-15T12:34:02Z",
+      "updatedAt": "2026-08-15T17:44:11Z",
+      "createdAt": "2026-08-15T10:44:04Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-message-rail",
+        "version": "0.1.3",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "ricketts-guo/dsh-shortcuts",
+      "order": 4,
+      "name": "dsh-shortcuts",
+      "owner": "Ricketts-Guo",
+      "repo": "Ricketts-Guo/dsh-shortcuts",
+      "url": "https://github.com/Ricketts-Guo/dsh-shortcuts",
+      "category": "ui",
+      "description": {
+        "en": "Fully customizable keyboard shortcuts for the Web UI: 34 pre-registered features (sessions, views, clipboard, models, silent permission cycling, settings), one-click recording to bind your own, and a shortcut cheatsheet with built-in diagnostics.",
+        "zh": "Web UI 可自定义键盘快捷键：34 个预置功能（会话、视图、剪贴板、模型、静默权限切换、设置），一键录制自定义组合键，内置快捷键速查表与诊断面板。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 1,
+      "watchers": 1,
+      "pushedAt": "2026-08-16T02:37:38Z",
+      "updatedAt": "2026-08-16T02:29:56Z",
+      "createdAt": "2026-08-15T07:25:00Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-shortcuts",
+        "version": "1.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "yeyeyeyeshifu/dsh-session-hotkeys",
+      "order": 5,
+      "name": "dsh-session-hotkeys",
+      "owner": "YEYEYEYESHIFU",
+      "repo": "YEYEYEYESHIFU/dsh-session-hotkeys",
+      "url": "https://github.com/YEYEYEYESHIFU/dsh-session-hotkeys",
+      "category": "ui",
+      "description": {
+        "en": "Session hotkeys for the Web UI: Alt+1-9 positional switching, pin-slot tri-state, a sidebar highlight nav mode, new/rename/archive session shortcuts, and a rebindable panel with arrow-key navigation.",
+        "zh": "Web UI 会话快捷键：Alt+1-9 顺序切换、固定槽位三态、侧边栏高亮导航模式、新建/重命名/归档会话快捷键，以及支持方向键导航的可改键面板。"
+      },
+      "added": "2026-08-16",
+      "curated": true,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-16T03:01:49Z",
+      "updatedAt": "2026-08-16T03:01:57Z",
+      "createdAt": "2026-08-15T19:32:24Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-session-hotkeys",
+        "version": "1.5.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "magian1127/deepseek-harness-zh_pro",
+      "order": 6,
+      "name": "deepseek-harness-zh_pro",
+      "owner": "magian1127",
+      "repo": "magian1127/deepseek-harness-zh_pro",
+      "url": "https://github.com/magian1127/deepseek-harness-zh_pro",
+      "category": "ui",
+      "description": {
+        "en": "Chinese UI enhancement for the DSH web client: completes the Chinese locale, keeps the session stats line fully visible on one row, and adds an Enhancements settings section with configurable chat width.",
+        "zh": "DSH 网页中文增强：补全中文界面残留英文、统计行单行完整显示，并提供「增强设置」分区（中文补全 / 统计全显示 / 对话宽度）。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 5,
+      "forks": 1,
+      "openIssues": 0,
+      "watchers": 5,
+      "pushedAt": "2026-08-15T13:57:13Z",
+      "updatedAt": "2026-08-16T04:04:21Z",
+      "createdAt": "2026-08-15T07:00:02Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "master",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "deepseek-harness-zh_pro",
+        "version": "0.5.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "newdanew/dsh-voice-input",
+      "order": 7,
+      "name": "dsh-voice-input",
+      "owner": "NewDaNew",
+      "repo": "NewDaNew/dsh-voice-input",
+      "url": "https://github.com/NewDaNew/dsh-voice-input",
+      "category": "ui",
+      "description": {
+        "en": "Voice input for the web UI: a mic button in the composer that transcribes speech into the draft via the Web Speech API, with an optional auto-send toggle.",
+        "zh": "Web UI 语音输入：输入框一键麦克风按钮，基于 Web Speech API 语音转文字填入草稿，可选识别后自动发送。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 0,
+      "pushedAt": "2026-08-15T08:17:32Z",
+      "updatedAt": "2026-08-15T08:17:38Z",
+      "createdAt": "2026-08-15T07:41:55Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@local/dsh-plugin-voice-input",
+        "version": "0.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "nothree-code/voco-input-sh",
+      "order": 8,
+      "name": "voco-input-sh",
+      "owner": "Nothree-code",
+      "repo": "Nothree-code/voco-input-sh",
+      "url": "https://github.com/Nothree-code/voco-input-sh",
+      "category": "ui",
+      "description": {
+        "en": "Voice input for the Web UI: a mic button that drives local VocoType offline speech recognition and auto-inserts recognized text into the composer (auto-deploy, dedupe, continuous dictation).",
+        "zh": "Web UI 语音输入：输入框麦克风按钮驱动本地 VocoType 离线识别，识别结果自动插入输入框（自动部署/防重复/持续输入）。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-15T11:54:01Z",
+      "updatedAt": "2026-08-16T00:05:21Z",
+      "createdAt": "2026-08-15T06:22:03Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "voco-input-sh",
+        "version": "0.2.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 1,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "13071301808/dsh-composer-expand",
+      "order": 9,
+      "name": "dsh-composer-expand",
+      "owner": "13071301808",
+      "repo": "13071301808/dsh-composer-expand",
+      "url": "https://github.com/13071301808/dsh-composer-expand",
+      "category": "ui",
+      "description": {
+        "en": "Composer expand/collapse toggle for the Web UI: a ⬆/⬇ button in the composer tool row grows the input to a tall 70vh writing view for long drafts.",
+        "zh": "Web UI 输入框展开/收起：composer 工具行新增 ⬆/⬇ 按钮，一键把输入框扩大到 70vh 高度，方便写长 prompt。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-15T07:20:09Z",
+      "updatedAt": "2026-08-15T08:03:42Z",
+      "createdAt": "2026-08-15T06:32:14Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": "https://github.com/13071301808/dsh-composer-expand",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-composer-expand",
+        "version": "0.1.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "littleboylittlegirl/dsh-community-hot",
+      "order": 10,
+      "name": "dsh-community-hot",
+      "owner": "littleboylittlegirl",
+      "repo": "littleboylittlegirl/dsh-community-hot",
+      "url": "https://github.com/littleboylittlegirl/dsh-community-hot",
+      "category": "ui",
+      "description": {
+        "en": "Floating community panel for the Web UI: 24h hot topics and hot plugins TOP10 with a draggable, always-on-top button.",
+        "zh": "Web UI 的社区热门悬浮面板：24 小时热门话题与热门插件 TOP10，悬浮按钮可拖动置顶、点击居中展开。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": false,
+      "stars": null,
+      "forks": null,
+      "openIssues": null,
+      "watchers": null,
+      "pushedAt": null,
+      "updatedAt": null,
+      "createdAt": null,
+      "license": null,
+      "language": null,
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "unknown",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-community-hot",
+        "version": "0.1.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "1624318455/dsh-plugin-tts",
+      "order": 11,
+      "name": "dsh-plugin-tts",
+      "owner": "1624318455",
+      "repo": "1624318455/dsh-plugin-tts",
+      "url": "https://github.com/1624318455/dsh-plugin-tts",
+      "category": "ui",
+      "description": {
+        "en": "Reads assistant replies aloud via free Edge TTS or your own RVC voice models: read-aloud buttons + auto-read, adaptive chunked progressive playback (gapless long reads), one-click voice-pack installs from a registry, and a portable RVC runtime.",
+        "zh": "用免费 Edge TTS 或你自己的 RVC 音色朗读 AI 回复：消息朗读与自动朗读、长文自适应分块渐进播放（无缝衔接）、音色包仓库一键安装、便携 RVC 运行时。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-16T04:43:24Z",
+      "updatedAt": "2026-08-16T04:43:29Z",
+      "createdAt": "2026-08-15T03:54:09Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@dsh-external/dsh-plugin-tts",
+        "version": "0.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.mjs",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "xanthanl/dsh-plugin-uisfx",
+      "order": 12,
+      "name": "dsh-plugin-uisfx",
+      "owner": "XanthanL",
+      "repo": "XanthanL/dsh-plugin-uisfx",
+      "url": "https://github.com/XanthanL/dsh-plugin-uisfx",
+      "category": "ui",
+      "description": {
+        "en": "Semantic UI sound effects powered by uisfx: task start/success/failure and per-button cues, settings UI with instant preview, 12 sound packs, Host-persisted preferences, and `ctx.uisfx` service for other plugins.",
+        "zh": "基于 uisfx 的语义化 UI 音效：任务开始/成功/失败、不同按钮情景 cue，设置页即时试听，12 种音色包，Host 持久化，并提供 `ctx.uisfx` 服务给其他插件。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 1,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-15T09:30:24Z",
+      "updatedAt": "2026-08-16T03:58:11Z",
+      "createdAt": "2026-08-15T09:10:22Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-plugin-uisfx",
+        "version": "0.1.1",
+        "lifecycleScripts": [
+          "prepare"
+        ],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": [
+          "prepare"
+        ]
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "x2802490130-prog/dsh-client-ui-writing",
+      "order": 13,
+      "name": "dsh-client-ui-writing",
+      "owner": "x2802490130-prog",
+      "repo": "x2802490130-prog/dsh-client-ui-writing",
+      "url": "https://github.com/x2802490130-prog/dsh-client-ui-writing",
+      "category": "ui",
+      "description": {
+        "en": "Client-side writing panel for the Web UI: project volumes and stats, corpus library, full-text search, evolution version-chain diffs, and an SVG thread graph, shown only in writing-preset sessions.",
+        "zh": "Web 客户端「写作」面板：项目分卷与统计、书库与全文检索、设定演化版本链 diff、线索 SVG 图谱，仅在写作预设会话显示。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 3,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 3,
+      "pushedAt": "2026-08-15T23:29:15Z",
+      "updatedAt": "2026-08-16T03:03:56Z",
+      "createdAt": "2026-08-15T02:31:13Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-client-ui-writing",
+        "version": "0.5.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "linhx1999/dsh-writing-pad",
+      "order": 14,
+      "name": "dsh-writing-pad",
+      "owner": "linhx1999",
+      "repo": "linhx1999/dsh-writing-pad",
+      "url": "https://github.com/linhx1999/dsh-writing-pad",
+      "category": "ui",
+      "description": {
+        "en": "Session-scoped Markdown writing pad docked beside the conversation, with edit/preview modes, selection-based AI rewrites, diff review, undo, and draft recovery.",
+        "zh": "停靠在对话旁的会话级 Markdown 写作板，支持编辑/预览、选区 AI 改写、Diff 审核、撤销与草稿恢复。"
+      },
+      "added": "2026-08-16",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-16T04:21:42Z",
+      "updatedAt": "2026-08-16T04:20:29Z",
+      "createdAt": "2026-08-14T06:15:14Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-writing-pad",
+        "version": "1.1.0",
+        "lifecycleScripts": [
+          "prepare"
+        ],
+        "runtimeDependencies": 1,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "dist/index.js",
+          "dist/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": [
+          "prepare"
+        ]
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "badai147/dsh-global-rules",
+      "order": 15,
+      "name": "dsh-global-rules",
+      "owner": "badai147",
+      "repo": "badai147/dsh-global-rules",
+      "url": "https://github.com/badai147/dsh-global-rules",
+      "category": "ui",
+      "description": {
+        "en": "Edit the global ~/.dsh/AGENTS.md rules from the web settings panel, live on save.",
+        "zh": "在设置面板中编辑 ~/.dsh/AGENTS.md 全局规则，保存后实时生效。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 4,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 4,
+      "pushedAt": "2026-08-15T02:48:27Z",
+      "updatedAt": "2026-08-15T17:16:14Z",
+      "createdAt": "2026-08-15T02:10:35Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-global-rules",
+        "version": "0.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "acidgr/dsh-web-mobile-fix",
+      "order": 16,
+      "name": "dsh-web-mobile-fix",
+      "owner": "AcidGr",
+      "repo": "AcidGr/dsh-web-mobile-fix",
+      "url": "https://github.com/AcidGr/dsh-web-mobile-fix",
+      "category": "ui",
+      "description": {
+        "en": "Mobile layout fixes for the Web UI on narrow screens: full-screen settings panel, one-row plugin nav, full-screen sidebar, centered popups, icon-only session-log button.",
+        "zh": "Web UI 移动端布局修复：窄屏下设置面板全屏化、插件导航单行排满、侧边栏全屏、弹层居中、会话日志按钮图标化。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 4,
+      "forks": 1,
+      "openIssues": 1,
+      "watchers": 4,
+      "pushedAt": "2026-08-15T20:08:43Z",
+      "updatedAt": "2026-08-16T03:57:36Z",
+      "createdAt": "2026-08-14T14:17:02Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-web-mobile-fix",
+        "version": "1.0.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "mexiaosqwq/dsh-web-mobile",
+      "order": 17,
+      "name": "dsh-web-mobile",
+      "owner": "mexiaosqwq",
+      "repo": "mexiaosqwq/dsh-web-mobile",
+      "url": "https://github.com/mexiaosqwq/dsh-web-mobile",
+      "category": "ui",
+      "description": {
+        "en": "Mobile-adaptive layout for the DSH Web UI: the sidebar becomes a content-hugging overlay drawer, the conversation gets the full width, and the settings panel becomes a near-full-width sheet.",
+        "zh": "DSH Web UI 移动端适配：窄屏下侧边栏变为贴合内容的 overlay 抽屉、会话独占全宽，设置面板改为近全宽 sheet。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 16,
+      "forks": 1,
+      "openIssues": 2,
+      "watchers": 16,
+      "pushedAt": "2026-08-15T23:25:13Z",
+      "updatedAt": "2026-08-16T04:40:45Z",
+      "createdAt": "2026-08-15T00:22:16Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@dsh-external/dsh-mobile-nav",
+        "version": "0.2.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "tzhr-invest/dsh-plugins",
+      "order": 18,
+      "name": "dsh-plugins#dsh-mobile-ui",
+      "owner": "TZHR-invest",
+      "repo": "TZHR-invest/dsh-plugins",
+      "url": "https://github.com/TZHR-invest/dsh-plugins/tree/main/packages/dsh-mobile-ui",
+      "category": "ui",
+      "description": {
+        "en": "Mobile UI for the Web GUI on narrow screens: full-width responsive layout, overlay session drawer, 44px touch targets, safe-area support, and reading enhancements with zero desktop impact.",
+        "zh": "Web GUI 移动端适配：窄屏全宽响应式布局、会话抽屉、44px 触摸目标、安全区适配与阅读增强，桌面端零影响。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": false,
+      "stars": null,
+      "forks": null,
+      "openIssues": null,
+      "watchers": null,
+      "pushedAt": null,
+      "updatedAt": null,
+      "createdAt": null,
+      "license": null,
+      "language": null,
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": null,
+      "maintenance": "unknown",
+      "manifest": {
+        "state": "missing",
+        "branch": null,
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "acidgr/dsh-web-lan-access",
+      "order": 19,
+      "name": "dsh-web-lan-access",
+      "owner": "AcidGr",
+      "repo": "AcidGr/dsh-web-lan-access",
+      "url": "https://github.com/AcidGr/dsh-web-lan-access",
+      "category": "ui",
+      "description": {
+        "en": "LAN/remote access for the Web UI: injects a crypto.randomUUID polyfill on plain-HTTP origins so the frontend survives LAN or Tailscale IP direct links.",
+        "zh": "Web UI 局域网/远程访问：为纯 HTTP 非安全上下文注入 crypto.randomUUID polyfill，局域网/Tailscale IP 直连时前端不再崩溃。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 6,
+      "forks": 1,
+      "openIssues": 0,
+      "watchers": 6,
+      "pushedAt": "2026-08-15T20:08:47Z",
+      "updatedAt": "2026-08-16T04:53:56Z",
+      "createdAt": "2026-08-14T14:17:04Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle"
+        ],
+        "packageName": "dsh-web-lan-access",
+        "version": "1.0.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "damonkoy/dsh-plugin-toggle",
+      "order": 20,
+      "name": "dsh-plugin-toggle",
+      "owner": "DamonKoy",
+      "repo": "DamonKoy/dsh-plugin-toggle",
+      "url": "https://github.com/DamonKoy/dsh-plugin-toggle",
+      "category": "ui",
+      "description": {
+        "en": "Settings -> Plugins switchboard: every loaded plugin card shows its package description and runtime phase, with fuzzy search and start/stop toggles that never rewrite config files.",
+        "zh": "设置→插件开关面板：每个已加载插件的卡片显示简述与运行阶段，支持模糊搜索与运行时启动/关闭（不改写配置文件）。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-15T16:09:15Z",
+      "updatedAt": "2026-08-15T23:08:10Z",
+      "createdAt": "2026-08-15T15:37:38Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-plugin-toggle",
+        "version": "0.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "client/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "bernardxu123/dsh-mobile-gate",
+      "order": 21,
+      "name": "dsh-mobile-gate",
+      "owner": "Bernardxu123",
+      "repo": "Bernardxu123/dsh-mobile-gate",
+      "url": "https://github.com/Bernardxu123/dsh-mobile-gate",
+      "category": "ui",
+      "description": {
+        "en": "LAN mobile gateway: isolated child-process reverse proxy with first-visit approval, per-device token binding, rate limiting, and mobile layout injection (compact composer pills, randomUUID polyfill).",
+        "zh": "局域网手机访问网关：独立子进程反向代理 + 首次访问审批 + 设备令牌绑定 + 限流 + 手机端紧凑排版注入（输入区权限/模型小胶囊、randomUUID polyfill）。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 3,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 3,
+      "pushedAt": "2026-08-14T16:20:20Z",
+      "updatedAt": "2026-08-16T03:39:26Z",
+      "createdAt": "2026-08-14T16:15:00Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "master",
+        "kinds": [
+          "bundle"
+        ],
+        "packageName": "dsh-mobile-gate",
+        "version": "1.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lan-gate.mjs"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "zylzyqzz/dsh-mobile-pwa",
+      "order": 22,
+      "name": "dsh-mobile-pwa",
+      "owner": "zylzyqzz",
+      "repo": "zylzyqzz/dsh-mobile-pwa",
+      "url": "https://github.com/zylzyqzz/dsh-mobile-pwa",
+      "category": "ui",
+      "description": {
+        "en": "Complete mobile PWA for DSH, built on dsh-mobile-gate: secure remote-access gateway plus install-to-homescreen (manifest + service worker), offline capability, touch gestures (pull-to-refresh, edge-swipe back, pinch-zoom font), agent-done push notifications, and touch-first layout — desktop unaffected.",
+        "zh": "基于 dsh-mobile-gate 的完整移动端 PWA：安全远程访问网关 + 可安装到主屏（manifest + service worker）+ 离线可用 + 触屏手势（下拉刷新/边缘返弹/捏合缩放字体）+ agent 完成推送 + 触屏优先布局，桌面零影响。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": false,
+      "stars": null,
+      "forks": null,
+      "openIssues": null,
+      "watchers": null,
+      "pushedAt": null,
+      "updatedAt": null,
+      "createdAt": null,
+      "license": null,
+      "language": null,
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "unknown",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle"
+        ],
+        "packageName": "dsh-mobile-pwa",
+        "version": "0.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lan-gate.mjs"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "blank-not-black/dsh-remote",
+      "order": 23,
+      "name": "dsh-Remote",
+      "owner": "Blank-not-black",
+      "repo": "Blank-not-black/dsh-Remote",
+      "url": "https://github.com/Blank-not-black/dsh-Remote",
+      "category": "ui",
+      "description": {
+        "en": "Mobile remote-control suite: bundle plugin with native sidebar entry and admin drawer, self-healing bearer-token gateway over LAN/Tailscale, Android app (sessions/approvals/questions/goals), /fs/* file transfer (Range resume, 2GB upload), latency-based multi-server auto-switch, offline chat cache.",
+        "zh": "移动远程控制套件：原生侧边栏入口 + 管理抽屉的 bundle 插件，自带 Bearer 令牌网关自愈（局域网/Tailscale）；Android App 覆盖会话/审批/提问/goal；/fs/* 文件端点（Range 断点续传、2GB 上传）；多服务器测速自动切换；聊天记录离线缓存。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 3,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 3,
+      "pushedAt": "2026-08-16T04:02:50Z",
+      "updatedAt": "2026-08-16T04:02:55Z",
+      "createdAt": "2026-08-15T07:57:45Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "package-only",
+        "branch": "main",
+        "kinds": [],
+        "packageName": "dsh-remote",
+        "version": "0.4.9",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 4,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "make0209/dsh-usage-stats",
+      "order": 24,
+      "name": "dsh-usage-stats",
+      "owner": "Make0209",
+      "repo": "Make0209/dsh-usage-stats",
+      "url": "https://github.com/Make0209/dsh-usage-stats",
+      "category": "ui",
+      "description": {
+        "en": "GitHub-style usage heatmap dashboard: per-workspace turn counts and token spend (with cache-hit rate), DeepSeek account balance, and workspace aliases.",
+        "zh": "GitHub 风格用量热力图看板：按工作区统计使用次数与 Token 花费（含缓存命中率）、DeepSeek 账户余额查询、工作区别名管理。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 15,
+      "forks": 1,
+      "openIssues": 2,
+      "watchers": 15,
+      "pushedAt": "2026-08-14T15:05:17Z",
+      "updatedAt": "2026-08-15T17:36:28Z",
+      "createdAt": "2026-08-14T14:10:10Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-usage-stats",
+        "version": "1.0.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "ychris12138/dsh-usage-stats",
+      "order": 25,
+      "name": "dsh-usage-stats",
+      "owner": "Ychris12138",
+      "repo": "Ychris12138/dsh-usage-stats",
+      "url": "https://github.com/Ychris12138/dsh-usage-stats",
+      "category": "ui",
+      "description": {
+        "en": "Multi-provider usage dashboard with provider/model token breakdowns, calendar drill-downs, account balances, and OpenCode Go / Z.ai subscription quota tracking.",
+        "zh": "多供应商用量看板：按供应商/模型统计 Token 与日期下钻，统一展示账户余额，并追踪 OpenCode Go / Z.ai 订阅额度。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 37,
+      "forks": 3,
+      "openIssues": 1,
+      "watchers": 37,
+      "pushedAt": "2026-08-15T09:33:25Z",
+      "updatedAt": "2026-08-16T04:18:42Z",
+      "createdAt": "2026-08-14T01:40:02Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-usage-stats",
+        "version": "0.2.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "v-dev-388/dsh-usage-meter",
+      "order": 26,
+      "name": "dsh-usage-meter",
+      "owner": "V-dev-388",
+      "repo": "V-dev-388/dsh-usage-meter",
+      "url": "https://github.com/V-dev-388/dsh-usage-meter",
+      "category": "ui",
+      "description": {
+        "en": "Settings-page usage dashboard: per-provider/model token summary across all sessions, with today/7-day/30-day CSS-bar trends and a cache-hit rate.",
+        "zh": "设置页用量仪表盘：按服务商/模型汇总全部会话 token 用量，含今日/近 7 天/近 30 天趋势柱状图与缓存命中率。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 0,
+      "pushedAt": "2026-08-15T06:23:06Z",
+      "updatedAt": "2026-08-15T06:23:07Z",
+      "createdAt": "2026-08-15T01:57:21Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-usage-meter",
+        "version": "0.1.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "zh667/tokenledger",
+      "order": 27,
+      "name": "TokenLedger",
+      "owner": "zh667",
+      "repo": "zh667/TokenLedger",
+      "url": "https://github.com/zh667/TokenLedger",
+      "category": "ui",
+      "description": {
+        "en": "Sidebar usage panel that attributes tokens to the relay site that served each request, read from your existing provider config: today/month/all-time totals, per-site and per-model breakdowns, a year activity heatmap, and New API / Sub2API / DeepSeek balances.",
+        "zh": "侧边栏用量面板：把 Token 归属到实际服务该请求的中转站，站点从已有的 provider 配置中读出，无需额外配置；含今日/本月/累计三窗口、按站点与模型下钻、一年活跃度热力图，以及 New API / Sub2API / DeepSeek 余额。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 12,
+      "forks": 3,
+      "openIssues": 0,
+      "watchers": 12,
+      "pushedAt": "2026-08-15T15:26:50Z",
+      "updatedAt": "2026-08-16T03:32:54Z",
+      "createdAt": "2026-08-14T08:32:47Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": "https://www.npmjs.com/package/dsh-tokenledger",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-tokenledger",
+        "version": "0.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "src/index.js",
+          "src/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "zoumutou/dsh-cost-balance",
+      "order": 28,
+      "name": "dsh-cost-balance",
+      "owner": "zoumutou",
+      "repo": "zoumutou/dsh-cost-balance",
+      "url": "https://github.com/zoumutou/dsh-cost-balance",
+      "category": "ui",
+      "description": {
+        "en": "Collapsible iOS-style stats pill under the composer: session cost, DeepSeek account balance, cache-hit rate, and token usage in a frosted panel.",
+        "zh": "输入框下方的 iOS 风格统计条：一键展开查看会话花费、DeepSeek 账户余额、缓存命中率与 Token 用量。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 3,
+      "forks": 3,
+      "openIssues": 5,
+      "watchers": 3,
+      "pushedAt": "2026-08-14T16:39:53Z",
+      "updatedAt": "2026-08-15T13:25:45Z",
+      "createdAt": "2026-08-14T16:09:42Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-cost-balance",
+        "version": "0.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "kirigayakazima/dsh-usage-vendor-stats",
+      "order": 29,
+      "name": "dsh-usage-vendor-stats",
+      "owner": "kirigayakazima",
+      "repo": "kirigayakazima/dsh-usage-vendor-stats",
+      "url": "https://github.com/kirigayakazima/dsh-usage-vendor-stats",
+      "category": "ui",
+      "description": {
+        "en": "Vendor-based usage dashboard: per-provider token/cache/output KPI, a 53-week heatmap, trend chart with hourly \"today\" view, model drilldown, cost estimation, CSV export, and health cards (TTFT, generation speed, peak context, error rate).",
+        "zh": "按厂商（订阅/官方API）统计用量看板：按供应商/模型拆分 Token、缓存、输出等 KPI，53 周热力图，趋势折线图（今天按小时），模型钻取，费用估算，CSV 导出，以及健康度卡片（TTFT、生成速度、峰值 Context、错误率）。"
+      },
+      "added": "2026-08-16",
+      "curated": true,
+      "topic": false,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 0,
+      "pushedAt": "2026-08-16T02:22:34Z",
+      "updatedAt": "2026-08-16T02:22:36Z",
+      "createdAt": "2026-08-15T12:17:33Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "unknown",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-usage-vendor-stats",
+        "version": "0.2.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "ibka512/dsh-ibka-balance",
+      "order": 30,
+      "name": "dsh-ibka-balance",
+      "owner": "ibka512",
+      "repo": "ibka512/dsh-ibka-balance",
+      "url": "https://github.com/ibka512/dsh-ibka-balance",
+      "category": "ui",
+      "description": {
+        "en": "Permanent composer-dock balance card: real-time DeepSeek API account balance with 5-minute auto-refresh, a manual refresh button, and low-balance color warnings.",
+        "zh": "输入框下方常驻余额卡片：实时显示 DeepSeek API 账户余额，每 5 分钟自动刷新，支持手动刷新，余额过低自动变色提醒。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": false,
+      "stars": null,
+      "forks": null,
+      "openIssues": null,
+      "watchers": null,
+      "pushedAt": null,
+      "updatedAt": null,
+      "createdAt": null,
+      "license": null,
+      "language": null,
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "unknown",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-ibka-balance",
+        "version": "1.0.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "jiangli07/dsh-deepseek-quota-bar",
+      "order": 31,
+      "name": "dsh-deepseek-quota-bar",
+      "owner": "jiangli07",
+      "repo": "jiangli07/dsh-deepseek-quota-bar",
+      "url": "https://github.com/jiangli07/dsh-deepseek-quota-bar",
+      "category": "ui",
+      "description": {
+        "en": "Draggable transparent balance card with a blood-bar of remaining balance vs month-opening, today/month spend (official when the platform token is configured), and session cost.",
+        "zh": "可拖动透明余额卡片：余额/月初额度血条、今日/本月用量（配置平台 token 后为官方精确数据）、当前对话费用。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-15T08:50:31Z",
+      "updatedAt": "2026-08-15T13:40:40Z",
+      "createdAt": "2026-08-15T06:52:14Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-deepseek-quota-bar",
+        "version": "0.5.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "bowenliang123/dsh-context",
+      "order": 32,
+      "name": "dsh-context",
+      "owner": "bowenliang123",
+      "repo": "bowenliang123/dsh-context",
+      "url": "https://github.com/bowenliang123/dsh-context",
+      "category": "ui",
+      "description": {
+        "en": "Context insight panel: see what the model's context window is made of and how it evolves — composition vs. window size, per-request history, compression/injection events, and per-message token stats.",
+        "zh": "上下文洞察面板：一眼看清模型上下文窗口的组成与变化——构成对照窗口大小、按请求历史趋势、压缩/注入事件、消息级 token 统计。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 42,
+      "forks": 1,
+      "openIssues": 1,
+      "watchers": 42,
+      "pushedAt": "2026-08-16T01:32:30Z",
+      "updatedAt": "2026-08-16T01:32:37Z",
+      "createdAt": "2026-08-14T08:23:28Z",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "homepage": "https://www.npmjs.com/package/dsh-context",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-context",
+        "version": "0.9.0",
+        "lifecycleScripts": [
+          "prepare"
+        ],
+        "runtimeDependencies": 1,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": [
+          "prepare"
+        ]
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "wjy9902/dsh-web-default-session",
+      "order": 33,
+      "name": "dsh-web-default-session",
+      "owner": "wjy9902",
+      "repo": "wjy9902/dsh-web-default-session",
+      "url": "https://github.com/wjy9902/dsh-web-default-session",
+      "category": "ui",
+      "description": {
+        "en": "The generic New Session action opens a default-directory workspace instead of requiring a folder pick, and the workspace picker lists that workspace as a no-folder choice.",
+        "zh": "点「新会话」默认打开绑定宿主启动目录的「默认目录」工作区（无需选文件夹），工作区选择菜单中也可选该项。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 1,
+      "watchers": 2,
+      "pushedAt": "2026-08-14T13:07:08Z",
+      "updatedAt": "2026-08-15T00:59:58Z",
+      "createdAt": "2026-08-14T13:07:04Z",
+      "license": null,
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-web-default-session",
+        "version": "1.0.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "fishsb/dsh-prompt-enhancer",
+      "order": 34,
+      "name": "dsh-prompt-enhancer",
+      "owner": "Fishsb",
+      "repo": "Fishsb/dsh-prompt-enhancer",
+      "url": "https://github.com/Fishsb/dsh-prompt-enhancer",
+      "category": "ui",
+      "description": {
+        "en": "One-click prompt enhancement: an independent LLM call rewrites your rough draft in the composer, fully undoable.",
+        "zh": "一键提示词增强：独立 LLM 调用把模糊草稿改写为更强的提示词，不满意可撤回。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 7,
+      "forks": 1,
+      "openIssues": 0,
+      "watchers": 7,
+      "pushedAt": "2026-08-16T05:01:07Z",
+      "updatedAt": "2026-08-16T05:01:16Z",
+      "createdAt": "2026-08-13T23:21:41Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-prompt-enhancer",
+        "version": "2.8.3",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.cjs",
+          "lib/client.cjs"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "huiliyi37/dsh-tianshu-tui",
+      "order": 35,
+      "name": "dsh-tianshu-tui",
+      "owner": "huiliyi37",
+      "repo": "huiliyi37/dsh-tianshu-tui",
+      "url": "https://github.com/huiliyi37/dsh-tianshu-tui",
+      "category": "ui",
+      "description": {
+        "en": "A terminal UI (TUI) for DeepSeek Harness.",
+        "zh": "DeepSeek Harness 的终端 UI（TUI）。"
+      },
+      "added": "2026-08-13",
+      "curated": true,
+      "topic": true,
+      "stars": 175,
+      "forks": 6,
+      "openIssues": 4,
+      "watchers": 175,
+      "pushedAt": "2026-08-16T04:55:33Z",
+      "updatedAt": "2026-08-16T04:55:46Z",
+      "createdAt": "2026-08-13T04:20:37Z",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "homepage": "https://github.com/huiliyi37/dsh-tianshu-tui",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle"
+        ],
+        "packageName": "@huiliyi37/dsh-tianshu-tui",
+        "version": "0.1.2-rc.8",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 4,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-13",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "openma-ai/deepseek-harness-tui",
+      "order": 36,
+      "name": "deepseek-harness-tui",
+      "owner": "openma-ai",
+      "repo": "openma-ai/deepseek-harness-tui",
+      "url": "https://github.com/openma-ai/deepseek-harness-tui",
+      "category": "ui",
+      "description": {
+        "en": "A Rust/ratatui terminal client that speaks the DSH SDK JSON-RPC protocol directly and runs standalone or as a profile bundle.",
+        "zh": "Rust/ratatui 终端客户端，直接使用 DSH SDK JSON-RPC 协议，支持独立运行或作为 profile bundle 加载。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 27,
+      "forks": 2,
+      "openIssues": 0,
+      "watchers": 27,
+      "pushedAt": "2026-08-15T16:29:09Z",
+      "updatedAt": "2026-08-16T04:10:23Z",
+      "createdAt": "2026-08-13T17:19:18Z",
+      "license": "MIT",
+      "language": "Rust",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "whiteplusms/dsh-input-plus",
+      "order": 37,
+      "name": "dsh-input-plus",
+      "owner": "WhitePlusMS",
+      "repo": "WhitePlusMS/dsh-input-plus",
+      "url": "https://github.com/WhitePlusMS/dsh-input-plus",
+      "category": "ui",
+      "description": {
+        "en": "Search and insert workspace file and directory paths with `@`, plus a `/h` menu for reusing prompts from the current session.",
+        "zh": "在组合框中使用 `@` 搜索并插入工作区文件和目录路径，并通过 `/h` 菜单复用当前会话的问题。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 4,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 4,
+      "pushedAt": "2026-08-14T17:34:57Z",
+      "updatedAt": "2026-08-16T02:50:44Z",
+      "createdAt": "2026-08-14T16:23:01Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-input-plus",
+        "version": "0.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 1,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "omdsh-dev/dsh-at-file",
+      "order": 38,
+      "name": "dsh-at-file",
+      "owner": "omdsh-dev",
+      "repo": "omdsh-dev/dsh-at-file",
+      "url": "https://github.com/omdsh-dev/dsh-at-file",
+      "category": "ui",
+      "description": {
+        "en": "Codex-style `@file` mentions: search workspace files in the composer and attach their contents to prompts.",
+        "zh": "Codex 风格的 `@file` 文件引用，输入框里直接搜索并引用工作区文件。"
+      },
+      "added": "2026-08-13",
+      "curated": true,
+      "topic": true,
+      "stars": 231,
+      "forks": 9,
+      "openIssues": 1,
+      "watchers": 231,
+      "pushedAt": "2026-08-14T16:15:06Z",
+      "updatedAt": "2026-08-16T04:35:10Z",
+      "createdAt": "2026-08-13T12:00:09Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-at-file",
+        "version": "0.6.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 1,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-13",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "fengmax1997/dsh-line-select",
+      "order": 39,
+      "name": "dsh-line-select",
+      "owner": "fengMax1997",
+      "repo": "fengMax1997/dsh-line-select",
+      "url": "https://github.com/fengMax1997/dsh-line-select",
+      "category": "ui",
+      "description": {
+        "en": "Line-range selection: browse workspace files, preview code with line numbers, visually select a line range, and write a `@path:start-end` reference into the composer; the agent receives the exact selected lines on send.",
+        "zh": "行选区：浏览工作区文件、带行号预览代码、可视化选中行范围，一键把 `@path:start-end` 引用写入输入框，agent 发送时自动收到所选行原文，精准修改指定行。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": false,
+      "stars": null,
+      "forks": null,
+      "openIssues": null,
+      "watchers": null,
+      "pushedAt": null,
+      "updatedAt": null,
+      "createdAt": null,
+      "license": null,
+      "language": null,
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "unknown",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-line-select",
+        "version": "0.1.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "alingalingling/ui-status-label",
+      "order": 40,
+      "name": "ui-status-label",
+      "owner": "alingalingling",
+      "repo": "alingalingling/ui-status-label",
+      "url": "https://github.com/alingalingling/ui-status-label",
+      "category": "ui",
+      "description": {
+        "en": "Customize the \"deep diving\" thinking status label to anything you like.",
+        "zh": "把鲸鱼娘思考时的 \"deep diving\" 状态文案自定义成任意你想要的样子。"
+      },
+      "added": "2026-08-13",
+      "curated": true,
+      "topic": true,
+      "stars": 34,
+      "forks": 2,
+      "openIssues": 4,
+      "watchers": 34,
+      "pushedAt": "2026-08-15T08:57:01Z",
+      "updatedAt": "2026-08-15T21:36:00Z",
+      "createdAt": "2026-08-11T19:46:33Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "master",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-ui-status-label",
+        "version": "0.1.0",
+        "lifecycleScripts": [
+          "prepare"
+        ],
+        "runtimeDependencies": 3,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": [
+          "prepare"
+        ]
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-13",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "leemancheung/dsh-whale-animation",
+      "order": 41,
+      "name": "dsh-whale-animation",
+      "owner": "LeemanCheung",
+      "repo": "LeemanCheung/dsh-whale-animation",
+      "url": "https://github.com/LeemanCheung/dsh-whale-animation",
+      "category": "ui",
+      "description": {
+        "en": "A 60-frame theme-aware monochrome whale-dive animation with reactive water for the DSH Web turn status: embedded assets, seamless closed-loop playback, a reduced-motion PNG fallback, and lifecycle-clean removal.",
+        "zh": "DSH Web 回合状态旁的 60 帧随主题适配的单色鲸鱼深潜动画：传播式水面、无缝闭环、资源内嵌、减少动态效果 PNG 回退，且随生命周期完整清理。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-15T15:10:16Z",
+      "updatedAt": "2026-08-15T20:30:44Z",
+      "createdAt": "2026-08-14T12:06:38Z",
+      "license": "MIT",
+      "language": "Python",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-whale-animation",
+        "version": "0.3.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "01virex/dsh-status-rotator",
+      "order": 42,
+      "name": "dsh-status-rotator",
+      "owner": "01Virex",
+      "repo": "01Virex/dsh-status-rotator",
+      "url": "https://github.com/01Virex/dsh-status-rotator",
+      "category": "ui",
+      "description": {
+        "en": "Replaces the \"Deep diving...\" turn-status label with rotating meme-worthy phrases, with typewriter and gradient effects.",
+        "zh": "把回合状态那句 \"Deep diving...\" 替换成更有梗的自定义文案，按阶段轮换，支持打字机与流动渐变。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 9,
+      "forks": 2,
+      "openIssues": 0,
+      "watchers": 9,
+      "pushedAt": "2026-08-15T01:16:24Z",
+      "updatedAt": "2026-08-15T14:56:58Z",
+      "createdAt": "2026-08-13T16:39:32Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-status-rotator",
+        "version": "0.2.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "eric-song-dev/dsh-ikun-pet",
+      "order": 43,
+      "name": "dsh-ikun-pet",
+      "owner": "eric-song-dev",
+      "repo": "eric-song-dev/dsh-ikun-pet",
+      "url": "https://github.com/eric-song-dev/dsh-ikun-pet",
+      "category": "ui",
+      "description": {
+        "en": "An ikun (basketball meme) pet that fills the dock under the \"Deep diving...\" status row during replies: a sprite-sheet pet walks a 0→100% progress bar, switching animation and text every 20%, and plays a system-level \"nǐ gàn ma~\" voice cue at completion.",
+        "zh": "ikun 桌宠填满「Deep diving...」状态行下方整行区块：坤宠动图沿 0%→100% 进度条行走，每 20% 切换动作与文案，完成时系统级播放「你干嘛~哎哟」提示音。"
+      },
+      "added": "2026-08-16",
+      "curated": true,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-15T19:27:33Z",
+      "updatedAt": "2026-08-15T19:28:00Z",
+      "createdAt": "2026-08-15T11:50:09Z",
+      "license": null,
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-ikun-pet",
+        "version": "2.2.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/host.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "zseven-w/dsh-openpencil",
+      "order": 44,
+      "name": "dsh-openpencil",
+      "owner": "ZSeven-W",
+      "repo": "ZSeven-W/dsh-openpencil",
+      "url": "https://github.com/ZSeven-W/dsh-openpencil",
+      "category": "ui",
+      "description": {
+        "en": "OpenPencil design preview and editing plugin.",
+        "zh": "OpenPencil 设计预览与编辑插件。"
+      },
+      "added": "2026-08-13",
+      "curated": true,
+      "topic": true,
+      "stars": 87,
+      "forks": 3,
+      "openIssues": 2,
+      "watchers": 87,
+      "pushedAt": "2026-08-14T14:36:17Z",
+      "updatedAt": "2026-08-16T04:43:04Z",
+      "createdAt": "2026-08-12T16:05:11Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": "https://op.zseven.tech",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@zseven-w/dsh-openpencil",
+        "version": "0.1.0-rc.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-13",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "nagi-ovo/dsh-visualize",
+      "order": 45,
+      "name": "dsh-visualize",
+      "owner": "Nagi-ovo",
+      "repo": "Nagi-ovo/dsh-visualize",
+      "url": "https://github.com/Nagi-ovo/dsh-visualize",
+      "category": "ui",
+      "description": {
+        "en": "In-conversation generative UI: the model renders interactive HTML cards into the chat stream, with streaming preview and sandboxed rendering.",
+        "zh": "对话内生成式 UI：模型把交互式 HTML 卡片直接画进会话流，带流式预览与沙箱渲染。"
+      },
+      "added": "2026-08-13",
+      "curated": true,
+      "topic": true,
+      "stars": 127,
+      "forks": 3,
+      "openIssues": 2,
+      "watchers": 127,
+      "pushedAt": "2026-08-15T15:58:20Z",
+      "updatedAt": "2026-08-16T04:43:09Z",
+      "createdAt": "2026-08-13T13:11:49Z",
+      "license": "BSD-3-Clause",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@dsh-external/dsh-visualize",
+        "version": "0.1.2",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-13",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "hanzhangzzz/dsh-diagram",
+      "order": 46,
+      "name": "dsh-diagram",
+      "owner": "hanzhangzzz",
+      "repo": "hanzhangzzz/dsh-diagram",
+      "url": "https://github.com/hanzhangzzz/dsh-diagram",
+      "category": "ui",
+      "description": {
+        "en": "Editable Excalidraw diagrams for DeepSeek Harness conversations.",
+        "zh": "DeepSeek Harness 会话中的可编辑 Excalidraw 图表。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-15T08:15:09Z",
+      "updatedAt": "2026-08-15T09:42:30Z",
+      "createdAt": "2026-08-15T05:51:02Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": "https://www.npmjs.com/package/dsh-diagram",
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "master",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-diagram",
+        "version": "0.1.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 2,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "nothree-code/folder-tree-sh",
+      "order": 47,
+      "name": "folder-tree-sh",
+      "owner": "Nothree-code",
+      "repo": "Nothree-code/folder-tree-sh",
+      "url": "https://github.com/Nothree-code/folder-tree-sh",
+      "category": "ui",
+      "description": {
+        "en": "Workspace file tree for the Web UI: multi-tab preview (text/DOCX/PDF/Markdown/CSV/images), inline Markdown editing, a Git changes panel, and file operations (rename/delete/copy/move/create) via context menu.",
+        "zh": "工作区文件树插件：多标签预览（文本/DOCX/PDF/Markdown/CSV/图片）、Markdown 内联编辑、Git 变更面板与右键文件操作（重命名/删除/复制/移动/新建）。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-15T11:54:52Z",
+      "updatedAt": "2026-08-15T17:35:23Z",
+      "createdAt": "2026-08-15T00:24:35Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "folder-tree-sh",
+        "version": "0.2.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 3,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "ccq1/dsh-side-panel",
+      "order": 48,
+      "name": "dsh-side-panel",
+      "owner": "ccq1",
+      "repo": "ccq1/dsh-side-panel",
+      "url": "https://github.com/ccq1/dsh-side-panel",
+      "category": "ui",
+      "description": {
+        "en": "Side panel with file browser, terminal, and Git review for quick file previews.",
+        "zh": "侧边栏集成文件浏览器、终端和 Git 审查，方便预览文件。"
+      },
+      "added": "2026-08-13",
+      "curated": true,
+      "topic": true,
+      "stars": 15,
+      "forks": 2,
+      "openIssues": 1,
+      "watchers": 15,
+      "pushedAt": "2026-08-14T17:45:41Z",
+      "updatedAt": "2026-08-15T17:03:08Z",
+      "createdAt": "2026-08-07T21:40:25Z",
+      "license": "BSD-3-Clause",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": true,
+      "defaultBranch": "main",
+      "maintenance": "archived",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@dsh-external/dsh-side-panel",
+        "version": "0.2.0",
+        "lifecycleScripts": [
+          "prepare"
+        ],
+        "runtimeDependencies": 12,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": [
+          "prepare"
+        ]
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-13",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "whiteplusms/dsh-git-graph",
+      "order": 49,
+      "name": "dsh-git-graph",
+      "owner": "WhitePlusMS",
+      "repo": "WhitePlusMS/dsh-git-graph",
+      "url": "https://github.com/WhitePlusMS/dsh-git-graph",
+      "category": "ui",
+      "description": {
+        "en": "Dedicated read-only Git Graph view beside Chat and Trajectory: commit topology, local/remote/tag refs, HEAD and working-tree status, search, filtering, first-parent mode, refresh, and load more.",
+        "zh": "Chat 和 Trajectory 旁的独立 Git Graph 视图：提交拓扑、本地/远程/tag 引用、HEAD 与工作区状态、搜索、筛选、首父模式、刷新和加载更多。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-15T06:44:23Z",
+      "updatedAt": "2026-08-15T16:56:38Z",
+      "createdAt": "2026-08-15T06:28:59Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "master",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-git-graph",
+        "version": "0.0.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 1,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "openagfs/dsh-agfs",
+      "order": 50,
+      "name": "dsh-agfs",
+      "owner": "openAGFS",
+      "repo": "openAGFS/dsh-agfs",
+      "url": "https://github.com/openAGFS/dsh-agfs",
+      "category": "ui",
+      "description": {
+        "en": "File-browser web app for DSH: React frontend and REST API served by the host webserver, a /dsh-agfs command that opens at the current session workspace, and a browse_files model tool.",
+        "zh": "文件浏览器 Web 应用：React 前端与 REST API 由宿主 webserver 托管，/dsh-agfs 命令自动定位当前工作区，附 browse_files 模型工具。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-15T08:53:13Z",
+      "updatedAt": "2026-08-15T08:53:25Z",
+      "createdAt": "2026-08-15T01:12:05Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle"
+        ],
+        "packageName": "@open-agfs/dsh-agfs",
+        "version": "0.1.9",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 1,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "dingyi222666/dsh-focus-chat",
+      "order": 51,
+      "name": "dsh-focus-chat",
+      "owner": "dingyi222666",
+      "repo": "dingyi222666/dsh-focus-chat",
+      "url": "https://github.com/dingyi222666/dsh-focus-chat",
+      "category": "ui",
+      "description": {
+        "en": "A \"focus chat\" minimal view that shows only final outputs.",
+        "zh": "「聚焦会话」精简视图，只关注最终产出结果。"
+      },
+      "added": "2026-08-13",
+      "curated": true,
+      "topic": true,
+      "stars": 16,
+      "forks": 0,
+      "openIssues": 2,
+      "watchers": 16,
+      "pushedAt": "2026-08-14T10:01:53Z",
+      "updatedAt": "2026-08-15T04:07:40Z",
+      "createdAt": "2026-08-10T19:40:36Z",
+      "license": null,
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@dingyi222666/dsh-focus-chat",
+        "version": "0.1.2",
+        "lifecycleScripts": [
+          "prepare"
+        ],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": [
+          "prepare"
+        ]
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-13",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "omdsh-dev/dsh-genui",
+      "order": 52,
+      "name": "dsh-genui",
+      "owner": "omdsh-dev",
+      "repo": "omdsh-dev/dsh-genui",
+      "url": "https://github.com/omdsh-dev/dsh-genui",
+      "category": "ui",
+      "description": {
+        "en": "Interactive UI components rendered inline in replies: layout, charts, forms, quizzes, mermaid, 3D scenes, and an action event loop back to the model.",
+        "zh": "助手回复内渲染交互式 UI 组件：布局、图表、表单、测验、mermaid、3D 场景与回传事件循环。"
+      },
+      "added": "2026-08-13",
+      "curated": true,
+      "topic": true,
+      "stars": 114,
+      "forks": 13,
+      "openIssues": 5,
+      "watchers": 114,
+      "pushedAt": "2026-08-15T20:28:46Z",
+      "updatedAt": "2026-08-16T04:39:42Z",
+      "createdAt": "2026-08-13T13:07:52Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@omdsh-dev/dsh-genui",
+        "version": "0.8.5",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 1,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-13",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "pengyue-polaron/deepseek-harness-genui",
+      "order": 53,
+      "name": "deepseek-harness-genui",
+      "owner": "pengyue-polaron",
+      "repo": "pengyue-polaron/deepseek-harness-genui",
+      "url": "https://github.com/pengyue-polaron/deepseek-harness-genui",
+      "category": "ui",
+      "description": {
+        "en": "Code-first React and TypeScript task apps rendered inline, in Canvas, full screen, or on localhost, with interaction state available to later agent turns and approval-gated MCP and API access.",
+        "zh": "Code-first React + TypeScript 任务应用，支持 Inline、Canvas、全屏与 localhost；交互状态可供 Agent 后续轮次读取，MCP 和 API 访问在用户授权后执行。"
+      },
+      "added": "2026-08-16",
+      "curated": true,
+      "topic": true,
+      "stars": 9,
+      "forks": 1,
+      "openIssues": 0,
+      "watchers": 9,
+      "pushedAt": "2026-08-15T20:17:56Z",
+      "updatedAt": "2026-08-16T04:14:27Z",
+      "createdAt": "2026-08-14T20:28:02Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-plugin-genui",
+        "version": "0.12.2",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 10,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "omdsh-dev/dsh-annotation",
+      "order": 54,
+      "name": "dsh-annotation",
+      "owner": "omdsh-dev",
+      "repo": "omdsh-dev/dsh-annotation",
+      "url": "https://github.com/omdsh-dev/dsh-annotation",
+      "category": "ui",
+      "description": {
+        "en": "Select text → annotate → send with your message; replies map back to each annotation.",
+        "zh": "选中文字→批注→随消息发送，回复按批注逐条对照。"
+      },
+      "added": "2026-08-13",
+      "curated": true,
+      "topic": true,
+      "stars": 57,
+      "forks": 3,
+      "openIssues": 2,
+      "watchers": 57,
+      "pushedAt": "2026-08-16T04:18:42Z",
+      "updatedAt": "2026-08-16T04:18:51Z",
+      "createdAt": "2026-08-10T17:36:49Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@omdsh-dev/dsh-annotation",
+        "version": "1.3.15",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "index.mjs",
+          "client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-13",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "vlln/dsh-navbar",
+      "order": 55,
+      "name": "dsh-navbar",
+      "owner": "vlln",
+      "repo": "vlln/dsh-navbar",
+      "url": "https://github.com/vlln/dsh-navbar",
+      "category": "ui",
+      "description": {
+        "en": "Conversation node navigation bar for quick jumps between user messages.",
+        "zh": "对话节点导航条，右缘节点串快速跳转 user 消息。"
+      },
+      "added": "2026-08-13",
+      "curated": true,
+      "topic": true,
+      "stars": 24,
+      "forks": 2,
+      "openIssues": 0,
+      "watchers": 24,
+      "pushedAt": "2026-08-15T16:43:34Z",
+      "updatedAt": "2026-08-15T16:44:01Z",
+      "createdAt": "2026-08-10T16:41:51Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@vlln/dsh-navbar",
+        "version": "0.3.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.mjs",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-13",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "asukasec/dsh-message-preview",
+      "order": 56,
+      "name": "dsh-message-preview",
+      "owner": "asukasec",
+      "repo": "asukasec/dsh-message-preview",
+      "url": "https://github.com/asukasec/dsh-message-preview",
+      "category": "ui",
+      "description": {
+        "en": "Right-edge user-message navigator with an adaptive block layout that fits the available height, plus hover previews, keyboard controls, and click-to-jump navigation.",
+        "zh": "右侧用户消息导航条，根据消息数量与可用高度自适应排布导航块，并支持悬停预览、键盘操作与点击跳转。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-14T09:39:57Z",
+      "updatedAt": "2026-08-15T00:59:26Z",
+      "createdAt": "2026-08-14T08:11:02Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-message-preview",
+        "version": "0.1.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "jjxjjjjiik-bot/dsh-chat-timeline",
+      "order": 57,
+      "name": "dsh-chat-timeline",
+      "owner": "jjxjjjjiik-bot",
+      "repo": "jjxjjjjiik-bot/dsh-chat-timeline",
+      "url": "https://github.com/jjxjjjjiik-bot/dsh-chat-timeline",
+      "category": "ui",
+      "description": {
+        "en": "1:1 port of DeepSeek's official web right-side chat navigation rail (ScrollNav): hover-expandable rail, reading-position highlight, click-to-jump.",
+        "zh": "1:1 复刻 DeepSeek 官网右侧对话导航栏（ScrollNav）：悬停展开面板、阅读位置高亮、点击跳转。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 6,
+      "forks": 1,
+      "openIssues": 0,
+      "watchers": 6,
+      "pushedAt": "2026-08-15T13:50:01Z",
+      "updatedAt": "2026-08-16T02:21:30Z",
+      "createdAt": "2026-08-14T16:38:22Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-chat-timeline",
+        "version": "0.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "mobai-read/dsh-chat-index-rail",
+      "order": 58,
+      "name": "dsh-chat-index-rail",
+      "owner": "Mobai-read",
+      "repo": "Mobai-read/dsh-chat-index-rail",
+      "url": "https://github.com/Mobai-read/dsh-chat-index-rail",
+      "category": "ui",
+      "description": {
+        "en": "Client-only right-edge chat input index rail: one bar per user message, two-stage hover preview (15 chars, expandable to 40), click-to-jump, and scroll-follow highlight; static npm bundle with no host half.",
+        "zh": "纯客户端对话输入目录条：每条用户消息一根横条，两级悬停预览（15 字，移入气泡展开 40 字）、点击跳转、滚动跟随高亮；静态 npm 包，无宿主半。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 0,
+      "pushedAt": "2026-08-15T12:02:05Z",
+      "updatedAt": "2026-08-15T16:04:11Z",
+      "createdAt": "2026-08-15T11:24:08Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-chat-index-rail",
+        "version": "0.1.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "vlln/dsh-task-status",
+      "order": 59,
+      "name": "dsh-task-status",
+      "owner": "vlln",
+      "repo": "vlln/dsh-task-status",
+      "url": "https://github.com/vlln/dsh-task-status",
+      "category": "ui",
+      "description": {
+        "en": "Background task status bar: progress plus live output tail on the chat page.",
+        "zh": "后台任务状态条：对话页任务进度 + 实时输出 tail。"
+      },
+      "added": "2026-08-13",
+      "curated": true,
+      "topic": true,
+      "stars": 10,
+      "forks": 0,
+      "openIssues": 2,
+      "watchers": 10,
+      "pushedAt": "2026-08-15T16:07:43Z",
+      "updatedAt": "2026-08-15T16:07:58Z",
+      "createdAt": "2026-08-10T16:41:56Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@vlln/dsh-task-status",
+        "version": "0.3.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.mjs",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-13",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    }
+  ],
+  "topStars": [
+    {
+      "id": "deepseek-ai/deepseek-harness",
+      "order": 820,
+      "name": "deepseek-harness",
+      "owner": "deepseek-ai",
+      "repo": "deepseek-ai/deepseek-harness",
+      "url": "https://github.com/deepseek-ai/deepseek-harness",
+      "category": "model",
+      "description": {
+        "zh": "DeepSeek Harness: Everything is a Plugin.",
+        "en": "DeepSeek Harness: Everything is a Plugin."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 118935,
+      "forks": 11688,
+      "openIssues": 0,
+      "watchers": 118935,
+      "pushedAt": "2026-08-13T13:00:21Z",
+      "updatedAt": "2026-08-16T05:03:29Z",
+      "createdAt": "2026-08-13T11:56:32Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": "https://deepseek.com/harness",
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "master",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "nexu-io/open-design",
+      "order": 821,
+      "name": "open-design",
+      "owner": "nexu-io",
+      "repo": "nexu-io/open-design",
+      "url": "https://github.com/nexu-io/open-design",
+      "category": "model",
+      "description": {
+        "zh": "🎨 Best DeepSeek Harness Design Plugin. The open-source Claude Design alternative. 🖥️ Local-first desktop app. 🖼️ Your coding agent becomes the design engine: prototypes, landing pages, dashboards, slides, images & video — real files, HTML/PDF/PPTX/MP4 export. 🤖 Claude Code / Codex / Cursor / DeepSeek Harness / OpenCode & 20+ CLIs via BYOK.",
+        "en": "🎨 Best DeepSeek Harness Design Plugin. The open-source Claude Design alternative. 🖥️ Local-first desktop app. 🖼️ Your coding agent becomes the design engine: prototypes, landing pages, dashboards, slides, images & video — real files, HTML/PDF/PPTX/MP4 export. 🤖 Claude Code / Codex / Cursor / DeepSeek Harness / OpenCode & 20+ CLIs via BYOK."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 87047,
+      "forks": 10122,
+      "openIssues": 801,
+      "watchers": 87047,
+      "pushedAt": "2026-08-16T04:06:29Z",
+      "updatedAt": "2026-08-16T05:07:16Z",
+      "createdAt": "2026-04-28T04:25:20Z",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "homepage": "https://open-design.ai",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "volcengine/openviking",
+      "order": 822,
+      "name": "OpenViking",
+      "owner": "volcengine",
+      "repo": "volcengine/OpenViking",
+      "url": "https://github.com/volcengine/OpenViking",
+      "category": "memory",
+      "description": {
+        "zh": "Self-evolving Context Database for AI Agents. Unify Agent Memory, Knowledge RAG and Skills.",
+        "en": "Self-evolving Context Database for AI Agents. Unify Agent Memory, Knowledge RAG and Skills."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 28503,
+      "forks": 2257,
+      "openIssues": 441,
+      "watchers": 28503,
+      "pushedAt": "2026-08-15T08:29:46Z",
+      "updatedAt": "2026-08-16T05:10:41Z",
+      "createdAt": "2026-01-05T07:11:17Z",
+      "license": "AGPL-3.0",
+      "language": "Python",
+      "homepage": "https://openviking.ai/",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "titanwings/colleague-skill",
+      "order": 823,
+      "name": "colleague-skill",
+      "owner": "titanwings",
+      "repo": "titanwings/colleague-skill",
+      "url": "https://github.com/titanwings/colleague-skill",
+      "category": "skill",
+      "description": {
+        "zh": "将冰冷的离别化为温暖的 Skill，欢迎加入数字生命1.0！Transforming cold farewells into warm skills? It's giving rebirth era. Welcome to Digital Life 1.0. 🫶",
+        "en": "将冰冷的离别化为温暖的 Skill，欢迎加入数字生命1.0！Transforming cold farewells into warm skills? It's giving rebirth era. Welcome to Digital Life 1.0. 🫶"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 22550,
+      "forks": 2053,
+      "openIssues": 34,
+      "watchers": 22550,
+      "pushedAt": "2026-08-13T15:00:28Z",
+      "updatedAt": "2026-08-16T05:10:52Z",
+      "createdAt": "2026-03-30T05:22:23Z",
+      "license": "MIT",
+      "language": "Python",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "dot-skill",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "dot-skill",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "nagi-ovo/voyager",
+      "order": 824,
+      "name": "voyager",
+      "owner": "Nagi-ovo",
+      "repo": "Nagi-ovo/voyager",
+      "url": "https://github.com/Nagi-ovo/voyager",
+      "category": "model",
+      "description": {
+        "zh": "Enhancement suite for Gemini, AI Studio, Claude & ChatGPT — plus a prompt manager for any web UI, DeepSeek Harness included. / 面向 Gemini、AI Studio、Claude 与 ChatGPT 的增强套件；提示词管理器可用于任意 Web UI，含 DeepSeek Harness。",
+        "en": "Enhancement suite for Gemini, AI Studio, Claude & ChatGPT — plus a prompt manager for any web UI, DeepSeek Harness included. / 面向 Gemini、AI Studio、Claude 与 ChatGPT 的增强套件；提示词管理器可用于任意 Web UI，含 DeepSeek Harness。"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 19417,
+      "forks": 646,
+      "openIssues": 17,
+      "watchers": 19417,
+      "pushedAt": "2026-08-16T00:11:26Z",
+      "updatedAt": "2026-08-16T05:05:18Z",
+      "createdAt": "2025-10-04T23:42:35Z",
+      "license": "GPL-3.0",
+      "language": "TypeScript",
+      "homepage": "https://voyager.nagi.fun/en",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "tt-a1i/archify",
+      "order": 825,
+      "name": "archify",
+      "owner": "tt-a1i",
+      "repo": "tt-a1i/archify",
+      "url": "https://github.com/tt-a1i/archify",
+      "category": "session",
+      "description": {
+        "zh": "Agent skill for beautiful, verifiable architecture, workflow, sequence, data-flow, and lifecycle diagrams—self-contained HTML with motion and crisp export.",
+        "en": "Agent skill for beautiful, verifiable architecture, workflow, sequence, data-flow, and lifecycle diagrams—self-contained HTML with motion and crisp export."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 13028,
+      "forks": 959,
+      "openIssues": 15,
+      "watchers": 13028,
+      "pushedAt": "2026-08-14T16:30:40Z",
+      "updatedAt": "2026-08-16T05:05:48Z",
+      "createdAt": "2026-04-15T05:27:37Z",
+      "license": "MIT",
+      "language": "HTML",
+      "homepage": "https://tt-a1i.github.io/archify/",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "freestylefly/awesome-gpt-image-2",
+      "order": 826,
+      "name": "awesome-gpt-image-2",
+      "owner": "freestylefly",
+      "repo": "freestylefly/awesome-gpt-image-2",
+      "url": "https://github.com/freestylefly/awesome-gpt-image-2",
+      "category": "skill",
+      "description": {
+        "zh": "Prompt as Code | GPT-Image2 工业级提示词引擎与模板库，470+ 个案例逆向工程，20+ 套工业级模板，并提炼出Skills，持续更新中",
+        "en": "Prompt as Code | GPT-Image2 工业级提示词引擎与模板库，470+ 个案例逆向工程，20+ 套工业级模板，并提炼出Skills，持续更新中"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 10361,
+      "forks": 1237,
+      "openIssues": 9,
+      "watchers": 10361,
+      "pushedAt": "2026-07-22T16:57:36Z",
+      "updatedAt": "2026-08-16T05:05:03Z",
+      "createdAt": "2026-04-25T09:19:13Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": "https://gpt-image2.canghe.ai",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "anywhere-labs/deepseek-harness-desktop",
+      "order": 827,
+      "name": "deepseek-harness-desktop",
+      "owner": "anywhere-labs",
+      "repo": "anywhere-labs/deepseek-harness-desktop",
+      "url": "https://github.com/anywhere-labs/deepseek-harness-desktop",
+      "category": "model",
+      "description": {
+        "zh": "为 DeepSeek Harness (DSH) 生态打造的现代化桌面端体验",
+        "en": "为 DeepSeek Harness (DSH) 生态打造的现代化桌面端体验"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 6703,
+      "forks": 293,
+      "openIssues": 89,
+      "watchers": 6703,
+      "pushedAt": "2026-08-15T16:41:18Z",
+      "updatedAt": "2026-08-16T05:03:19Z",
+      "createdAt": "2026-08-13T16:30:50Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": "https://dshdesktop.cn",
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "master",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "q00/ouroboros",
+      "order": 828,
+      "name": "ouroboros",
+      "owner": "Q00",
+      "repo": "Q00/ouroboros",
+      "url": "https://github.com/Q00/ouroboros",
+      "category": "model",
+      "description": {
+        "zh": "Agent OS: the agent gets smarter on its own. We just hold the line: the grading command and expected result never make it into the success contract we hand it. Interview-gated, staged evaluation, budgeted evolution loop. MCP server, 13 runtimes: Claude Code, Codex CLI, Gemini CLI, OpenCode, Copilot, Kiro and more.",
+        "en": "Agent OS: the agent gets smarter on its own. We just hold the line: the grading command and expected result never make it into the success contract we hand it. Interview-gated, staged evaluation, budgeted evolution loop. MCP server, 13 runtimes: Claude Code, Codex CLI, Gemini CLI, OpenCode, Copilot, Kiro and more."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 5431,
+      "forks": 550,
+      "openIssues": 63,
+      "watchers": 5431,
+      "pushedAt": "2026-08-16T05:08:37Z",
+      "updatedAt": "2026-08-16T03:43:07Z",
+      "createdAt": "2026-01-14T01:14:04Z",
+      "license": "MIT",
+      "language": "Python",
+      "homepage": "https://ouroboros.page/",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "zseven-w/openpencil",
+      "order": 829,
+      "name": "openpencil",
+      "owner": "ZSeven-W",
+      "repo": "ZSeven-W/openpencil",
+      "url": "https://github.com/ZSeven-W/openpencil",
+      "category": "memory",
+      "description": {
+        "zh": "The world's first open-source AI-native vector design tool and the first to feature concurrent Agent Teams. Design-as-Code. Turn prompts into UI directly on the live canvas. A modern alternative to Pencil.",
+        "en": "The world's first open-source AI-native vector design tool and the first to feature concurrent Agent Teams. Design-as-Code. Turn prompts into UI directly on the live canvas. A modern alternative to Pencil."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 5011,
+      "forks": 461,
+      "openIssues": 12,
+      "watchers": 5011,
+      "pushedAt": "2026-08-16T04:55:07Z",
+      "updatedAt": "2026-08-16T04:18:44Z",
+      "createdAt": "2026-02-17T10:51:46Z",
+      "license": "MIT",
+      "language": "Rust",
+      "homepage": "https://op.zseven.tech",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "devin-axis/ipollowork",
+      "order": 830,
+      "name": "iPolloWork",
+      "owner": "Devin-AXIS",
+      "repo": "Devin-AXIS/iPolloWork",
+      "url": "https://github.com/Devin-AXIS/iPolloWork",
+      "category": "model",
+      "description": {
+        "zh": "A next-generation, source-available AI workspace with a self-evolving agent runtime for editable code, design, presentations, websites, and video—a Codex alternative that integrates DeepSeek Harness for subagent delegation, combining iPolloWork’s complete AI workbench with DSH’s specialized agents and both plugin ecosystems in one workflow.",
+        "en": "A next-generation, source-available AI workspace with a self-evolving agent runtime for editable code, design, presentations, websites, and video—a Codex alternative that integrates DeepSeek Harness for subagent delegation, combining iPolloWork’s complete AI workbench with DSH’s specialized agents and both plugin ecosystems in one workflow."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 4098,
+      "forks": 830,
+      "openIssues": 77,
+      "watchers": 4098,
+      "pushedAt": "2026-08-16T05:06:52Z",
+      "updatedAt": "2026-08-16T05:09:04Z",
+      "createdAt": "2025-08-25T03:57:40Z",
+      "license": null,
+      "language": "HTML",
+      "homepage": "https://www.ipollo.ai/",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "crafter-station/petdex",
+      "order": 831,
+      "name": "petdex",
+      "owner": "crafter-station",
+      "repo": "crafter-station/petdex",
+      "url": "https://github.com/crafter-station/petdex",
+      "category": "model",
+      "description": {
+        "zh": "A public gallery of animated pets for Codex, Claude Code, DeepSeek Harness, Hermes, OpenCode, Gemini CLI, and more.",
+        "en": "A public gallery of animated pets for Codex, Claude Code, DeepSeek Harness, Hermes, OpenCode, Gemini CLI, and more."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 3837,
+      "forks": 181,
+      "openIssues": 20,
+      "watchers": 3837,
+      "pushedAt": "2026-08-14T11:41:27Z",
+      "updatedAt": "2026-08-16T04:55:34Z",
+      "createdAt": "2026-05-02T07:51:35Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": "https://petdex.dev",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "strukto-ai/mirage",
+      "order": 738,
+      "name": "mirage#dsh",
+      "owner": "strukto-ai",
+      "repo": "strukto-ai/mirage",
+      "url": "https://github.com/strukto-ai/mirage/tree/main/typescript/packages/dsh",
+      "category": "dev",
+      "description": {
+        "en": "Swaps the filesystem and bash providers for a mirage virtual workspace: file tools and shell commands run over mounted resources (RAM, S3, Redis, Slack, Gmail, Notion, Postgres) instead of the host disk, with per-mount read/write/exec modes, per-command sandbox routing (monty, pyodide, quickjs in process; docker, e2b, daytona remote), and installed CLIs (git, gh, slack, linear, ntn, gws, or one you register) as head words in the virtual terminal.",
+        "zh": "把文件系统与 bash 提供者换成 mirage 虚拟工作区：文件工具与 shell 命令作用于挂载的资源（RAM、S3、Redis、Slack、Gmail、Notion、Postgres）而非宿主磁盘，支持按挂载点设置读/写/执行模式、按命令选择沙箱（进程内 monty、pyodide、quickjs；远程 docker、e2b、daytona），并可在虚拟终端中安装 CLI（git、gh、slack、linear、ntn、gws，或自行注册的程序树）作为命令头词。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 3450,
+      "forks": 255,
+      "openIssues": 105,
+      "watchers": 3450,
+      "pushedAt": "2026-08-16T04:47:53Z",
+      "updatedAt": "2026-08-16T04:48:11Z",
+      "createdAt": "2026-05-06T17:00:48Z",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "homepage": "https://www.strukto.ai/mirage",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "awesome-dsh-plugin/awesome-dsh-plugin",
+      "order": 832,
+      "name": "awesome-dsh-plugin",
+      "owner": "awesome-dsh-plugin",
+      "repo": "awesome-dsh-plugin/awesome-dsh-plugin",
+      "url": "https://github.com/awesome-dsh-plugin/awesome-dsh-plugin",
+      "category": "model",
+      "description": {
+        "zh": "A curated list of plugins for DeepSeek Harness (dsh) · DeepSeek Harness 插件精选列表",
+        "en": "A curated list of plugins for DeepSeek Harness (dsh) · DeepSeek Harness 插件精选列表"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 3317,
+      "forks": 658,
+      "openIssues": 86,
+      "watchers": 3317,
+      "pushedAt": "2026-08-16T04:12:07Z",
+      "updatedAt": "2026-08-16T05:02:50Z",
+      "createdAt": "2026-08-13T13:55:31Z",
+      "license": "CC0-1.0",
+      "language": "Python",
+      "homepage": "https://awesome-dsh-plugin.com",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "edison7009/echobird",
+      "order": 833,
+      "name": "EchoBird",
+      "owner": "edison7009",
+      "repo": "edison7009/EchoBird",
+      "url": "https://github.com/edison7009/EchoBird",
+      "category": "model",
+      "description": {
+        "zh": "One-click install + model switch:Claude Code,Codex CLI (OpenAI), Grok Build (xAI), DeepSeek Harness, Kimi Code (Moonshot) ,Qwen Code,Aider,OpenCode,MiMo Code (Xiaomi),ZCode (Z.AI),OpenClaw,Pi,OpenScience,Vibe-Trading,Claude Desktop (3P profile),ChatGPT desktop,OpenCode Desktop,",
+        "en": "One-click install + model switch:Claude Code,Codex CLI (OpenAI), Grok Build (xAI), DeepSeek Harness, Kimi Code (Moonshot) ,Qwen Code,Aider,OpenCode,MiMo Code (Xiaomi),ZCode (Z.AI),OpenClaw,Pi,OpenScience,Vibe-Trading,Claude Desktop (3P profile),ChatGPT desktop,OpenCode Desktop,"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 3024,
+      "forks": 341,
+      "openIssues": 347,
+      "watchers": 3024,
+      "pushedAt": "2026-08-16T04:49:57Z",
+      "updatedAt": "2026-08-16T04:50:01Z",
+      "createdAt": "2026-02-15T12:36:33Z",
+      "license": "MIT",
+      "language": "Rust",
+      "homepage": "https://Echobird.ai",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "zhu1090093659/dsh-web-ui",
+      "order": 103,
+      "name": "dsh-web-ui#packages/dsh-web-ui-all",
+      "owner": "zhu1090093659",
+      "repo": "zhu1090093659/dsh-web-ui",
+      "url": "https://github.com/zhu1090093659/dsh-web-ui/tree/main/packages/dsh-web-ui-all",
+      "category": "ui",
+      "description": {
+        "en": "Plugin and skin collection for the DSH Web UI: task board, Git graph, right-side panel, remote mobile UI, pet, live token stats, and a skin center.",
+        "zh": "DSH Web UI 插件与皮肤合集：任务看板、git 图、右侧面板、远程移动端 UI、桌宠、实时 token 统计与皮肤中心。"
+      },
+      "added": "2026-08-14",
+      "curated": true,
+      "topic": true,
+      "stars": 2866,
+      "forks": 163,
+      "openIssues": 36,
+      "watchers": 2866,
+      "pushedAt": "2026-08-16T04:05:13Z",
+      "updatedAt": "2026-08-16T05:00:05Z",
+      "createdAt": "2026-08-12T05:15:20Z",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "homepage": "https://gallery.dsh-market.com",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "package-only",
+        "branch": "main",
+        "kinds": [],
+        "packageName": "dsh-web-ui",
+        "version": "0.1.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-14",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "foryourhealth111-pixel/vibe-skills",
+      "order": 834,
+      "name": "Vibe-Skills",
+      "owner": "foryourhealth111-pixel",
+      "repo": "foryourhealth111-pixel/Vibe-Skills",
+      "url": "https://github.com/foryourhealth111-pixel/Vibe-Skills",
+      "category": "skill",
+      "description": {
+        "zh": "VibeSkills is a general-purpose Skill that automatically routes local Skills and intelligently orchestrates harness workflows.",
+        "en": "VibeSkills is a general-purpose Skill that automatically routes local Skills and intelligently orchestrates harness workflows."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 2824,
+      "forks": 223,
+      "openIssues": 34,
+      "watchers": 2824,
+      "pushedAt": "2026-08-11T15:42:32Z",
+      "updatedAt": "2026-08-16T04:48:26Z",
+      "createdAt": "2026-02-22T13:51:44Z",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "imsai-sh/zhuzhiliao",
+      "order": 835,
+      "name": "zhuzhiliao",
+      "owner": "imsai-sh",
+      "repo": "imsai-sh/zhuzhiliao",
+      "url": "https://github.com/imsai-sh/zhuzhiliao",
+      "category": "tools",
+      "description": {
+        "zh": "竹知了 —— 一转就哇哇叫的传统玩具，Web 模拟版。零依赖单文件，真实录音采样，移动端优先。",
+        "en": "竹知了 —— 一转就哇哇叫的传统玩具，Web 模拟版。零依赖单文件，真实录音采样，移动端优先。"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 2813,
+      "forks": 343,
+      "openIssues": 18,
+      "watchers": 2813,
+      "pushedAt": "2026-08-14T14:31:41Z",
+      "updatedAt": "2026-08-16T04:47:25Z",
+      "createdAt": "2026-08-01T17:20:54Z",
+      "license": null,
+      "language": "HTML",
+      "homepage": "https://imsai.top",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "whiteguo233/openbiliclaw",
+      "order": 836,
+      "name": "OpenBiliClaw",
+      "owner": "whiteguo233",
+      "repo": "whiteguo233/OpenBiliClaw",
+      "url": "https://github.com/whiteguo233/OpenBiliClaw",
+      "category": "model",
+      "description": {
+        "zh": "本地私有、开源的自进化跨平台 AI 内容发现 Agent：先理解你，再主动从 B站、小红书、抖音、YouTube、X、知乎、Reddit、微博等平台与开放 Web 寻找内容。（支持 deepseek harness 插件） | Local-first open-source cross-platform AI content discovery agent: understands you, then proactively finds content across Bilibili, Xiaohongshu, Douyin, YouTube, X, Zhihu, Reddit, Weibo and the open web.（support deepseek harness plugin）",
+        "en": "本地私有、开源的自进化跨平台 AI 内容发现 Agent：先理解你，再主动从 B站、小红书、抖音、YouTube、X、知乎、Reddit、微博等平台与开放 Web 寻找内容。（支持 deepseek harness 插件） | Local-first open-source cross-platform AI content discovery agent: understands you, then proactively finds content across Bilibili, Xiaohongshu, Douyin, YouTube, X, Zhihu, Reddit, Weibo and the open web.（support deepseek harness plugin）"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 2615,
+      "forks": 125,
+      "openIssues": 29,
+      "watchers": 2615,
+      "pushedAt": "2026-08-15T19:31:34Z",
+      "updatedAt": "2026-08-16T05:09:23Z",
+      "createdAt": "2026-03-07T13:46:10Z",
+      "license": "MIT",
+      "language": "Python",
+      "homepage": "https://whiteguo233.github.io/OpenBiliClaw/",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "xiaobright/dsh-anchored-standard",
+      "order": 837,
+      "name": "dsh-anchored-standard",
+      "owner": "xiaobright",
+      "repo": "xiaobright/dsh-anchored-standard",
+      "url": "https://github.com/xiaobright/dsh-anchored-standard",
+      "category": "model",
+      "description": {
+        "zh": "Two-phase DeepSeek Harness preset: Minimal-aligned bootstrap, then full Standard tools (Project2 98/99)",
+        "en": "Two-phase DeepSeek Harness preset: Minimal-aligned bootstrap, then full Standard tools (Project2 98/99)"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 2416,
+      "forks": 75,
+      "openIssues": 32,
+      "watchers": 2416,
+      "pushedAt": "2026-08-15T22:55:15Z",
+      "updatedAt": "2026-08-16T05:05:10Z",
+      "createdAt": "2026-08-14T14:06:39Z",
+      "license": null,
+      "language": "JavaScript",
+      "homepage": "https://github.com/xiaobright/modeltest",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    }
+  ],
+  "topFresh": [
+    {
+      "id": "ariestar/sivtr",
+      "order": 873,
+      "name": "sivtr",
+      "owner": "Ariestar",
+      "repo": "Ariestar/sivtr",
+      "url": "https://github.com/Ariestar/sivtr",
+      "category": "memory",
+      "description": {
+        "zh": "A unified agent memory workspace for human and agent",
+        "en": "A unified agent memory workspace for human and agent"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 135,
+      "forks": 18,
+      "openIssues": 34,
+      "watchers": 135,
+      "pushedAt": "2026-08-16T05:09:07Z",
+      "updatedAt": "2026-08-16T04:07:38Z",
+      "createdAt": "2026-04-20T12:31:22Z",
+      "license": "Apache-2.0",
+      "language": "Rust",
+      "homepage": "https://sivtr.pages.dev/",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "kcnyu/clawock",
+      "order": 1050,
+      "name": "clawock",
+      "owner": "KCNyu",
+      "repo": "KCNyu/clawock",
+      "url": "https://github.com/KCNyu/clawock",
+      "category": "workflow",
+      "description": {
+        "zh": "AI argues. Code settles. The losses stay on the page. A portable investment decision-workflow plugin and verifiable harness, proven on a real HK + US portfolio.",
+        "en": "AI argues. Code settles. The losses stay on the page. A portable investment decision-workflow plugin and verifiable harness, proven on a real HK + US portfolio."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 8,
+      "forks": 1,
+      "openIssues": 14,
+      "watchers": 8,
+      "pushedAt": "2026-08-16T05:09:05Z",
+      "updatedAt": "2026-08-16T04:49:37Z",
+      "createdAt": "2026-05-16T09:21:08Z",
+      "license": "MIT",
+      "language": "Python",
+      "homepage": "https://kcnyu.github.io/clawock/",
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "master",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "q00/ouroboros",
+      "order": 828,
+      "name": "ouroboros",
+      "owner": "Q00",
+      "repo": "Q00/ouroboros",
+      "url": "https://github.com/Q00/ouroboros",
+      "category": "model",
+      "description": {
+        "zh": "Agent OS: the agent gets smarter on its own. We just hold the line: the grading command and expected result never make it into the success contract we hand it. Interview-gated, staged evaluation, budgeted evolution loop. MCP server, 13 runtimes: Claude Code, Codex CLI, Gemini CLI, OpenCode, Copilot, Kiro and more.",
+        "en": "Agent OS: the agent gets smarter on its own. We just hold the line: the grading command and expected result never make it into the success contract we hand it. Interview-gated, staged evaluation, budgeted evolution loop. MCP server, 13 runtimes: Claude Code, Codex CLI, Gemini CLI, OpenCode, Copilot, Kiro and more."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 5431,
+      "forks": 550,
+      "openIssues": 63,
+      "watchers": 5431,
+      "pushedAt": "2026-08-16T05:08:37Z",
+      "updatedAt": "2026-08-16T03:43:07Z",
+      "createdAt": "2026-01-14T01:14:04Z",
+      "license": "MIT",
+      "language": "Python",
+      "homepage": "https://ouroboros.page/",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "michengai/dsh-archive-manager",
+      "order": 2804,
+      "name": "dsh-archive-manager",
+      "owner": "MichengAI",
+      "repo": "MichengAI/dsh-archive-manager",
+      "url": "https://github.com/MichengAI/dsh-archive-manager",
+      "category": "model",
+      "description": {
+        "zh": "DSH Archive Manager 基于 DeepSeek Harness 的归档会话管理插件",
+        "en": "DSH Archive Manager 基于 DeepSeek Harness 的归档会话管理插件"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 0,
+      "pushedAt": "2026-08-16T05:07:59Z",
+      "updatedAt": "2026-08-16T05:08:11Z",
+      "createdAt": "2026-08-16T02:35:05Z",
+      "license": "Apache-2.0",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "february2015/dsh-dingo",
+      "order": 645,
+      "name": "dsh-dingo",
+      "owner": "february2015",
+      "repo": "february2015/dsh-dingo",
+      "url": "https://github.com/february2015/dsh-dingo",
+      "category": "notify",
+      "description": {
+        "en": "Sound reminders with one-click jump for concurrent sessions: the current session gets crisp dang/dang-dang tones, other sessions a soft ding/ding-ding plus a top-right card that jumps straight to the replying conversation.",
+        "zh": "多对话并行的声音提醒 + 对话直达：当前对话当/当当（crisp 清脆档），其他对话叮/叮叮（soft 柔和档）+ 右上角小卡片，点一下直达对应对话。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 0,
+      "pushedAt": "2026-08-16T05:07:53Z",
+      "updatedAt": "2026-08-16T02:49:02Z",
+      "createdAt": "2026-08-15T14:50:31Z",
+      "license": null,
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-dingo",
+        "version": "1.0.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "xcnxnxnx/dsh-weekly-hot",
+      "order": 2671,
+      "name": "dsh-weekly-hot",
+      "owner": "XCNXNXNX",
+      "repo": "XCNXNXNX/dsh-weekly-hot",
+      "url": "https://github.com/XCNXNXNX/dsh-weekly-hot",
+      "category": "theme",
+      "description": {
+        "zh": "DSH Web UI 每周热门插件榜单侧栏面板：7/30/90 天飙升榜 + 社区精选主题榜，一键安装，零运行时依赖。| Weekly hot DSH plugin leaderboard sidebar for the DSH Web UI: 7/30/90-day trending + curated topic boards, one-click install, zero runtime deps.",
+        "en": "DSH Web UI 每周热门插件榜单侧栏面板：7/30/90 天飙升榜 + 社区精选主题榜，一键安装，零运行时依赖。| Weekly hot DSH plugin leaderboard sidebar for the DSH Web UI: 7/30/90-day trending + curated topic boards, one-click install, zero runtime deps."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-16T05:07:53Z",
+      "updatedAt": "2026-08-16T05:08:05Z",
+      "createdAt": "2026-08-16T03:23:04Z",
+      "license": "BSD-3-Clause",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "a735624258/dsh-skill-picker",
+      "order": 3172,
+      "name": "dsh-skill-picker",
+      "owner": "a735624258",
+      "repo": "a735624258/dsh-skill-picker",
+      "url": "https://github.com/a735624258/dsh-skill-picker",
+      "category": "model",
+      "description": {
+        "zh": "DSH 实现 workbuddy 同款选择 skill 功能 | WorkBuddy-style skill picker for DeepSeek Harness: pick a skill in the composer, insert the official /skill-name gesture, and DSH loads it with your message.",
+        "en": "DSH 实现 workbuddy 同款选择 skill 功能 | WorkBuddy-style skill picker for DeepSeek Harness: pick a skill in the composer, insert the official /skill-name gesture, and DSH loads it with your message."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 0,
+      "pushedAt": "2026-08-16T05:07:36Z",
+      "updatedAt": "2026-08-16T05:07:40Z",
+      "createdAt": "2026-08-16T04:26:07Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": "https://github.com/a735624258/dsh-skill-picker",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "ulabe/dsh-conversation-nav",
+      "order": 2869,
+      "name": "dsh-conversation-nav",
+      "owner": "UlaBe",
+      "repo": "UlaBe/dsh-conversation-nav",
+      "url": "https://github.com/UlaBe/dsh-conversation-nav",
+      "category": "model",
+      "description": {
+        "zh": "Conversation position navigator plugin for DeepSeek Harness: right-edge floating button + drawer listing every user message (auto-loads full history), click to jump. Install via dsh plugin add @ulabe/dsh-conversation-nav",
+        "en": "Conversation position navigator plugin for DeepSeek Harness: right-edge floating button + drawer listing every user message (auto-loads full history), click to jump. Install via dsh plugin add @ulabe/dsh-conversation-nav"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 0,
+      "pushedAt": "2026-08-16T05:07:30Z",
+      "updatedAt": "2026-08-16T05:07:54Z",
+      "createdAt": "2026-08-15T14:00:34Z",
+      "license": null,
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "ez118/dsh-ppt-composer",
+      "order": 3101,
+      "name": "dsh-ppt-composer",
+      "owner": "EZ118",
+      "repo": "EZ118/dsh-ppt-composer",
+      "url": "https://github.com/EZ118/dsh-ppt-composer",
+      "category": "theme",
+      "description": {
+        "zh": "DeepSeek Harness 的 AI PPT 生成助手 Cordis 插件。载入后，直接对话即可生成幻灯片。支持AI自定义幻灯片内容、图表、多媒体、主题和切换效果等。",
+        "en": "DeepSeek Harness 的 AI PPT 生成助手 Cordis 插件。载入后，直接对话即可生成幻灯片。支持AI自定义幻灯片内容、图表、多媒体、主题和切换效果等。"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 0,
+      "pushedAt": "2026-08-16T05:07:09Z",
+      "updatedAt": "2026-08-16T05:07:25Z",
+      "createdAt": "2026-08-16T04:56:35Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "agentrq/agentrq",
+      "order": 840,
+      "name": "agentrq",
+      "owner": "agentrq",
+      "repo": "agentrq/agentrq",
+      "url": "https://github.com/agentrq/agentrq",
+      "category": "model",
+      "description": {
+        "zh": "AgentRQ: Human-in-loop realtime conversational task manager for AI Agents. Self-hosted! Control your own agents from wherever you want Mobile, Web, Desktop. Designed to work well with your own Claude subscriptions and any harness.",
+        "en": "AgentRQ: Human-in-loop realtime conversational task manager for AI Agents. Self-hosted! Control your own agents from wherever you want Mobile, Web, Desktop. Designed to work well with your own Claude subscriptions and any harness."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 1072,
+      "forks": 80,
+      "openIssues": 16,
+      "watchers": 1072,
+      "pushedAt": "2026-08-16T05:07:06Z",
+      "updatedAt": "2026-08-16T05:07:11Z",
+      "createdAt": "2026-03-24T08:35:45Z",
+      "license": "Apache-2.0",
+      "language": "Go",
+      "homepage": "https://agentrq.com",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "xv-chang/dsh-opencode-go-usage-dock",
+      "order": 3026,
+      "name": "dsh-opencode-go-usage-dock",
+      "owner": "xv-chang",
+      "repo": "xv-chang/dsh-opencode-go-usage-dock",
+      "url": "https://github.com/xv-chang/dsh-opencode-go-usage-dock",
+      "category": "model",
+      "description": {
+        "zh": "DeepSeek Harness plugin: OpenCode Go plan usage readout docked under the composer, aligned with the input bar width",
+        "en": "DeepSeek Harness plugin: OpenCode Go plan usage readout docked under the composer, aligned with the input bar width"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 0,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 0,
+      "pushedAt": "2026-08-16T05:07:04Z",
+      "updatedAt": "2026-08-16T05:07:12Z",
+      "createdAt": "2026-08-16T04:19:21Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "sjh9714/dsh-win32",
+      "order": 758,
+      "name": "dsh-win32",
+      "owner": "sjh9714",
+      "repo": "sjh9714/dsh-win32",
+      "url": "https://github.com/sjh9714/dsh-win32",
+      "category": "dev",
+      "description": {
+        "en": "Makes Minimal mode work on Windows: supplies the missing win32 process inspector so the persistent Git Bash shell runs, plus a faithful minimal-windows preset and an install-trap doctor (koffi crashes, PS 5.1 fallback, localhost 403).",
+        "zh": "让 Minimal 模式在 Windows 上真正可用：补上缺失的 win32 进程探测，常驻 Git Bash shell 才能正常工作；附还原度高的 minimal-windows 预设与安装排障工具（koffi 崩溃、PS 5.1 回退、localhost 403）。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 4,
+      "forks": 1,
+      "openIssues": 4,
+      "watchers": 4,
+      "pushedAt": "2026-08-16T05:06:55Z",
+      "updatedAt": "2026-08-16T05:06:59Z",
+      "createdAt": "2026-08-15T07:15:19Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "master",
+        "kinds": [
+          "bundle"
+        ],
+        "packageName": "dsh-win32",
+        "version": "0.7.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 1,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "chaojixinren/dsh-reviewer-bot",
+      "order": 1142,
+      "name": "dsh-reviewer-bot",
+      "owner": "chaojixinren",
+      "repo": "chaojixinren/dsh-reviewer-bot",
+      "url": "https://github.com/chaojixinren/dsh-reviewer-bot",
+      "category": "model",
+      "description": {
+        "zh": "原生 DeepSeek Harness 插件形态的代码评审机器人：跨代码平台、规则可插拔、可本地重放。",
+        "en": "原生 DeepSeek Harness 插件形态的代码评审机器人：跨代码平台、规则可插拔、可本地重放。"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 6,
+      "forks": 1,
+      "openIssues": 5,
+      "watchers": 6,
+      "pushedAt": "2026-08-16T05:06:54Z",
+      "updatedAt": "2026-08-16T05:06:58Z",
+      "createdAt": "2026-08-15T09:52:35Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "devin-axis/ipollowork",
+      "order": 830,
+      "name": "iPolloWork",
+      "owner": "Devin-AXIS",
+      "repo": "Devin-AXIS/iPolloWork",
+      "url": "https://github.com/Devin-AXIS/iPolloWork",
+      "category": "model",
+      "description": {
+        "zh": "A next-generation, source-available AI workspace with a self-evolving agent runtime for editable code, design, presentations, websites, and video—a Codex alternative that integrates DeepSeek Harness for subagent delegation, combining iPolloWork’s complete AI workbench with DSH’s specialized agents and both plugin ecosystems in one workflow.",
+        "en": "A next-generation, source-available AI workspace with a self-evolving agent runtime for editable code, design, presentations, websites, and video—a Codex alternative that integrates DeepSeek Harness for subagent delegation, combining iPolloWork’s complete AI workbench with DSH’s specialized agents and both plugin ecosystems in one workflow."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 4098,
+      "forks": 830,
+      "openIssues": 77,
+      "watchers": 4098,
+      "pushedAt": "2026-08-16T05:06:52Z",
+      "updatedAt": "2026-08-16T05:09:04Z",
+      "createdAt": "2025-08-25T03:57:40Z",
+      "license": null,
+      "language": "HTML",
+      "homepage": "https://www.ipollo.ai/",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "winter-and-you-gone/dsh-turn-fold",
+      "order": 2634,
+      "name": "dsh-turn-fold",
+      "owner": "Winter-And-You-Gone",
+      "repo": "Winter-And-You-Gone/dsh-turn-fold",
+      "url": "https://github.com/Winter-And-You-Gone/dsh-turn-fold",
+      "category": "tools",
+      "description": {
+        "zh": "dsh-turn-fold",
+        "en": "dsh-turn-fold"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-16T05:06:20Z",
+      "updatedAt": "2026-08-16T05:06:39Z",
+      "createdAt": "2026-08-15T16:55:33Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "caoyiwei850/dsh-client-ui-skins",
+      "order": 213,
+      "name": "dsh-client-ui-skins",
+      "owner": "caoyiwei850",
+      "repo": "caoyiwei850/dsh-client-ui-skins",
+      "url": "https://github.com/caoyiwei850/dsh-client-ui-skins",
+      "category": "theme",
+      "description": {
+        "en": "Skin plugin for the DSH Web UI: 4 built-in skins plus custom image skins with the photo as a full-interface background and the palette following its dominant hue.",
+        "zh": "DSH Web 换肤插件：4 套内置皮肤 + 自定义图片皮肤，图片作为全界面背景，配色自动跟随图片主色调。"
+      },
+      "added": "2026-08-15",
+      "curated": true,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-16T05:06:01Z",
+      "updatedAt": "2026-08-16T05:06:13Z",
+      "createdAt": "2026-08-15T02:12:33Z",
+      "license": "MIT",
+      "language": "Shell",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-client-ui-skins",
+        "version": "0.1.7",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "curated",
+        "firstSeenAt": "2026-08-15",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "yxccai/dsh-desktop",
+      "order": 2388,
+      "name": "dsh-desktop",
+      "owner": "yxccai",
+      "repo": "yxccai/dsh-desktop",
+      "url": "https://github.com/yxccai/dsh-desktop",
+      "category": "model",
+      "description": {
+        "zh": "Unofficial Windows and macOS desktop app for DeepSeek Harness, with bundled runtime and automatic reuse of existing DSH environments.",
+        "en": "Unofficial Windows and macOS desktop app for DeepSeek Harness, with bundled runtime and automatic reuse of existing DSH environments."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-16T05:05:31Z",
+      "updatedAt": "2026-08-16T05:05:43Z",
+      "createdAt": "2026-08-15T09:11:11Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "yan-zero/dsh-remote-ssh",
+      "order": 2043,
+      "name": "dsh-remote-ssh",
+      "owner": "Yan-Zero",
+      "repo": "Yan-Zero/dsh-remote-ssh",
+      "url": "https://github.com/Yan-Zero/dsh-remote-ssh",
+      "category": "model",
+      "description": {
+        "zh": "Use SSH hosts as transparent workspaces in DeepSeek Harness.",
+        "en": "Use SSH hosts as transparent workspaces in DeepSeek Harness."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-16T05:04:35Z",
+      "updatedAt": "2026-08-16T05:04:40Z",
+      "createdAt": "2026-08-14T10:58:17Z",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "dolorescaritasangelus/dsh-aux",
+      "order": 1760,
+      "name": "DSH-AUX",
+      "owner": "DoloresCaritasAngelus",
+      "repo": "DoloresCaritasAngelus/DSH-AUX",
+      "url": "https://github.com/DoloresCaritasAngelus/DSH-AUX",
+      "category": "model",
+      "description": {
+        "zh": "Auxiliary model system for DeepSeek Harness: unified aux-LLM routing (per-task model, timeout, concurrency, failure cooldown, main-model fallback) + vision_analyze / web_extract / compress_text tools, settings page, and session image lifecycle cleanup.",
+        "en": "Auxiliary model system for DeepSeek Harness: unified aux-LLM routing (per-task model, timeout, concurrency, failure cooldown, main-model fallback) + vision_analyze / web_extract / compress_text tools, settings page, and session image lifecycle cleanup."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 2,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 2,
+      "pushedAt": "2026-08-16T05:04:33Z",
+      "updatedAt": "2026-08-16T05:04:59Z",
+      "createdAt": "2026-08-14T23:10:52Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    },
+    {
+      "id": "21hbguo/dsh-feishu-bridge-plugin",
+      "order": 2416,
+      "name": "dsh-feishu-bridge-plugin",
+      "owner": "21hbguo",
+      "repo": "21hbguo/dsh-feishu-bridge-plugin",
+      "url": "https://github.com/21hbguo/dsh-feishu-bridge-plugin",
+      "category": "session",
+      "description": {
+        "zh": "飞书机器人 ↔ DSH 对话桥：DSH 进程内 Cordis 插件，流式卡片 / 问答卡片 / 审批卡片 / 斜杠命令",
+        "en": "飞书机器人 ↔ DSH 对话桥：DSH 进程内 Cordis 插件，流式卡片 / 问答卡片 / 审批卡片 / 斜杠命令"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-16T05:04:21Z",
+      "updatedAt": "2026-08-16T05:04:31Z",
+      "createdAt": "2026-08-15T14:13:40Z",
+      "license": "BSD-3-Clause",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+      }
+    }
+  ],
+  "growthSeries": [
+    {
+      "date": "2026-08-13",
+      "added": 96,
+      "total": 96
+    },
+    {
+      "date": "2026-08-14",
+      "added": 260,
+      "total": 356
+    },
+    {
+      "date": "2026-08-15",
+      "added": 389,
+      "total": 745
+    },
+    {
+      "date": "2026-08-16",
+      "added": 2588,
+      "total": 3333
+    }
+  ],
+  "categoryCounts": {
+    "ui": 222,
+    "theme": 102,
+    "model": 1684,
+    "session": 182,
+    "memory": 84,
+    "tools": 545,
+    "skill": 105,
+    "workflow": 126,
+    "notify": 65,
+    "dev": 133,
+    "market": 37,
+    "fun": 48
+  }
+}

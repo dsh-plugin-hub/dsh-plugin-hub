@@ -40,3 +40,4 @@ yarn-error.log*
 /.wrangler/
 /outputs/
 /work/
+data/topic-scan-state.json
