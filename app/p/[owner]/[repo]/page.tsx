@@ -24,8 +24,9 @@ function findPreviewPlugin(owner: string, repo: string) {
 export async function generateMetadata({ params }: PluginRouteProps): Promise<Metadata> {
   const { owner, repo } = await params;
   const plugin = findPreviewPlugin(owner, repo);
+  // plugin.repo 已是全名 "owner/repo"（不再叠加 plugin.owner，避免标题双重前缀）
   const title = plugin
-    ? `${plugin.owner}/${plugin.repo} — ${plugin.name}`
+    ? `${plugin.repo} — ${plugin.name}`
     : `${owner}/${repo}`;
   const description = plugin
     ? plugin.description?.zh || plugin.description?.en || plugin.name
