@@ -2,13 +2,20 @@ import rawData from "@/data/plugins.generated.json";
 import { sanitizeRegistryInstallEvidence } from "@/lib/plugin-screening.mjs";
 
 export type Language = "zh" | "en";
+
+/** 插件分类，对齐 awesome-dsh-plugin 实际分类（12 类）。 */
 export type CategoryId =
   | "ui"
+  | "theme"
+  | "model"
   | "session"
+  | "memory"
   | "tools"
+  | "skill"
   | "workflow"
   | "notify"
   | "dev"
+  | "market"
   | "fun";
 
 export interface PluginManifest {
@@ -23,27 +30,18 @@ export interface PluginManifest {
   invalidDeclaredPaths: string[];
 }
 
-export interface PluginScreening {
-  version: number;
-  scope: "manifest" | "source";
-  state: "clear" | "review" | "blocked" | "pending";
-  risk: "low" | "medium" | "high" | "unknown";
-  checkedAt: string;
-  findings: Array<{
-    id: string;
-    severity: "medium" | "high";
-    label: Record<Language, string>;
-    files: string[];
-  }>;
-  filesInspected: string[];
-  checks: {
-    manifest: boolean;
-    license: boolean;
-    readme: boolean;
-    lockfile: boolean;
-    source: boolean;
-    securityDisclosure: boolean;
-  };
+/**
+ * 纯事实字段（无判定），由 lib/plugin-screening.mjs 的 deriveFacts(manifest, meta)
+ * best-effort 计算：Package.json 客观可读、不带安全结论。
+ */
+export interface PluginFacts {
+  /** package.json 含 dsh.* 声明（manifest.state === "verified"） */
+  hasManifest: boolean;
+  hasLockfile: boolean;
+  hasLicense: boolean;
+  hasReadme: boolean;
+  /** preinstall/install/postinstall/prepare 原样列出，不评判 */
+  lifecycleScripts: string[];
 }
 
 export interface PluginRecord {
@@ -72,17 +70,13 @@ export interface PluginRecord {
   defaultBranch: string | null;
   maintenance: "active" | "warm" | "quiet" | "archived" | "unknown";
   manifest: PluginManifest;
-  screenedCommit: string | null;
-  installCommand: string | null;
+  facts: PluginFacts;
+  /** 退出 topic / 仓库被删除标记 */
+  removed?: boolean;
   discovery: {
     source: "curated" | "topic";
     firstSeenAt: string;
     lastSeenAt: string;
-  };
-  screening: PluginScreening;
-  attention: {
-    level: "clear" | "review" | "caution";
-    reasons: string[];
   };
 }
 
@@ -127,9 +121,6 @@ export interface PluginRegistryData {
     topicTotal: number;
     metadataMatches: number;
     manifestMatches: number;
-    screeningClear: number;
-    screeningReview: number;
-    screeningBlocked: number;
     owners: number;
     stars: number;
   };
@@ -137,4 +128,9 @@ export interface PluginRegistryData {
   plugins: PluginRecord[];
 }
 
+/**
+ * 构建期快照：经 sanitizeRegistryInstallEvidence 字段白名单过滤后作为注册表使用。
+ * 快照本身不产生 screening 判定；facts/removed 等新字段由 P1-T4 的 data:sync
+ * 在生成 JSON 时写入（本文件不补算，缺失即未知）。
+ */
 export const pluginRegistry = sanitizeRegistryInstallEvidence(rawData) as unknown as PluginRegistryData;

@@ -1,0 +1,32 @@
+name: Deploy
+on:
+  push: { branches: [main] }
+  workflow_dispatch:
+  schedule:
+    - cron: '17 2 * * *'   # 每日 UTC 2:17 重建打包快照（可选）
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22.19.0', cache: npm }
+      - run: npm ci
+      - name: Sync data
+        run: npm run data:sync
+        env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+      - run: npm test        # 含 lint + typecheck + build + 集成测试
+      - name: Deploy Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --config dist/server/wrangler.json
+      - name: Apply D1 migrations
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: d1 migrations apply dsh-plugin-hub-visits --remote --config dist/server/wrangler.json

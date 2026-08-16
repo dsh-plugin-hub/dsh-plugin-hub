@@ -2,17 +2,12 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   categoryFromText,
-  markInspectionUnavailable,
+  deriveFacts,
+  installCommandFor,
   manifestSummary,
   normalizeRepositoryPath,
   sanitizeRegistryInstallEvidence,
-  screenRepository,
 } from "../lib/plugin-screening.mjs";
-
-const safeMeta = {
-  archived: false,
-  license: { spdx_id: "MIT" },
-};
 
 function manifest(pkg = {}) {
   return manifestSummary({
@@ -31,119 +26,158 @@ test("normalizes only repository-relative declared paths", () => {
   assert.equal(normalizeRepositoryPath("https://example.com/a.js"), null);
 });
 
-test("marks a fully inspectable local-only plugin as clear", () => {
-  const result = screenRepository({
-    meta: safeMeta,
-    manifest: manifest(),
-    files: ["README.md", "LICENSE", "pnpm-lock.yaml", "package.json"],
-    sourceFiles: [{ path: "lib/index.js", text: "export function apply(ctx) { return ctx; }" }],
-    readme: "## Security\nThis plugin has no network, shell, or file access.",
-    checkedAt: "2026-08-14T00:00:00.000Z",
-  });
-  assert.equal(result.state, "clear");
-  assert.equal(result.risk, "low");
-  assert.equal(result.checks.source, true);
-  assert.equal(result.checks.securityDisclosure, true);
-});
-
-test("flags lifecycle, network, filesystem, and credential access for review", () => {
-  const result = screenRepository({
-    meta: safeMeta,
-    manifest: manifest({ scripts: { prepare: "npm run build" } }),
-    files: ["README.md", "package.json"],
-    sourceFiles: [{
-      path: "lib/index.js",
-      text: "const key = process.env.API_KEY; await fetch(url); await writeFile(path, key);",
-    }],
-    readme: "Plugin docs",
-  });
-  assert.equal(result.state, "review");
-  assert.equal(result.risk, "medium");
-  assert.ok(result.findings.some((finding) => finding.id === "lifecycle-script"));
-  assert.ok(result.findings.some((finding) => finding.id === "network-egress"));
-  assert.ok(result.findings.some((finding) => finding.id === "filesystem-write"));
-  assert.ok(result.findings.some((finding) => finding.id === "credential-access"));
-});
-
-test("blocks permission bypass and dynamic code execution signals", () => {
-  const result = screenRepository({
-    meta: safeMeta,
-    manifest: manifest(),
-    files: ["README.md", "package-lock.json", "package.json"],
-    sourceFiles: [{ path: "lib/index.js", text: "eval(code); run('--dangerously-skip-permissions');" }],
-    readme: "Security boundary",
-  });
-  assert.equal(result.state, "blocked");
-  assert.equal(result.risk, "high");
-  assert.ok(result.findings.some((finding) => finding.id === "permission-bypass"));
-  assert.ok(result.findings.some((finding) => finding.id === "dynamic-code"));
-});
-
-test("extracts dsh manifest paths and classifies common plugin categories", () => {
+test("extracts dsh manifest fields from package.json", () => {
   const summary = manifest({
     exports: { ".": { default: "./lib/index.js" }, "./client": "./lib/client.js" },
     dsh: {
       bundle: { patch: "./cordis.patch.yml" },
       client: { platform: "web" },
     },
+    scripts: { prepare: "npm run build", postinstall: "node scripts/patch.mjs" },
+    dependencies: { react: "^19", lodash: "^4" },
   });
   assert.equal(summary.state, "verified");
   assert.deepEqual(summary.kinds, ["bundle", "client"]);
   assert.ok(summary.declaredPaths.includes("lib/client.js"));
-  assert.equal(categoryFromText("desktop notification bridge"), "notify");
-  assert.equal(categoryFromText("OCR vision document tool"), "tools");
+  assert.deepEqual(summary.lifecycleScripts, ["postinstall", "prepare"]);
+  assert.equal(summary.runtimeDependencies, 2);
+  assert.equal(summary.packageName, "safe-plugin");
 });
 
-test("withdraws stale installation evidence when a rescan cannot complete", () => {
-  const previous = {
-    defaultBranch: "main",
-    manifest: manifest(),
-    screenedCommit: "a".repeat(40),
-    installCommand: `dsh plugin --profile web add github:owner/plugin#${"a".repeat(40)}`,
-    discovery: { source: "curated", firstSeenAt: "2026-08-01", lastSeenAt: "2026-08-10" },
-    screening: screenRepository({
-      meta: safeMeta,
-      manifest: manifest(),
-      files: ["README.md", "package-lock.json"],
-      sourceFiles: [{ path: "lib/index.js", text: "export const safe = true;" }],
-      readme: "Security",
-    }),
-  };
-
-  const unavailable = markInspectionUnavailable(previous, {
-    kind: "error",
-    checkedAt: "2026-08-14T10:00:00.000Z",
-  });
-  assert.equal(unavailable.installCommand, null);
-  assert.equal(unavailable.screenedCommit, null);
-  assert.equal(unavailable.screening.state, "review");
-  assert.equal(unavailable.discovery.lastSeenAt, "2026-08-14T10:00:00.000Z");
-
-  const rejected = markInspectionUnavailable(previous, {
-    kind: "rejected",
-    checkedAt: "2026-08-14T10:05:00.000Z",
-  });
-  assert.equal(rejected.installCommand, null);
-  assert.equal(rejected.screening.state, "blocked");
-  assert.equal(rejected.screening.risk, "high");
+test("returns a missing manifest summary for non-object input", () => {
+  const summary = manifestSummary(null, "main");
+  assert.equal(summary.state, "missing");
+  assert.equal(summary.branch, "main");
+  assert.deepEqual(summary.lifecycleScripts, []);
+  assert.deepEqual(summary.declaredPaths, []);
 });
 
-test("removes unpinned or mismatched commands from stored registry data", () => {
-  const commit = "b".repeat(40);
-  const base = {
-    repo: "owner/plugin",
-    curated: true,
-    manifest: { state: "verified" },
-    screening: { state: "review" },
-  };
+test("derives facts from manifest and repository metadata", () => {
+  const facts = deriveFacts(manifest({ scripts: { postinstall: "node patch.mjs" } }), {
+    license: { spdx_id: "MIT" },
+    files: ["README.md", "package.json", "pnpm-lock.yaml"],
+  });
+  assert.equal(facts.hasManifest, true);
+  assert.equal(facts.hasLicense, true);
+  assert.equal(facts.hasReadme, true);
+  assert.equal(facts.hasLockfile, true);
+  assert.deepEqual(facts.lifecycleScripts, ["postinstall"]);
+});
+
+test("best-effort facts tolerate missing metadata", () => {
+  const facts = deriveFacts(manifestSummary(null, null), { license: "NOASSERTION" });
+  assert.equal(facts.hasManifest, false);
+  assert.equal(facts.hasLicense, false);
+  assert.equal(facts.hasLockfile, false);
+  assert.equal(facts.hasReadme, false);
+  assert.deepEqual(facts.lifecycleScripts, []);
+});
+
+test("facts accept precomputed lockfile/readme flags", () => {
+  const facts = deriveFacts(manifest(), {
+    license: "MIT",
+    hasLockfile: true,
+    hasReadme: true,
+  });
+  assert.equal(facts.hasLockfile, true);
+  assert.equal(facts.hasReadme, true);
+  assert.equal(facts.hasLicense, true);
+});
+
+test("builds an unpinned install command for valid owner/name repos", () => {
+  assert.equal(
+    installCommandFor("owner/plugin"),
+    "dsh plugin --profile web add github:owner/plugin",
+  );
+  assert.equal(
+    installCommandFor("Owner-Name/repo.name_1"),
+    "dsh plugin --profile web add github:Owner-Name/repo.name_1",
+  );
+  assert.equal(
+    installCommandFor("  owner/plugin  "),
+    "dsh plugin --profile web add github:owner/plugin",
+  );
+});
+
+test("rejects invalid repo inputs for installCommandFor", () => {
+  assert.equal(installCommandFor(""), null);
+  assert.equal(installCommandFor("owner"), null);
+  assert.equal(installCommandFor("owner/plugin/extra"), null);
+  assert.equal(installCommandFor("/plugin"), null);
+  assert.equal(installCommandFor("owner/"), null);
+  assert.equal(installCommandFor("owner//plugin"), null);
+  assert.equal(installCommandFor("../.."), null);
+  assert.equal(installCommandFor("https://github.com/owner/plugin"), null);
+  assert.equal(installCommandFor("a".repeat(241)), null);
+  assert.equal(installCommandFor(null), null);
+});
+
+test("maps text to all twelve categories", () => {
+  assert.equal(categoryFromText("dsh web sidebar panel"), "ui");
+  assert.equal(categoryFromText("dark mode appearance theme"), "theme");
+  assert.equal(categoryFromText("openai llm provider proxy"), "model");
+  assert.equal(categoryFromText("conversation memory recall"), "memory");
+  assert.equal(categoryFromText("session export chat history"), "session");
+  assert.equal(categoryFromText("prompt skill pack"), "skill");
+  assert.equal(categoryFromText("cron automation pipeline"), "workflow");
+  assert.equal(categoryFromText("telegram webhook notify"), "notify");
+  assert.equal(categoryFromText("debug sandbox inspector"), "dev");
+  assert.equal(categoryFromText("plugin marketplace catalog"), "market");
+  assert.equal(categoryFromText("emoji sticker pet"), "fun");
+  assert.equal(categoryFromText("ocr vision document tool"), "tools");
+});
+
+test("categoryFromText falls back to tools for unrelated text", () => {
+  assert.equal(categoryFromText("random words with no signal"), "tools");
+  assert.equal(categoryFromText(""), "tools");
+});
+
+test("whitelists plugin fields and drops screening evidence", () => {
+  const registry = sanitizeRegistryInstallEvidence({
+    summary: { listed: 1, screeningClear: 0, screeningReview: 2, screeningBlocked: 9, stars: 10 },
+    plugins: [{
+      id: "owner/plugin",
+      repo: "Owner/Plugin",
+      manifest: { state: "verified" },
+      screening: { state: "blocked" },
+      screenedCommit: "abc",
+      installCommand: "dsh plugin --profile web add github:Owner/Plugin",
+      attention: { level: "caution" },
+      facts: { hasManifest: true, hasLicense: true },
+      removed: false,
+    }],
+  });
+  assert.equal(registry.summary.screeningClear, undefined);
+  assert.equal(registry.summary.screeningReview, undefined);
+  assert.equal(registry.summary.screeningBlocked, undefined);
+  assert.equal(registry.summary.listed, 1);
+  assert.equal(registry.summary.stars, 10);
+  const plugin = registry.plugins[0];
+  assert.equal(plugin.screening, undefined);
+  assert.equal(plugin.screenedCommit, undefined);
+  assert.equal(plugin.installCommand, undefined);
+  assert.equal(plugin.attention, undefined);
+  assert.equal(plugin.id, "owner/plugin");
+  assert.equal(plugin.repo, "Owner/Plugin");
+  assert.deepEqual(plugin.facts, { hasManifest: true, hasLicense: true });
+  assert.equal(plugin.removed, false);
+});
+
+test("cleans malformed repo values", () => {
   const registry = sanitizeRegistryInstallEvidence({
     plugins: [
-      { ...base, screenedCommit: null, installCommand: "dsh plugin --profile web add github:owner/plugin" },
-      { ...base, screenedCommit: commit, installCommand: "dsh plugin --profile web add github:owner/plugin#wrong" },
-      { ...base, screenedCommit: commit, installCommand: `dsh plugin --profile web add github:owner/plugin#${commit}` },
+      { repo: "not-a-repo" },
+      { repo: "owner/plugin/extra" },
+      { repo: "Owner/Plugin" },
     ],
   });
-  assert.equal(registry.plugins[0].installCommand, null);
-  assert.equal(registry.plugins[1].installCommand, null);
-  assert.equal(registry.plugins[2].installCommand, `dsh plugin --profile web add github:owner/plugin#${commit}`);
+  assert.equal(registry.plugins[0].repo, null);
+  assert.equal(registry.plugins[1].repo, null);
+  assert.equal(registry.plugins[2].repo, "Owner/Plugin");
+});
+
+test("passes through non-registry input untouched", () => {
+  assert.equal(sanitizeRegistryInstallEvidence(null), null);
+  assert.equal(sanitizeRegistryInstallEvidence(undefined), undefined);
+  assert.equal(sanitizeRegistryInstallEvidence({ plugins: "nope" }).plugins, "nope");
 });

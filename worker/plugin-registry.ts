@@ -1,28 +1,56 @@
-import bundledRegistryJson from "../data/plugins.generated.json";
+/**
+ * Worker 侧 GitHub 全量贪心分桶扫描（P1-T3）。
+ *
+ * 依据方案文档 4.1 节与 PLAN 6.1：
+ * - 按月 created 分桶（created:YYYY-MM-01..YYYY-MM-31, sort:created asc）逐页扫完一桶；
+ *   桶内结果触顶 1000（GitHub Search 硬上限）→ 按天二分递归；
+ * - 首轮全量：从当前月逐月向过去回退，连续 3 个空桶停止（无 oldestSeen 时回退到安全下限）；
+ * - 增量（每次 cron）：pushed:>=上次运行时间 + 当月 created 窗口（新仓库）；
+ * - 每周全量重扫 + 与注册表 diff：本次全量未再出现的 topic 仓库置 removed=true（不物理删除）；
+ * - 同步进度持久化到 KV（sync-state:v2），断点续扫：预算（每次 run 最多 60 次 search 调用）
+ *   或平台墙钟上限打断后，下轮 cron 从持久化进度继续；
+ * - 配额保护：匿名 search 10 次/分 → 调用间 sleep ≥ 6.5s（有 token 时按 2 次/秒）；
+ *   403/429 读取 x-ratelimit-remaining/reset 重试；失败降级 automation.state='degraded'。
+ *
+ * 元数据直用 search 结果（stars/forks/pushed_at/license/language/archived/default_branch/
+ * homepage/description/created_at 全都有），不再逐仓库调 commits API。
+ * 事实采集（可选增强）：每轮最多 20 个仓库 raw 拉 package.json，用 manifestSummary + deriveFacts
+ * 填充 facts；未采集的仓库保持保守默认值（hasManifest=false、lifecycleScripts=[]）。
+ */
+import bundledRegistryJson from "../data/plugins.generated.json" with { type: "json" };
 import type {
   CategoryId,
+  PluginFacts,
   PluginManifest,
   PluginRecord,
   PluginRegistryData,
-  PluginScreening,
 } from "../lib/plugin-data";
 import { readResponseTextLimited } from "../lib/limited-response.mjs";
 import {
   categoryFromText,
-  markInspectionUnavailable,
+  deriveFacts,
   manifestSummary,
   normalizeRepositoryPath,
   sanitizeRegistryInstallEvidence,
-  screenRepository,
 } from "../lib/plugin-screening.mjs";
 
 const REGISTRY_KEY = "registry:v2";
-const STATE_KEY = "sync-state:v1";
-const MAX_SCANS_PER_RUN = 7;
-const MAX_SEARCH_PAGE = 10;
-const RESCAN_AFTER_MS = 7 * 24 * 60 * 60 * 1_000;
+const STATE_KEY = "sync-state:v2";
+export const SEARCH_PER_PAGE = 100;
+export const SEARCH_PAGE_CAP = 10;
+export const BUCKET_RESULT_CAP = 1_000;
+export const EMPTY_BUCKET_STOP = 3;
+export const SWEEP_FLOOR = "2020-01-01";
+const MAX_SPLIT_DEPTH = 10;
+const FULL_SCAN_INTERVAL_MS = 7 * 24 * 60 * 60 * 1_000;
+const PUSHED_FIRST_RUN_WINDOW_MS = 24 * 60 * 60 * 1_000;
+const INCREMENTAL_CREATED_WINDOW_MS = 48 * 60 * 60 * 1_000;
+const MAX_SEARCH_CALLS_PER_RUN = 60;
+const MAX_SEARCH_RETRIES = 2;
+const MAX_RATE_WAIT_MS = 30_000;
+const SECONDARY_BACKOFF_MS = 13_000;
+const MAX_FACT_FETCHES_PER_RUN = 20;
 const MAX_JSON_BYTES = 6_000_000;
-const MAX_COMMIT_JSON_BYTES = 300_000;
 const MAX_TEXT_BYTES = 140_000;
 
 export interface PluginRegistryEnv {
@@ -57,19 +85,196 @@ interface GithubSearchResponse {
   items: GithubRepository[];
 }
 
-interface GithubCommitResponse {
-  sha: string;
+/** ISO 日期/时间区间 [start, end]（含），用于 GitHub 时间限定符。 */
+export interface DateRange {
+  start: string;
+  end: string;
 }
 
-interface SeenCandidate {
-  pushedAt: string | null;
-  checkedAt: string;
-  outcome: "listed" | "rejected" | "blocked" | "error";
+/** 二分扫描中的子区间（带页游标，支持断点续扫）。 */
+interface PendingRange extends DateRange {
+  page: number;
+  collected: number;
+  depth: number;
+}
+
+/** 全量扫描进度（持久化到 KV，跨 cron run 续扫）。 */
+interface FullScanProgress {
+  mode: "first" | "weekly";
+  startedAt: string;
+  /** 是否启用「连续空桶停止」：首轮 / 无 oldestSeen 时启用；周扫（受 oldestSeen 约束）不启用 */
+  useEmptyStop: boolean;
+  /** 待扫月份桶（新 → 旧） */
+  monthQueue: DateRange[];
+  /** 当前月份的二分区间栈（LIFO） */
+  rangeStack: PendingRange[];
+  /** 当前月份已收集结果数（跨 run 累计，用于空桶判定） */
+  monthCollected: number;
+  emptyStreak: number;
+  collected: number;
+  /** 本次全量已确认仍在 topic 的仓库 id（周扫 diff 用，跨 run 累计） */
+  seen: string[];
+  /** 扫描开始时 registry 中的 topic 仓库 id 快照（周扫 diff 用） */
+  topicBefore: string[];
 }
 
 interface SyncState {
-  cursorPage: number;
-  seen: Record<string, SeenCandidate>;
+  version: 2;
+  lastRunAt: string | null;
+  lastFullScanAt: string | null;
+  progress: FullScanProgress | null;
+  factsCollected: string[];
+}
+
+interface RunOutcome {
+  topicTotal: number | null;
+  mergedThisRun: number;
+  discoveredThisRun: number;
+  errors: string[];
+}
+
+// ---------------------------------------------------------------------------
+// 错误与预算
+// ---------------------------------------------------------------------------
+
+class BudgetExhaustedError extends Error {}
+
+class RateLimitError extends Error {
+  readonly remaining: string | null;
+  readonly reset: string | null;
+  constructor(message: string, remaining: string | null, reset: string | null) {
+    super(message);
+    this.remaining = remaining;
+    this.reset = reset;
+  }
+}
+
+/** 每次 cron run 的 search 调用预算；耗尽即停，进度交给下轮续扫。 */
+class SearchBudget {
+  remaining: number;
+  constructor(limit: number) {
+    this.remaining = limit;
+  }
+  consume() {
+    if (this.remaining <= 0) throw new BudgetExhaustedError("search budget exhausted");
+    this.remaining -= 1;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 纯分桶规划函数（供 tests/worker-bucket.test.mjs 直接 import，无网络）
+// ---------------------------------------------------------------------------
+
+function parseDateStrict(value: string | null | undefined): Date | null {
+  if (!value || typeof value !== "string") return null;
+  const normalized = /^\d{4}-\d{2}-\d{2}$/u.test(value) ? `${value}T00:00:00Z` : value;
+  const time = Date.parse(normalized);
+  return Number.isFinite(time) ? new Date(time) : null;
+}
+
+function toISODate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+/** 月份桶：所在自然月的 [1 号, 月末]。 */
+export function monthRangeFor(date: Date): DateRange {
+  const start = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1));
+  const end = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 0));
+  return { start: toISODate(start), end: toISODate(end) };
+}
+
+/** 上一月份桶（跨年正确）。 */
+export function prevMonthRange(range: DateRange): DateRange {
+  const start = parseDateStrict(range.start);
+  if (!start) return range;
+  return monthRangeFor(new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() - 1, 1)));
+}
+
+/**
+ * 全量扫描的月份桶序列（新 → 旧）：从 now 所在月回退到 oldestSeen 所在月（含）。
+ * oldestSeen 为空（首轮无数据）或早于 floor 时回退到 floor（安全下限，防止无限回退）。
+ */
+export function planBuckets(now: Date, oldestSeen?: string | null, floor = SWEEP_FLOOR): DateRange[] {
+  const buckets: DateRange[] = [];
+  const floorDate = parseDateStrict(floor) ?? new Date(0);
+  const oldestDate = parseDateStrict(oldestSeen);
+  const stopAt = oldestDate && oldestDate.getTime() >= floorDate.getTime() ? oldestDate : floorDate;
+  const stopRange = monthRangeFor(stopAt);
+  let cursor = monthRangeFor(now);
+  while (cursor.start >= stopRange.start) {
+    buckets.push(cursor);
+    cursor = prevMonthRange(cursor);
+  }
+  return buckets;
+}
+
+/**
+ * 区间按时间中点切分（返回 [前半, 后半]，首尾相接、与原区间覆盖一致）。
+ * 单日区间无法再切分 → 返回 [range, range]，调用方应停止二分（触顶时接受溢出）。
+ */
+export function splitRange(range: DateRange): [DateRange, DateRange] {
+  if (range.start === range.end) return [range, range];
+  const start = parseDateStrict(range.start);
+  const end = parseDateStrict(range.end);
+  if (!start || !end) return [range, range];
+  const mid = new Date(start.getTime() + Math.floor((end.getTime() - start.getTime()) / 2));
+  const midDay = toISODate(mid);
+  return [
+    { start: range.start, end: midDay },
+    { start: midDay, end: range.end },
+  ];
+}
+
+/** 连续空桶停止判定：仅首轮（useEmptyStop=true）生效。 */
+export function shouldStopOnEmptyStreak(
+  emptyStreak: number,
+  useEmptyStop: boolean,
+  stopAfter = EMPTY_BUCKET_STOP,
+): boolean {
+  return useEmptyStop && emptyStreak >= stopAfter;
+}
+
+/**
+ * 增量新仓库 created 窗口起点：max(当月 1 号, now - INCREMENTAL_CREATED_WINDOW_MS)。
+ * 当月桶可能包含数千仓库（如 2026-08 有 4000+），每 30 分钟整月重扫会烧光配额，
+ * 因此只补扫最近窗口；整月完整性由每周全量重扫兜底。
+ */
+export function incrementalCreatedStart(now: Date): string {
+  const monthStart = monthRangeFor(now).start;
+  const windowStart = new Date(now.getTime() - INCREMENTAL_CREATED_WINDOW_MS).toISOString();
+  return windowStart < monthStart ? monthStart : windowStart;
+}
+
+// ---------------------------------------------------------------------------
+// 基础工具
+// ---------------------------------------------------------------------------
+
+function messageOf(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/** 去掉 ISO 时间戳的毫秒部分（GitHub 限定符更稳妥）。 */
+function isoTimestamp(value: string): string {
+  return value.replace(/\.\d{3}Z$/u, "Z");
+}
+
+function midpointISO(startISO: string, endISO: string): string {
+  const start = Date.parse(startISO);
+  const end = Date.parse(endISO);
+  const mid = new Date(start + Math.floor((end - start) / 2));
+  return isoTimestamp(mid.toISOString());
+}
+
+function safeRepoId(fullName: string): string | null {
+  try {
+    return validateRepoName(fullName).toLowerCase();
+  } catch {
+    return null;
+  }
 }
 
 function bundledRegistry(): PluginRegistryData {
@@ -103,7 +308,11 @@ async function fetchLimited(url: string, init: RequestInit, maxBytes: number) {
   if (response.status === 404) return null;
   if (!response.ok) {
     const remaining = response.headers.get("x-ratelimit-remaining");
+    const reset = response.headers.get("x-ratelimit-reset");
     const suffix = remaining === "0" ? " (GitHub rate limit reached)" : "";
+    if (response.status === 403 || response.status === 429) {
+      throw new RateLimitError(`${response.status} ${response.statusText}: ${url}${suffix}`, remaining, reset);
+    }
     throw new Error(`${response.status} ${response.statusText}: ${url}${suffix}`);
   }
   const length = Number(response.headers.get("content-length") || 0);
@@ -131,103 +340,96 @@ async function fetchRaw(repo: string, revision: string, filePath: string) {
   return fetchLimited(url, { headers: { Accept: "text/plain" } }, MAX_TEXT_BYTES);
 }
 
-async function resolveCommitSha(repo: string, branch: string, env: PluginRegistryEnv) {
-  validateRepoName(repo);
-  const commit = await fetchJson<GithubCommitResponse>(
-    `https://api.github.com/repos/${repo}/commits/${encodeURIComponent(branch)}`,
-    env,
-    MAX_COMMIT_JSON_BYTES,
-  );
-  if (!/^[a-f\d]{40,64}$/iu.test(commit.sha)) {
-    throw new Error(`GitHub returned an invalid commit id for ${repo}`);
-  }
-  return commit.sha.toLowerCase();
+// ---------------------------------------------------------------------------
+// GitHub Search（配额保护）
+// ---------------------------------------------------------------------------
+
+function searchSleepMs(env: PluginRegistryEnv): number {
+  // 匿名 search 10 次/分 → 调用间 ≥6.5s；有 token（30 次/分）→ 2s（方案 4.1 按 2 次/秒）
+  return env.GITHUB_TOKEN?.trim() ? 2_000 : 6_500;
 }
 
-function metadataFromPlugin(plugin: PluginRecord): GithubRepository {
-  return {
-    full_name: plugin.repo,
-    name: plugin.repo.split("/")[1] || plugin.name,
-    description: plugin.description.en || plugin.description.zh || null,
-    html_url: plugin.url,
-    homepage: plugin.homepage,
-    default_branch: plugin.defaultBranch || plugin.manifest.branch || "main",
-    fork: false,
-    archived: plugin.archived,
-    stargazers_count: plugin.stars || 0,
-    forks_count: plugin.forks || 0,
-    open_issues_count: plugin.openIssues || 0,
-    watchers_count: plugin.watchers || 0,
-    pushed_at: plugin.pushedAt,
-    updated_at: plugin.updatedAt,
-    created_at: plugin.createdAt,
-    language: plugin.language,
-    owner: { login: plugin.owner },
-    license: plugin.license ? { spdx_id: plugin.license } : null,
-  };
+/** 403/429 后等待多久重试：优先按 x-ratelimit-reset，重置过远则不等待（本轮放弃）。 */
+function rateLimitWaitMs(error: RateLimitError): number {
+  if (error.reset) {
+    const resetMs = Number(error.reset) * 1000;
+    if (Number.isFinite(resetMs) && resetMs > 0) {
+      const wait = resetMs - Date.now() + 1_000;
+      if (wait > 0 && wait <= MAX_RATE_WAIT_MS) return wait;
+      return 0;
+    }
+  }
+  // secondary rate limit（无 reset 头）→ 短退避
+  return SECONDARY_BACKOFF_MS;
 }
 
-function selectSourcePaths(manifest: PluginManifest) {
-  const declared = manifest.declaredPaths
-    .filter((item) => !/\.(?:d\.ts|map)$/iu.test(item))
-    .sort((a, b) => {
-      const aCode = /\.[cm]?[jt]sx?$/iu.test(a) ? 0 : 1;
-      const bCode = /\.[cm]?[jt]sx?$/iu.test(b) ? 0 : 1;
-      return aCode - bCode;
-    });
-  const fallbacks = ["src/index.ts", "dsh/index.js", "index.ts", "index.js", "lib/index.js"];
-  return [...new Set([...declared, ...fallbacks])].slice(0, 3);
-}
-
-async function inspectRepository(meta: GithubRepository, env: PluginRegistryEnv) {
-  const repo = validateRepoName(meta.full_name);
-  const branch = meta.default_branch || "main";
-  const commitSha = await resolveCommitSha(repo, branch, env);
-  const packageText = await fetchRaw(repo, commitSha, "package.json");
-  if (!packageText) return { outcome: "rejected" as const, reason: "package.json missing" };
-
-  let pkg: unknown;
-  try {
-    pkg = JSON.parse(packageText);
-  } catch {
-    return { outcome: "rejected" as const, reason: "package.json invalid" };
-  }
-  const manifest = manifestSummary(pkg, branch) as PluginManifest;
-  if (manifest.state !== "verified") {
-    return { outcome: "rejected" as const, reason: "dsh manifest missing", manifest };
-  }
-
-  const readmePath = "README.md";
-  const sourcePaths = selectSourcePaths(manifest);
-  const [readme, ...sourceTexts] = await Promise.all([
-    readmePath ? fetchRaw(repo, commitSha, readmePath) : Promise.resolve(null),
-    ...sourcePaths.map((item) => fetchRaw(repo, commitSha, item)),
-  ]);
-  const sourceFiles = sourcePaths.flatMap((filePath, index) => {
-    const text = sourceTexts[index];
-    return typeof text === "string" ? [{ path: filePath, text }] : [];
+async function githubSearchPage(
+  env: PluginRegistryEnv,
+  query: string,
+  sort: string,
+  order: string,
+  page: number,
+  budget: SearchBudget,
+  attempt = 0,
+): Promise<GithubSearchResponse> {
+  budget.consume();
+  await sleep(searchSleepMs(env));
+  const params = new URLSearchParams({
+    q: query,
+    sort,
+    order,
+    per_page: String(SEARCH_PER_PAGE),
+    page: String(page),
   });
-  const rootFiles = ["package.json", ...(readme ? [readmePath] : [])];
-  const screening = screenRepository({
-    meta,
-    manifest,
-    files: rootFiles,
-    sourceFiles,
-    readme,
-  }) as PluginScreening;
+  const url = `https://api.github.com/search/repositories?${params}`;
+  try {
+    return await fetchJson<GithubSearchResponse>(url, env);
+  } catch (error) {
+    if (error instanceof RateLimitError && attempt < MAX_SEARCH_RETRIES) {
+      const waitMs = rateLimitWaitMs(error);
+      if (waitMs > 0) {
+        await sleep(waitMs);
+        return githubSearchPage(env, query, sort, order, page, budget, attempt + 1);
+      }
+    }
+    throw error;
+  }
+}
+
+function createdQualifier(start: string, end: string): string {
+  return `topic:dsh-plugin created:${start}..${end}`;
+}
+
+function pushedQualifier(startISO: string, endISO: string): string {
+  return `topic:dsh-plugin pushed:${isoTimestamp(startISO)}..${isoTimestamp(endISO)}`;
+}
+
+// ---------------------------------------------------------------------------
+// 记录构造与合并
+// ---------------------------------------------------------------------------
+
+function defaultManifest(branch: string | null): PluginManifest {
   return {
-    outcome: screening.state === "blocked" ? "blocked" as const : "listed" as const,
-    commitSha,
-    manifest,
-    screening,
-    readme,
+    state: "missing",
+    branch,
+    kinds: [],
+    packageName: null,
+    version: null,
+    lifecycleScripts: [],
+    runtimeDependencies: 0,
+    declaredPaths: [],
+    invalidDeclaredPaths: [],
   };
 }
 
-function attentionFromScreening(screening: PluginScreening) {
+/** 未采集事实的保守默认值（task 要求：hasManifest=false、lifecycleScripts=[] 等）。 */
+function defaultFacts(): PluginFacts {
   return {
-    level: screening.state === "blocked" ? "caution" as const : screening.state === "clear" ? "clear" as const : "review" as const,
-    reasons: screening.findings.map((finding) => finding.label.zh),
+    hasManifest: false,
+    hasLockfile: false,
+    hasLicense: false,
+    hasReadme: false,
+    lifecycleScripts: [],
   };
 }
 
@@ -241,24 +443,22 @@ function maintenanceState(meta: GithubRepository) {
   return "quiet" as const;
 }
 
-function recordFromInspection(
+/** 由 search 结果元数据直接构造 PluginRecord（无 commits API、无 screening）。 */
+function recordFromMeta(
   meta: GithubRepository,
-  commitSha: string,
-  manifest: PluginManifest,
-  screening: PluginScreening,
   previous: PluginRecord | undefined,
   now: string,
-) {
+  fetched: { manifest: PluginManifest; facts: PluginFacts } | null,
+): PluginRecord {
   const curated = previous?.curated === true;
   const [fallbackOwner, fallbackName] = meta.full_name.split("/");
-  const description = meta.description?.trim() || manifest.packageName || meta.name;
-  const installAllowed = curated ? screening.state !== "blocked" : screening.state === "clear";
-  const firstSeenAt = previous?.discovery?.firstSeenAt || previous?.added || now.slice(0, 10);
-  const category = previous?.category || categoryFromText(`${meta.name} ${description}`) as CategoryId;
+  const description = meta.description?.trim() || meta.name || fallbackName;
+  const category = previous?.category || (categoryFromText(`${meta.name} ${description}`) as CategoryId);
+  const firstSeenAt = previous?.discovery?.firstSeenAt || now.slice(0, 10);
   return {
     id: meta.full_name.toLowerCase(),
     order: previous?.order ?? Number.MAX_SAFE_INTEGER,
-    name: previous?.name || manifest.packageName || fallbackName,
+    name: previous?.name || meta.name || fallbackName,
     owner: previous?.owner || meta.owner?.login || fallbackOwner,
     repo: meta.full_name,
     url: `https://github.com/${meta.full_name}`,
@@ -278,84 +478,366 @@ function recordFromInspection(
     language: meta.language ?? previous?.language ?? null,
     homepage: meta.homepage || previous?.homepage || null,
     archived: Boolean(meta.archived),
-    defaultBranch: meta.default_branch || manifest.branch || null,
+    defaultBranch: meta.default_branch || previous?.defaultBranch || null,
     maintenance: maintenanceState(meta),
-    manifest,
-    screenedCommit: commitSha,
-    installCommand: installAllowed ? `dsh plugin --profile web add github:${meta.full_name}#${commitSha}` : null,
+    manifest: fetched?.manifest ?? previous?.manifest ?? defaultManifest(meta.default_branch),
+    facts: fetched?.facts ?? previous?.facts ?? defaultFacts(),
     discovery: {
       source: curated ? "curated" as const : "topic" as const,
       firstSeenAt,
       lastSeenAt: now,
     },
-    screening,
-    attention: attentionFromScreening(screening),
   } satisfies PluginRecord;
 }
 
-async function searchTopicPage(page: number, env: PluginRegistryEnv) {
-  const query = new URLSearchParams({
-    q: "topic:dsh-plugin",
-    sort: "updated",
-    order: "desc",
-    per_page: "100",
-    page: String(page),
-  });
-  return fetchJson<GithubSearchResponse>(`https://api.github.com/search/repositories?${query}`, env);
+/** 把 search 结果合并进工作副本（upsert，去重按 repo id）。 */
+function mergeRepos(
+  previousById: Map<string, PluginRecord>,
+  items: GithubRepository[],
+  now: string,
+): { merged: number; discovered: number } {
+  let merged = 0;
+  let discovered = 0;
+  for (const item of items) {
+    if (!item?.full_name) continue;
+    const id = safeRepoId(item.full_name);
+    if (!id) continue;
+    const previous = previousById.get(id);
+    const record = recordFromMeta(item, previous, now, null);
+    previousById.set(id, record);
+    merged += 1;
+    if (!previous) discovered += 1;
+  }
+  return { merged, discovered };
 }
 
-function shouldRescan(plugin: PluginRecord, state: SyncState) {
-  if (plugin.screening?.scope !== "source") return true;
-  const seen = state.seen[plugin.id];
-  const checked = Date.parse(seen?.checkedAt || plugin.screening.checkedAt || "0");
-  return !Number.isFinite(checked) || Date.now() - checked >= RESCAN_AFTER_MS;
-}
+// ---------------------------------------------------------------------------
+// 增量扫描（每次 cron）：pushed 变更 + 当月 created 窗口 + topic 计数
+// ---------------------------------------------------------------------------
 
-function candidateWasRecentlyRejected(meta: GithubRepository, state: SyncState) {
-  const seen = state.seen[meta.full_name.toLowerCase()];
-  if (!seen || !["rejected", "blocked"].includes(seen.outcome)) return false;
-  const checked = Date.parse(seen.checkedAt);
-  return seen.pushedAt === meta.pushed_at && Number.isFinite(checked) && Date.now() - checked < RESCAN_AFTER_MS;
-}
-
-async function mapLimit<T, R>(items: T[], limit: number, mapper: (item: T) => Promise<R>) {
-  const result = new Array<R>(items.length);
-  let cursor = 0;
-  async function worker() {
-    while (true) {
-      const index = cursor++;
-      if (index >= items.length) return;
-      result[index] = await mapper(items[index]);
+/** pushed 区间扫描：触顶 1000 时按时间中点二分（深度受限），预算耗尽返回已收集部分。 */
+async function sweepPushed(
+  env: PluginRegistryEnv,
+  budget: SearchBudget,
+  startISO: string,
+  endISO: string,
+): Promise<{ items: GithubRepository[]; truncated: boolean }> {
+  const items: GithubRepository[] = [];
+  const stack: PendingRange[] = [{ start: startISO, end: endISO, page: 1, collected: 0, depth: 0 }];
+  let truncated = false;
+  while (stack.length > 0 && !truncated) {
+    const top = stack[stack.length - 1];
+    let response: GithubSearchResponse;
+    try {
+      response = await githubSearchPage(env, pushedQualifier(top.start, top.end), "updated", "desc", top.page, budget);
+    } catch (error) {
+      if (error instanceof BudgetExhaustedError) {
+        truncated = true;
+        break;
+      }
+      throw error;
+    }
+    const pageItems = response.items || [];
+    items.push(...pageItems);
+    top.collected += pageItems.length;
+    const finished = pageItems.length < SEARCH_PER_PAGE || top.page >= SEARCH_PAGE_CAP;
+    if (finished) {
+      stack.pop();
+      const atCap = top.collected >= BUCKET_RESULT_CAP;
+      if (atCap && top.start !== top.end && top.depth < MAX_SPLIT_DEPTH) {
+        const mid = midpointISO(top.start, top.end);
+        if (mid !== top.start && mid !== top.end) {
+          stack.push({ start: mid, end: top.end, page: 1, collected: 0, depth: top.depth + 1 });
+          stack.push({ start: top.start, end: mid, page: 1, collected: 0, depth: top.depth + 1 });
+        }
+      }
+    } else {
+      top.page += 1;
     }
   }
-  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
-  return result;
+  return { items, truncated };
 }
 
-function compactState(state: SyncState) {
-  const entries = Object.entries(state.seen)
-    .sort((a, b) => Date.parse(b[1].checkedAt) - Date.parse(a[1].checkedAt))
-    .slice(0, 1_500);
-  return { ...state, seen: Object.fromEntries(entries) };
+/** 当月 created 窗口（新仓库）扫描：created:>=windowStart，翻页到桶空。 */
+async function searchCreatedSince(env: PluginRegistryEnv, budget: SearchBudget, sinceISO: string): Promise<GithubRepository[]> {
+  const items: GithubRepository[] = [];
+  const query = `topic:dsh-plugin created:>=${isoTimestamp(sinceISO)}`;
+  for (let page = 1; page <= SEARCH_PAGE_CAP; page += 1) {
+    const response = await githubSearchPage(env, query, "created", "asc", page, budget);
+    const pageItems = response.items || [];
+    items.push(...pageItems);
+    if (pageItems.length < SEARCH_PER_PAGE) break;
+  }
+  return items;
 }
+
+async function runIncremental(
+  registry: PluginRegistryData,
+  state: SyncState,
+  env: PluginRegistryEnv,
+  now: string,
+  previousById: Map<string, PluginRecord>,
+): Promise<RunOutcome> {
+  const budget = new SearchBudget(MAX_SEARCH_CALLS_PER_RUN);
+  const errors: string[] = [];
+  let mergedThisRun = 0;
+  let discoveredThisRun = 0;
+  let topicTotal: number | null = null;
+
+  // 1. topic 计数 + 最新更新前 100 的元数据刷新（1 次调用）
+  try {
+    const pageOne = await githubSearchPage(env, "topic:dsh-plugin", "updated", "desc", 1, budget);
+    topicTotal = pageOne.total_count;
+    const merged = mergeRepos(previousById, pageOne.items || [], now);
+    mergedThisRun += merged.merged;
+    discoveredThisRun += merged.discovered;
+  } catch (error) {
+    if (!(error instanceof BudgetExhaustedError)) errors.push(`topic count: ${messageOf(error)}`);
+  }
+
+  // 2. pushed:>=上次运行时间 → now（捕获所有变更）
+  const sinceISO = state.lastRunAt ?? new Date(Date.now() - PUSHED_FIRST_RUN_WINDOW_MS).toISOString();
+  if (sinceISO < now) {
+    try {
+      const { items, truncated } = await sweepPushed(env, budget, sinceISO, now);
+      const merged = mergeRepos(previousById, items, now);
+      mergedThisRun += merged.merged;
+      discoveredThisRun += merged.discovered;
+      if (truncated) errors.push("pushed sweep truncated (window >= 1000 repos)");
+    } catch (error) {
+      if (!(error instanceof BudgetExhaustedError)) errors.push(`pushed sweep: ${messageOf(error)}`);
+    }
+  }
+
+  // 3. 当月 created 窗口（新仓库）
+  const createdSince = incrementalCreatedStart(new Date(now));
+  try {
+    const items = await searchCreatedSince(env, budget, createdSince);
+    const merged = mergeRepos(previousById, items, now);
+    mergedThisRun += merged.merged;
+    discoveredThisRun += merged.discovered;
+    if (items.length >= BUCKET_RESULT_CAP) errors.push("created window truncated (>= 1000 repos)");
+  } catch (error) {
+    if (!(error instanceof BudgetExhaustedError)) errors.push(`created sweep: ${messageOf(error)}`);
+  }
+
+  return { topicTotal, mergedThisRun, discoveredThisRun, errors };
+}
+
+// ---------------------------------------------------------------------------
+// 全量分桶扫描（首轮 / 每周），带断点续扫
+// ---------------------------------------------------------------------------
+
+function oldestCreatedAt(registry: PluginRegistryData): string | null {
+  let oldest: string | null = null;
+  for (const plugin of registry.plugins) {
+    if (!plugin.createdAt) continue;
+    if (!oldest || plugin.createdAt < oldest) oldest = plugin.createdAt;
+  }
+  return oldest;
+}
+
+async function runFullScan(
+  registry: PluginRegistryData,
+  state: SyncState,
+  env: PluginRegistryEnv,
+  now: string,
+  previousById: Map<string, PluginRecord>,
+): Promise<RunOutcome> {
+  const budget = new SearchBudget(MAX_SEARCH_CALLS_PER_RUN);
+  const errors: string[] = [];
+  let progress = state.progress;
+  if (!progress) {
+    const oldest = oldestCreatedAt(registry);
+    progress = {
+      mode: state.lastFullScanAt ? "weekly" : "first",
+      startedAt: now,
+      useEmptyStop: !state.lastFullScanAt || !oldest,
+      monthQueue: planBuckets(new Date(now), oldest),
+      rangeStack: [],
+      monthCollected: 0,
+      emptyStreak: 0,
+      collected: 0,
+      seen: [],
+      topicBefore: registry.plugins.filter((p) => p.topic && !p.removed).map((p) => p.id),
+    };
+    const firstMonth = progress.monthQueue.shift();
+    if (firstMonth) progress.rangeStack.push({ ...firstMonth, page: 1, collected: 0, depth: 0 });
+    state.progress = progress;
+  }
+  const seenSet = new Set(progress.seen);
+  let mergedThisRun = 0;
+  let discoveredThisRun = 0;
+  let topicTotal: number | null = null;
+
+  // 0. topic 计数 + 最新更新前 100 的元数据刷新（1 次调用）
+  try {
+    const pageOne = await githubSearchPage(env, "topic:dsh-plugin", "updated", "desc", 1, budget);
+    topicTotal = pageOne.total_count;
+    const merged = mergeRepos(previousById, pageOne.items || [], now);
+    mergedThisRun += merged.merged;
+    discoveredThisRun += merged.discovered;
+    for (const item of pageOne.items || []) {
+      const id = safeRepoId(item?.full_name || "");
+      if (id) seenSet.add(id);
+    }
+  } catch (error) {
+    if (!(error instanceof BudgetExhaustedError)) errors.push(`topic count: ${messageOf(error)}`);
+  }
+
+  let complete = false;
+  while (budget.remaining > 0 && !complete) {
+    if (progress.rangeStack.length === 0) {
+      // 完成一个月份桶 → 更新连续空桶计数
+      if (progress.monthCollected === 0) progress.emptyStreak += 1;
+      else progress.emptyStreak = 0;
+      progress.monthCollected = 0;
+      if (shouldStopOnEmptyStreak(progress.emptyStreak, progress.useEmptyStop)) {
+        complete = true;
+        break;
+      }
+      const nextMonth = progress.monthQueue.shift();
+      if (!nextMonth) {
+        complete = true;
+        break;
+      }
+      progress.rangeStack.push({ ...nextMonth, page: 1, collected: 0, depth: 0 });
+      continue;
+    }
+
+    const top = progress.rangeStack[progress.rangeStack.length - 1];
+    try {
+      const response = await githubSearchPage(
+        env,
+        createdQualifier(top.start, top.end),
+        "created",
+        "asc",
+        top.page,
+        budget,
+      );
+      const items = response.items || [];
+      const merged = mergeRepos(previousById, items, now);
+      mergedThisRun += merged.merged;
+      discoveredThisRun += merged.discovered;
+      for (const item of items) {
+        const id = safeRepoId(item?.full_name || "");
+        if (id) seenSet.add(id);
+      }
+      top.collected += items.length;
+      progress.monthCollected += items.length;
+      progress.collected += items.length;
+
+      const pageCount = items.length;
+      const atCap = top.collected >= BUCKET_RESULT_CAP;
+      const finished = pageCount < SEARCH_PER_PAGE || top.page >= SEARCH_PAGE_CAP;
+      if (finished) {
+        progress.rangeStack.pop();
+        if (atCap && top.start !== top.end && top.depth < MAX_SPLIT_DEPTH) {
+          const [first, second] = splitRange({ start: top.start, end: top.end });
+          progress.rangeStack.push({ ...second, page: 1, collected: 0, depth: top.depth + 1 });
+          progress.rangeStack.push({ ...first, page: 1, collected: 0, depth: top.depth + 1 });
+        }
+      } else {
+        top.page += 1;
+      }
+
+      // 每页持久化进度：run 被墙钟/预算打断后，下轮从精确页游标续扫
+      // （env.PLUGIN_REGISTRY 由 syncPluginRegistry 入口守卫保证存在）
+      progress.seen = [...seenSet];
+      await env.PLUGIN_REGISTRY!.put(STATE_KEY, JSON.stringify(state));
+    } catch (error) {
+      if (error instanceof BudgetExhaustedError) break;
+      errors.push(`${top.start}..${top.end} page ${top.page}: ${messageOf(error)}`);
+      // 失败区间移到栈底，本轮稍后或下轮重试（不丢进度）
+      progress.rangeStack.pop();
+      progress.rangeStack.unshift(top);
+    }
+  }
+
+  if (complete) {
+    // 周扫 diff：本次全量未再出现的 topic 仓库 → removed=true（不物理删除）
+    if (progress.mode === "weekly") {
+      const seenFinal = new Set(progress.seen);
+      for (const id of progress.topicBefore) {
+        const plugin = previousById.get(id);
+        if (plugin && !seenFinal.has(id)) {
+          plugin.removed = true;
+          plugin.discovery.lastSeenAt = now;
+        }
+      }
+    }
+    state.progress = null;
+    state.lastFullScanAt = now;
+  }
+
+  return { topicTotal, mergedThisRun, discoveredThisRun, errors };
+}
+
+// ---------------------------------------------------------------------------
+// 事实采集（可选增强）：每轮最多 20 个仓库 raw 拉 package.json
+// ---------------------------------------------------------------------------
+
+async function collectFacts(
+  previousById: Map<string, PluginRecord>,
+  state: SyncState,
+): Promise<string[]> {
+  const errors: string[] = [];
+  const collected = new Set(state.factsCollected);
+  let attempts = MAX_FACT_FETCHES_PER_RUN;
+  for (const plugin of previousById.values()) {
+    if (attempts <= 0) break;
+    if (plugin.removed || collected.has(plugin.id)) continue;
+    attempts -= 1;
+    const branch = plugin.defaultBranch || plugin.manifest?.branch || "main";
+    try {
+      const text = await fetchRaw(plugin.repo, branch, "package.json");
+      if (text) {
+        let pkg: unknown;
+        try {
+          pkg = JSON.parse(text);
+        } catch {
+          // invalid JSON → 视为无有效 package.json
+        }
+        if (pkg && typeof pkg === "object" && !Array.isArray(pkg)) {
+          const manifest = manifestSummary(pkg, branch) as PluginManifest;
+          plugin.manifest = manifest;
+          plugin.facts = deriveFacts(manifest, { license: plugin.license, files: ["package.json"] }) as PluginFacts;
+        }
+      }
+      collected.add(plugin.id);
+    } catch (error) {
+      // 网络错误下轮重试（不标记完成）
+      errors.push(`facts ${plugin.repo}: ${messageOf(error)}`);
+    }
+  }
+  state.factsCollected = [...collected];
+  return errors;
+}
+
+// ---------------------------------------------------------------------------
+// 汇总
+// ---------------------------------------------------------------------------
 
 function summarize(registry: PluginRegistryData) {
   const plugins = registry.plugins;
+  const active = plugins.filter((plugin) => !plugin.removed);
   registry.summary = {
     curated: plugins.filter((plugin) => plugin.curated).length,
     listed: plugins.length,
-    autoDiscovered: plugins.filter((plugin) => !plugin.curated).length,
+    autoDiscovered: active.filter((plugin) => !plugin.curated).length,
     topicTotal: registry.sources.topic.total,
-    metadataMatches: plugins.filter((plugin) => plugin.topic).length,
-    manifestMatches: plugins.filter((plugin) => plugin.manifest.state === "verified").length,
-    screeningClear: plugins.filter((plugin) => plugin.screening.state === "clear").length,
-    screeningReview: plugins.filter((plugin) => ["review", "pending"].includes(plugin.screening.state)).length,
-    screeningBlocked: plugins.filter((plugin) => plugin.screening.state === "blocked").length,
-    owners: new Set(plugins.map((plugin) => plugin.owner.toLowerCase())).size,
-    stars: plugins.reduce((sum, plugin) => sum + (plugin.stars || 0), 0),
+    metadataMatches: active.filter((plugin) => plugin.topic).length,
+    manifestMatches: active.filter((plugin) => plugin.manifest.state === "verified").length,
+    owners: new Set(active.map((plugin) => plugin.owner.toLowerCase())).size,
+    stars: active.reduce((sum, plugin) => sum + (plugin.stars || 0), 0),
   };
+  registry.sources.topic.scanned = registry.summary.metadataMatches;
   registry.sources.topic.matched = registry.summary.metadataMatches;
 }
+
+// ---------------------------------------------------------------------------
+// 公开 API
+// ---------------------------------------------------------------------------
 
 export async function readPluginRegistry(env: PluginRegistryEnv): Promise<PluginRegistryData> {
   if (!env.PLUGIN_REGISTRY) return bundledRegistry();
@@ -363,7 +845,10 @@ export async function readPluginRegistry(env: PluginRegistryEnv): Promise<Plugin
     const stored = await env.PLUGIN_REGISTRY.get<PluginRegistryData>(REGISTRY_KEY, "json");
     return stored ? sanitizeRegistryInstallEvidence(stored) as PluginRegistryData : bundledRegistry();
   } catch (error) {
-    console.error(JSON.stringify({ event: "registry.read.error", error: error instanceof Error ? error.message : String(error) }));
+    console.error(JSON.stringify({
+      event: "registry.read.error",
+      error: error instanceof Error ? error.message : String(error),
+    }));
     return bundledRegistry();
   }
 }
@@ -376,96 +861,45 @@ export async function syncPluginRegistry(env: PluginRegistryEnv) {
 
   const now = new Date().toISOString();
   const registry = await readPluginRegistry(env);
-  const state: SyncState = await env.PLUGIN_REGISTRY.get<SyncState>(STATE_KEY, "json") || { cursorPage: 2, seen: {} };
+  const state: SyncState = await env.PLUGIN_REGISTRY.get<SyncState>(STATE_KEY, "json") || {
+    version: 2,
+    lastRunAt: null,
+    lastFullScanAt: null,
+    progress: null,
+    factsCollected: [],
+  };
+  const previousById = new Map(registry.plugins.map((plugin) => [plugin.id, plugin]));
   const errors: string[] = [];
-  let pageOne: GithubSearchResponse;
+  let mergedThisRun = 0;
+  let discoveredThisRun = 0;
+  let topicTotal: number | null = null;
+
+  const weeklyDue = !state.lastFullScanAt
+    || Date.parse(now) - Date.parse(state.lastFullScanAt) >= FULL_SCAN_INTERVAL_MS;
+  const mode: "full" | "incremental" = state.progress || weeklyDue ? "full" : "incremental";
+
   try {
-    pageOne = await searchTopicPage(1, env);
+    const outcome = mode === "full"
+      ? await runFullScan(registry, state, env, now, previousById)
+      : await runIncremental(registry, state, env, now, previousById);
+    errors.push(...outcome.errors);
+    topicTotal = outcome.topicTotal;
+    mergedThisRun = outcome.mergedThisRun;
+    discoveredThisRun = outcome.discoveredThisRun;
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
+    // 整体降级（保留现有机制）
+    const message = messageOf(error);
     registry.automation = { ...registry.automation, state: "degraded", lastRunAt: now, error: message };
     await env.PLUGIN_REGISTRY.put(REGISTRY_KEY, JSON.stringify(registry));
-    console.error(JSON.stringify({ event: "registry.sync.error", stage: "discovery", error: message }));
+    console.error(JSON.stringify({ event: "registry.sync.error", stage: "scan", error: message }));
     return registry;
   }
 
-  let rotatingItems: GithubRepository[] = [];
-  const rotatingPage = Math.max(2, Math.min(MAX_SEARCH_PAGE, state.cursorPage || 2));
+  // 事实采集（raw 拉 package.json，不计 search 配额；失败计入 errors → 降级）
   try {
-    const rotating = await searchTopicPage(rotatingPage, env);
-    rotatingItems = rotating.items || [];
+    errors.push(...await collectFacts(previousById, state));
   } catch (error) {
-    errors.push(error instanceof Error ? error.message : String(error));
-  }
-  state.cursorPage = rotatingPage >= MAX_SEARCH_PAGE ? 2 : rotatingPage + 1;
-
-  const discovered = new Map<string, GithubRepository>();
-  for (const item of [...(pageOne.items || []), ...rotatingItems]) {
-    if (!item?.full_name) continue;
-    try {
-      discovered.set(validateRepoName(item.full_name).toLowerCase(), item);
-    } catch {
-      // GitHub-owned metadata that does not fit an owner/repository pair is ignored.
-    }
-  }
-
-  const previousById = new Map(registry.plugins.map((plugin) => [plugin.id, plugin]));
-  const newOrChanged = [...discovered.entries()]
-    .filter(([id, meta]) => {
-      const previous = previousById.get(id);
-      if (candidateWasRecentlyRejected(meta, state)) return false;
-      return !previous || previous.pushedAt !== meta.pushed_at || shouldRescan(previous, state);
-    })
-    .map(([, meta]) => meta);
-  const staleExisting = registry.plugins
-    .filter((plugin) => shouldRescan(plugin, state) && !discovered.has(plugin.id))
-    .map(metadataFromPlugin);
-  const candidates = [...newOrChanged, ...staleExisting].slice(0, MAX_SCANS_PER_RUN);
-  const discoveredThisRun = [...discovered.keys()].filter((id) => !previousById.has(id)).length;
-
-  const results = await mapLimit(candidates, 2, async (meta) => {
-    try {
-      return { meta, inspection: await inspectRepository(meta, env) };
-    } catch (error) {
-      return { meta, error: error instanceof Error ? error.message : String(error) };
-    }
-  });
-
-  let admittedThisRun = 0;
-  for (const result of results) {
-    const id = result.meta.full_name.toLowerCase();
-    const previous = previousById.get(id);
-    if ("error" in result) {
-      state.seen[id] = { pushedAt: result.meta.pushed_at, checkedAt: now, outcome: "error" };
-      errors.push(`${result.meta.full_name}: ${result.error}`);
-      if (previous) {
-        previousById.set(id, markInspectionUnavailable(previous, { kind: "error", checkedAt: now }) as PluginRecord);
-      }
-      continue;
-    }
-    const inspection = result.inspection;
-    state.seen[id] = { pushedAt: result.meta.pushed_at, checkedAt: now, outcome: inspection.outcome };
-    if (inspection.outcome === "listed") {
-      const record = recordFromInspection(result.meta, inspection.commitSha, inspection.manifest, inspection.screening, previous, now);
-      previousById.set(id, record);
-      if (!previous) admittedThisRun += 1;
-      continue;
-    }
-    if (inspection.outcome === "blocked") {
-      if (previous?.curated) {
-        previousById.set(id, recordFromInspection(result.meta, inspection.commitSha, inspection.manifest, inspection.screening, previous, now));
-      } else {
-        previousById.delete(id);
-      }
-      continue;
-    }
-    if (previous) {
-      previousById.set(id, markInspectionUnavailable(previous, {
-        kind: "rejected",
-        checkedAt: now,
-        manifest: "manifest" in inspection ? inspection.manifest : null,
-      }) as PluginRecord);
-    }
+    errors.push(`facts: ${messageOf(error)}`);
   }
 
   const plugins = [...previousById.values()].sort((a, b) => {
@@ -480,32 +914,32 @@ export async function syncPluginRegistry(env: PluginRegistryEnv) {
   registry.sources.topic = {
     ...registry.sources.topic,
     state: errors.length ? "partial" : "live",
-    total: pageOne.total_count || registry.sources.topic.total,
-    scanned: Object.keys(state.seen).length,
+    total: topicTotal ?? registry.sources.topic.total,
     error: errors.length ? errors.slice(0, 3).join(" | ") : null,
   };
   registry.automation = {
     enabled: true,
     schedule: "*/30 * * * *",
     state: errors.length ? "degraded" : "live",
-    scanVersion: 1,
+    scanVersion: 2,
     lastRunAt: now,
     lastSuccessfulRunAt: errors.length ? registry.automation?.lastSuccessfulRunAt || null : now,
-    checkedThisRun: candidates.length,
+    checkedThisRun: mergedThisRun,
     discoveredThisRun,
-    admittedThisRun,
-    rejectedTotal: Object.values(state.seen).filter((item) => ["rejected", "blocked"].includes(item.outcome)).length,
+    admittedThisRun: discoveredThisRun,
+    rejectedTotal: 0,
     error: errors.length ? errors.slice(0, 3).join(" | ") : null,
   };
   summarize(registry);
 
+  state.lastRunAt = now;
   await env.PLUGIN_REGISTRY.put(REGISTRY_KEY, JSON.stringify(registry));
-  await env.PLUGIN_REGISTRY.put(STATE_KEY, JSON.stringify(compactState(state)));
+  await env.PLUGIN_REGISTRY.put(STATE_KEY, JSON.stringify(state));
   console.log(JSON.stringify({
     event: "registry.sync.complete",
-    checked: candidates.length,
+    mode,
+    checked: mergedThisRun,
     discovered: discoveredThisRun,
-    admitted: admittedThisRun,
     listed: registry.summary.listed,
     errors: errors.length,
   }));
@@ -522,3 +956,4 @@ export function pluginRegistryResponse(registry: PluginRegistryData) {
     },
   });
 }
+

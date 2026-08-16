@@ -221,3 +221,26 @@ npm test
 ## 许可证
 
 本项目采用 [MIT License](./LICENSE)。
+
+## 自动部署
+
+push 到 `main` 分支后，[.github/workflows/deploy.yml](.github/workflows/deploy.yml) 会自动完成：安装依赖 → 同步插件数据（`npm run data:sync`）→ 跑测试（含 lint + typecheck + build）→ 部署 Worker 到 Cloudflare → 应用 D1 migrations。另设每日定时（UTC 2:17）与 `workflow_dispatch` 手动触发。
+
+### 仓库 Secrets 配置
+
+在仓库 **Settings → Secrets and variables → Actions** 中配置以下 Secrets：
+
+| Secret | 说明 |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare API Token，创建时权限模板选择 **Edit Cloudflare Workers**（含 Workers Scripts 编辑/部署权限） |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare 账号 ID（Dashboard 右下角查看，或 `npx wrangler whoami`） |
+| `GITHUB_TOKEN` | GitHub Actions 自动注入的仓库级 token，无需手动配置；deploy workflow 将其传给 `npm run data:sync`，用于认证 GitHub API 调用，把 Search API 限流从匿名的 10 次/分提升到认证的 30 次/分（5000 次/小时），保证数据同步稳定 |
+
+### 首次部署前（一次性手工步骤）
+
+1. 创建 D1 数据库并记下返回的 `database_id`：
+```bash
+npx wrangler d1 create dsh-plugin-hub-visits
+```
+2. 将 `database_id` 写入 `vite.config.ts` 中 `d1_databases` 下 `VISIT_METRICS` 绑定的 `database_id` 字段。
+3. 配置好上述 Secrets 后推送 `main` 即可触发首次自动部署；Workers cron（数据增量扫描）随部署自动生效。

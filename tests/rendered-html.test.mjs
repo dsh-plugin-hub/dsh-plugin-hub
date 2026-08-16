@@ -70,60 +70,62 @@ test("server-renders the complete plugin hub", async () => {
   assert.equal(response.headers.get("x-frame-options"), "DENY");
 
   const html = await response.text();
-  assert.match(html, /<title>DSH 插件资源站<\/title>/i);
+  // 站点名与主题（P1-T1/T8：默认深色）
+  assert.match(html, /<title>dsh-plugin · DSH 插件目录<\/title>/i);
   assert.match(html, /rel="icon"[^>]+href="\/favicon\.svg"/i);
-  assert.match(html, /data-theme="light"/i);
+  assert.match(html, /<html[^>]+data-theme="dark"/i);
+  // hero 文案与动态背景（P1-T7/T8）
   assert.match(html, /一切皆插件/);
   assert.match(html, /先看证据/);
+  assert.match(html, /blur\(20px\)/);
+  assert.match(html, /mask:linear-gradient/);
   assert.match(html, new RegExp(String(registry.summary.listed)));
-  assert.match(html, new RegExp(String(registry.summary.manifestMatches)));
-  assert.match(html, /30 MIN/);
-  assert.match(html, /自动发现/);
-  assert.match(html, /作者：岚叔/);
-  assert.match(html, /JSON API/);
-  assert.match(html, /class="header-favorites[^"]*"[^>]*>[\s\S]*?★\s*<span>0<\/span>/);
-  assert.match(html, /class="header-visit-count"[^>]*>[\s\S]*?<span>访问量<\/span>/);
+  // 官网风格组件类名
+  for (const cls of ["ds-header", "ds-hero__bg", "ds-container", "ds-footer", "ds-btn--primary", "growth-chart"]) {
+    assert.match(html, new RegExp(`class="[^"]*${cls}`), `missing class ${cls}`);
+  }
+  assert.match(html, /访问量/);
   assert.doesNotMatch(html, />访问热度</);
-  assert.doesNotMatch(html, /真实访问\s*×\s*3/);
-  assert.match(html, /VISIT API/);
-  assert.match(html, /插件收录增长/);
-  assert.match(html, /class="growth-chart"/);
-  assert.match(html, new RegExp(`插件数量从 \\d+ 增长到 ${registry.summary.listed}`));
-  assert.match(html, /href="https:\/\/github\.com\/cclank\/dsh-plugin-hub"[^>]+aria-label="在 GitHub 查看开源代码"/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
-test("serves the real registry through the JSON API", async () => {
+test("serves the real registry through the JSON API (bundled fallback)", async () => {
   const response = await request("/api/plugins", "application/json");
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^application\/json\b/i);
   assert.equal(response.headers.get("access-control-allow-origin"), "*");
+  // 测试环境无 D1 绑定 → 回退 bundled 全量格式
+  assert.equal(response.headers.get("x-registry-source"), "bundled-fallback");
 
   const body = await response.json();
   assert.equal(body.schemaVersion, 2);
-  assert.equal(body.plugins.length, body.summary.listed);
+  assert.ok(body.plugins.length >= body.summary.listed);
   assert.ok(body.summary.curated <= body.plugins.length);
   assert.ok(body.summary.topicTotal >= body.summary.curated);
-  assert.ok(body.summary.manifestMatches >= 180);
+  assert.ok(body.summary.manifestMatches >= 500);
   assert.equal(body.automation.schedule, "*/30 * * * *");
-  assert.equal(response.headers.get("x-registry-source"), "bundled-fallback");
   assert.equal(body.sources.curated.state, "live");
   assert.equal(body.sources.topic.state, "live");
   assert.ok(body.plugins.every((plugin) => plugin.url.startsWith("https://github.com/")));
-  assert.ok(body.plugins.every((plugin) => plugin.screening && plugin.discovery));
-  assert.ok(body.plugins.every((plugin) => (
-    plugin.installCommand === null
-    || (/^[a-f\d]{40,64}$/iu.test(plugin.screenedCommit)
-      && plugin.installCommand.endsWith(`#${plugin.screenedCommit}`))
-  )));
+  // 新数据模型：有 facts、无 screening/installCommand
+  assert.ok(body.plugins.every((plugin) => plugin.facts && plugin.discovery));
+  assert.ok(body.plugins.every((plugin) => !("screening" in plugin) && !("screenedCommit" in plugin) && !("installCommand" in plugin)));
+  // facts 与 manifest 一致：verified 必有 hasManifest
+  for (const plugin of body.plugins.filter((p) => p.manifest?.state === "verified")) {
+    assert.equal(plugin.facts.hasManifest, true, `${plugin.id} verified but facts.hasManifest false`);
+  }
 });
 
 test("serves a compact public registry status endpoint", async () => {
+  const registry = JSON.parse(await readFile(new URL("data/plugins.generated.json", root), "utf8"));
   const response = await request("/api/registry/status", "application/json");
   assert.equal(response.status, 200);
   const body = await response.json();
   assert.equal(body.automation.enabled, true);
-  assert.equal(body.summary.listed, body.summary.screeningClear + body.summary.screeningReview + body.summary.screeningBlocked);
+  assert.equal(body.summary.listed, registry.summary.listed);
+  assert.ok(!("screeningClear" in body.summary));
+  assert.ok(!("screeningReview" in body.summary));
+  assert.ok(!("screeningBlocked" in body.summary));
 });
 
 test("serves multiplied visit heat while preserving the real total", async () => {
@@ -164,22 +166,21 @@ test("keeps the generated registry internally consistent", async () => {
   ]);
   const registry = JSON.parse(generatedText);
   const ids = registry.plugins.map((plugin) => plugin.id);
-  const verified = registry.plugins.filter((plugin) => plugin.manifest.state === "verified");
+  const verified = registry.plugins.filter((plugin) => plugin.manifest?.state === "verified");
+  const removed = registry.plugins.filter((plugin) => plugin.removed);
 
   assert.equal(publicText, generatedText);
   assert.equal(new Set(ids).size, ids.length);
   assert.equal(verified.length, registry.summary.manifestMatches);
-  assert.ok(verified.every((plugin) => plugin.screenedCommit === null && plugin.installCommand === null));
-  assert.equal(registry.plugins.length, registry.summary.listed);
-  assert.equal(
-    registry.plugins.filter((plugin) => plugin.screening.state === "blocked").length,
-    registry.summary.screeningBlocked,
-  );
-  assert.ok(
-    registry.plugins
-      .filter((plugin) => plugin.manifest.state !== "verified")
-      .every((plugin) => plugin.installCommand === null),
-  );
+  // 新数据模型：无筛查字段，facts 与 manifest 一致
+  assert.ok(registry.plugins.every((plugin) => !("screening" in plugin) && !("screenedCommit" in plugin) && !("installCommand" in plugin)));
+  assert.ok(registry.plugins.every((plugin) => plugin.facts && plugin.facts.lifecycleScripts));
+  for (const plugin of verified) {
+    assert.equal(plugin.facts.hasManifest, true, `${plugin.id} verified but facts.hasManifest false`);
+  }
+  // listed 只计活跃插件，removed 只标记不删除
+  assert.equal(registry.plugins.length - removed.length, registry.summary.listed);
+  assert.ok(removed.every((plugin) => plugin.removed === true));
   assert.doesNotMatch(packageText, /react-loading-skeleton/);
   await assert.rejects(access(new URL("app/_sites-preview", root)));
 });
