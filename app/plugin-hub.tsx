@@ -8,7 +8,7 @@ import type {
   PluginRegistryData,
 } from "@/lib/plugin-data";
 import { installCommandFor } from "@/lib/plugin-screening.mjs";
-import { buildGrowthSeries, isoDate, type GrowthPoint } from "@/lib/growth";
+import { buildGrowthSeries, type GrowthPoint } from "@/lib/growth";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import AuroraBackground from "@/components/aurora-background";
 
@@ -186,17 +186,6 @@ function shortDate(value: string, lang: Language) {
   }).format(new Date(`${value}T00:00:00Z`));
 }
 
-function maintenanceLabel(plugin: PluginRecord, lang: Language) {
-  const labels = {
-    active: text(lang, "近 30 天活跃", "Active in 30d"),
-    warm: text(lang, "近半年更新", "Updated in 6mo"),
-    quiet: text(lang, "更新较少", "Quiet"),
-    archived: text(lang, "已归档", "Archived"),
-    unknown: text(lang, "活跃度未知", "Activity unknown"),
-  };
-  return labels[plugin.maintenance];
-}
-
 function sourceLabel(plugin: PluginRecord) {
   if (!plugin.curated) return "AUTO";
   return plugin.topic ? "TOPIC + LIST" : "LIST";
@@ -204,17 +193,6 @@ function sourceLabel(plugin: PluginRecord) {
 
 function categoryLabelOf(data: PluginRegistryData, plugin: PluginRecord, lang: Language) {
   return data.categories[plugin.category]?.[lang] ?? plugin.category;
-}
-
-function manifestSummary(plugin: PluginRecord, lang: Language) {
-  if (plugin.manifest.state === "verified") {
-    const kinds = plugin.manifest.kinds.length ? plugin.manifest.kinds.join(" · ") : "dsh";
-    return plugin.manifest.packageName ? `${kinds} · ${plugin.manifest.packageName}` : kinds;
-  }
-  if (plugin.manifest.state === "package-only") {
-    return text(lang, "有 package.json，无 dsh 声明", "package.json found, no dsh declaration");
-  }
-  return plugin.manifest.state;
 }
 
 function growthChartGeometry(series: GrowthPoint[]) {
@@ -328,7 +306,6 @@ function PluginCard({
   lang,
   categoryLabel,
   favorite,
-  onOpen,
   onFavorite,
   view,
   copiedId,
@@ -338,13 +315,13 @@ function PluginCard({
   lang: Language;
   categoryLabel: string;
   favorite: boolean;
-  onOpen: () => void;
   onFavorite: () => void;
   view: ViewId;
   copiedId: string | null;
   onCopy: (value: string, id: string) => void;
 }) {
   const command = installCommandFor(plugin.repo);
+  const detailHref = `/p/${plugin.id}`;
   return (
     <article className={`ds-card ds-card--${view}`}>
       <div className="ds-card__head">
@@ -362,9 +339,9 @@ function PluginCard({
           </button>
         </span>
       </div>
-      <button className="ds-card__title" type="button" onClick={onOpen}>
+      <a className="ds-card__title" href={detailHref}>
         <span className="ds-card__name">{plugin.name}</span>
-      </button>
+      </a>
       <span className="ds-card__owner">{plugin.owner} · {categoryLabel}</span>
       <p className="ds-card__desc">{plugin.description[lang]}</p>
       <FactBadges plugin={plugin} lang={lang} />
@@ -375,9 +352,9 @@ function PluginCard({
       </span>
       <TerminalBlock command={command} copiedId={copiedId} id={plugin.id} lang={lang} onCopy={onCopy} />
       <div className="ds-card__foot">
-        <button className="ds-btn ds-btn--ghost ds-btn--xs" type="button" onClick={onOpen}>
+        <a className="ds-btn ds-btn--ghost ds-btn--xs" href={detailHref}>
           {text(lang, "详情", "Details")} <span aria-hidden="true">→</span>
-        </button>
+        </a>
         <a className="ds-link" href={plugin.url} target="_blank" rel="noreferrer">
           {text(lang, "GitHub", "GitHub")} <span aria-hidden="true">↗</span>
         </a>
@@ -466,7 +443,6 @@ export function PluginHub({
   const [view, setView] = useState<ViewId>("cards");
   const [evidence, setEvidence] = useState<EvidenceFilter>("all");
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [selected, setSelected] = useState<PluginRecord | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [visitStats, setVisitStats] = useState<VisitStats | null>(null);
 
@@ -569,23 +545,8 @@ export function PluginHub({
     }
   }, [favorites, lang, preferencesReady, theme, view]);
 
-  useEffect(() => {
-    if (!selected) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSelected(null);
-    };
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = previous;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [selected]);
-
   const go = useCallback((next: PageId) => {
     setPage(next);
-    setSelected(null);
     window.history.pushState(null, "", `#/${next}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -1082,13 +1043,13 @@ export function PluginHub({
               </div>
               <div className="ds-featured-grid">
                 {featured.map((plugin, index) => (
-                  <button className="ds-featured-card" type="button" key={plugin.id} onClick={() => setSelected(plugin)}>
+                  <a className="ds-featured-card" key={plugin.id} href={`/p/${plugin.id}`}>
                     <span className="ds-featured-card__rank">{String(index + 1).padStart(2, "0")}</span>
                     <span className="ds-featured-card__head"><strong>{plugin.name}</strong><em>★ {formatNumber(plugin.stars, lang)}</em></span>
                     <span className="ds-featured-card__owner">{plugin.owner}</span>
                     <span className="ds-featured-card__desc">{plugin.description[lang]}</span>
                     <span className="ds-featured-card__foot">{categoryLabelOf(data, plugin, lang)} <span aria-hidden="true">→</span></span>
-                  </button>
+                  </a>
                 ))}
               </div>
             </section>
@@ -1211,7 +1172,6 @@ export function PluginHub({
                         lang={lang}
                         categoryLabel={categoryLabelOf(data, plugin, lang)}
                         favorite={favorites.includes(plugin.id)}
-                        onOpen={() => setSelected(plugin)}
                         onFavorite={() => toggleFavorite(plugin.id)}
                         view={view}
                         copiedId={copied}
@@ -1266,11 +1226,11 @@ export function PluginHub({
                 <ol>
                   {topStars.map((plugin, index) => (
                     <li key={plugin.id}>
-                      <button type="button" onClick={() => setSelected(plugin)}>
+                      <a href={`/p/${plugin.id}`}>
                         <b className="ds-rank-num">{String(index + 1).padStart(2, "0")}</b>
                         <span><strong>{plugin.name}</strong><small>{plugin.owner}</small></span>
                         <em>★ {formatNumber(plugin.stars, lang)}</em>
-                      </button>
+                      </a>
                     </li>
                   ))}
                 </ol>
@@ -1286,11 +1246,11 @@ export function PluginHub({
                 <ol>
                   {topFresh.map((plugin, index) => (
                     <li key={plugin.id}>
-                      <button type="button" onClick={() => setSelected(plugin)}>
+                      <a href={`/p/${plugin.id}`}>
                         <b className="ds-rank-num">{String(index + 1).padStart(2, "0")}</b>
                         <span><strong>{plugin.name}</strong><small>{plugin.owner}</small></span>
                         <em>{relativeDate(plugin.pushedAt, lang)}</em>
-                      </button>
+                      </a>
                     </li>
                   ))}
                 </ol>
@@ -1380,71 +1340,6 @@ export function PluginHub({
           </p>
         </div>
       </footer>
-
-      {selected && (
-        <div className="ds-drawer-layer" role="presentation">
-          <button className="ds-drawer-backdrop" type="button" onClick={() => setSelected(null)} aria-label={text(lang, "关闭详情", "Close details")} />
-          <aside className="ds-drawer" role="dialog" aria-modal="true" aria-labelledby="ds-plugin-title">
-            <div className="ds-drawer__head">
-              <span>PLUGIN {String(selected.order + 1).padStart(3, "0")}</span>
-              <button className="ds-icon-btn" type="button" onClick={() => setSelected(null)} aria-label={text(lang, "关闭", "Close")}>×</button>
-            </div>
-            <div className="ds-drawer__body">
-              <div className="ds-card__badges">
-                <span className="ds-source-badge">{sourceLabel(selected)}</span>
-                {selected.removed && <span className="ds-badge ds-badge--brand">{text(lang, "已下架", "Removed")}</span>}
-                <FactBadges plugin={selected} lang={lang} />
-              </div>
-              <h2 id="ds-plugin-title">{selected.name}</h2>
-              <p className="ds-drawer__owner">{selected.owner} · {categoryLabelOf(data, selected, lang)}</p>
-              <div className="ds-stat-chips">
-                <span>★ {formatNumber(selected.stars, lang)}</span>
-                <span>{relativeDate(selected.pushedAt, lang)}</span>
-                <span>{selected.license || text(lang, "许可证未声明", "License missing")}</span>
-                <span>{selected.language || text(lang, "语言未知", "Language unknown")}</span>
-              </div>
-              <p className="ds-drawer__desc">{selected.description[lang]}</p>
-
-              <section className="ds-drawer-section" aria-label={text(lang, "安装", "Install")}>
-                <span className="ds-drawer-label">{text(lang, "安装", "INSTALL")}</span>
-                <TerminalBlock command={installCommandFor(selected.repo)} copiedId={copied} id={selected.id} lang={lang} onCopy={copy} />
-                <p>{text(lang, "命令通过 dsh CLI 安装到 web profile；执行前建议阅读完整源码。", "The command installs via the dsh CLI into the web profile; review the complete source before running it.")}</p>
-              </section>
-
-              <section className="ds-drawer-section" aria-label={text(lang, "仓库事实", "Repository facts")}>
-                <span className="ds-drawer-label">{text(lang, "仓库事实", "REPOSITORY FACTS")}</span>
-                <dl className="ds-evidence-list">
-                  <div><dt>{text(lang, "Manifest 状态", "Manifest")}</dt><dd>{manifestSummary(selected, lang)}</dd></div>
-                  <div><dt>{text(lang, "分类", "Category")}</dt><dd>{categoryLabelOf(data, selected, lang)}</dd></div>
-                  <div><dt>{text(lang, "版本", "Version")}</dt><dd>{selected.manifest.version || "—"}</dd></div>
-                  <div><dt>{text(lang, "运行依赖", "Runtime deps")}</dt><dd>{selected.manifest.runtimeDependencies}</dd></div>
-                  <div><dt>{text(lang, "生命周期脚本", "Lifecycle scripts")}</dt><dd>{selected.manifest.lifecycleScripts.length ? selected.manifest.lifecycleScripts.join(" · ") : text(lang, "未发现", "None found")}</dd></div>
-                  <div><dt>{text(lang, "声明入口", "Declared entrypoints")}</dt><dd>{selected.manifest.declaredPaths.length ? selected.manifest.declaredPaths.join(" · ") : "—"}</dd></div>
-                  <div><dt>{text(lang, "许可证", "License")}</dt><dd>{selected.license || text(lang, "未声明", "Not declared")}</dd></div>
-                  <div><dt>{text(lang, "锁文件", "Lockfile")}</dt><dd>{factsOf(selected).hasLockfile ? text(lang, "存在", "Present") : text(lang, "未发现", "None found")}</dd></div>
-                  <div><dt>README</dt><dd>{factsOf(selected).hasReadme ? text(lang, "存在", "Present") : text(lang, "未发现", "None found")}</dd></div>
-                  <div><dt>{text(lang, "维护状态", "Maintenance")}</dt><dd>{maintenanceLabel(selected, lang)}</dd></div>
-                  <div><dt>{text(lang, "默认分支", "Default branch")}</dt><dd>{selected.defaultBranch || "—"}</dd></div>
-                  <div><dt>{text(lang, "首次发现", "First seen")}</dt><dd>{isoDate(selected.discovery.firstSeenAt) || "—"}</dd></div>
-                  <div><dt>{text(lang, "数据源", "Source")}</dt><dd>{selected.curated ? text(lang, "社区精选名单", "Curated list") : text(lang, "GitHub 话题发现", "GitHub topic")}</dd></div>
-                </dl>
-              </section>
-
-              <div className="ds-drawer__actions">
-                <a className="ds-btn ds-btn--primary ds-btn--s" href={selected.url} target="_blank" rel="noreferrer">
-                  {text(lang, "在 GitHub 打开", "Open on GitHub")} <span aria-hidden="true">↗</span>
-                </a>
-                <button className={`ds-btn ds-btn--secondary ds-btn--s${favorites.includes(selected.id) ? " is-active" : ""}`} type="button" onClick={() => toggleFavorite(selected.id)}>
-                  ★ {text(lang, favorites.includes(selected.id) ? "已收藏" : "收藏", favorites.includes(selected.id) ? "Saved" : "Save")}
-                </button>
-              </div>
-              <p className="ds-drawer__disclaimer">
-                {text(lang, "本站只展示 GitHub 公开元数据与仓库事实，不构成安全背书。安装插件会在你的机器上执行第三方代码；高权限项目请放进独立 profile 与临时工作区验证。", "This hub shows public GitHub metadata and repository facts only — no security endorsement. Installing a plugin executes third-party code on your machine; test high-authority projects in an isolated profile and disposable workspace.")}
-              </p>
-            </div>
-          </aside>
-        </div>
-      )}
     </div>
   );
 }

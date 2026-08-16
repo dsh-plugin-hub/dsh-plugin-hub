@@ -405,6 +405,58 @@ async function handlePluginsRequest(request: Request, env: Env): Promise<Respons
   }
 }
 
+/** /api/plugins/:owner/:repo 单插件详情：从全量注册表取完整 PluginRecord。 */
+async function handlePluginDetailRequest(request: Request, env: Env): Promise<Response> {
+  const url = new URL(request.url);
+  const match = /^\/api\/plugins\/([^/]+)\/([^/]+)\/?$/u.exec(url.pathname);
+  if (!match) {
+    return Response.json({ error: "Invalid plugin detail path" }, {
+      status: 400,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-store",
+      },
+    });
+  }
+
+  let owner: string;
+  let repo: string;
+  try {
+    owner = decodeURIComponent(match[1]);
+    repo = decodeURIComponent(match[2]);
+  } catch {
+    return Response.json({ error: "Invalid plugin detail path" }, {
+      status: 400,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-store",
+      },
+    });
+  }
+
+  const registry = await readPluginRegistry(env);
+  const id = `${owner}/${repo}`.toLowerCase();
+  const plugin = registry.plugins.find((candidate) => candidate.id.toLowerCase() === id);
+  if (!plugin) {
+    return Response.json({ error: "Plugin not found" }, {
+      status: 404,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-store",
+        "X-Content-Type-Options": "nosniff",
+      },
+    });
+  }
+
+  return Response.json({
+    plugin,
+    categories: registry.categories,
+    generatedAt: registry.generatedAt,
+  }, {
+    headers: pluginsApiHeaders("cloudflare-kv"),
+  });
+}
+
 // Image security config. SVG sources with .svg extension auto-skip the
 // optimization endpoint on the client side (served directly, no proxy).
 // To route SVGs through the optimizer (with security headers), set
@@ -417,6 +469,10 @@ const worker = {
 
     if (request.method === "GET" && url.pathname === "/api/plugins") {
       return withSecurityHeaders(await handlePluginsRequest(request, env));
+    }
+
+    if (request.method === "GET" && /^\/api\/plugins\/[^/]+\/[^/]+\/?$/u.test(url.pathname)) {
+      return withSecurityHeaders(await handlePluginDetailRequest(request, env));
     }
 
     if (request.method === "GET" && url.pathname === "/api/registry/status") {

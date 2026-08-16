@@ -130,6 +130,36 @@ test("serves the real registry through the JSON API (bundled fallback)", async (
   }
 });
 
+test("serves one complete plugin record through the detail JSON API", async () => {
+  const registry = JSON.parse(await readFile(new URL("data/plugins.generated.json", root), "utf8"));
+  const expected = registry.plugins.find((plugin) => plugin.id === "max-samson/dsh-usage-chart");
+  assert.ok(expected, "fixture plugin should exist in the registry");
+
+  const response = await request("/api/plugins/Max-Samson/dsh-usage-chart", "application/json");
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^application\/json\b/i);
+  assert.equal(response.headers.get("access-control-allow-origin"), "*");
+
+  const body = await response.json();
+  assert.equal(body.plugin.id, expected.id);
+  assert.equal(body.plugin.manifest.packageName, "dsh-usage-chart");
+  assert.equal(body.categories.ui.zh, registry.categories.ui.zh);
+  assert.equal(body.generatedAt, registry.generatedAt);
+});
+
+test("server-renders the plugin detail page for preview plugins", async () => {
+  const preview = JSON.parse(await readFile(new URL("data/preview.generated.json", root), "utf8"));
+  const plugin = preview.plugins[0];
+  const response = await request(`/p/${plugin.id}`, "text/html");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, new RegExp(plugin.name));
+  assert.match(html, /ds-detail__plate/);
+  assert.match(html, /安装/);
+  assert.match(html, /README/);
+  assert.match(html, /仓库事实/);
+});
+
 test("serves a compact public registry status endpoint", async () => {
   const registry = JSON.parse(await readFile(new URL("data/plugins.generated.json", root), "utf8"));
   const response = await request("/api/registry/status", "application/json");

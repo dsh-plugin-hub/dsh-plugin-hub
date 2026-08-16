@@ -33,5 +33,6 @@ export function normalizeRepositoryPath(value: unknown): string | null;
 export function manifestSummary(pkg: unknown, branch: string | null): ScreeningManifest;
 export function deriveFacts(manifest: ScreeningManifest, meta?: unknown): ScreeningFacts;
 export function installCommandFor(repo: string): string | null;
+export function npmInstallCommandFor(packageName: string | null): string | null;
 export function sanitizeRegistryInstallEvidence<T>(registry: T): T;
 export function categoryFromText(value: unknown): ScreeningCategoryId;

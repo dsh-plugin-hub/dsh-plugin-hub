@@ -1,5 +1,4 @@
 import rawPreview from "@/data/preview.generated.json";
-import { sanitizeRegistryInstallEvidence } from "@/lib/plugin-screening.mjs";
 
 export type Language = "zh" | "en";
 

@@ -6,6 +6,7 @@ import {
   installCommandFor,
   manifestSummary,
   normalizeRepositoryPath,
+  npmInstallCommandFor,
   sanitizeRegistryInstallEvidence,
 } from "../lib/plugin-screening.mjs";
 
@@ -110,6 +111,33 @@ test("rejects invalid repo inputs for installCommandFor", () => {
   assert.equal(installCommandFor("https://github.com/owner/plugin"), null);
   assert.equal(installCommandFor("a".repeat(241)), null);
   assert.equal(installCommandFor(null), null);
+});
+
+
+test("builds npm install commands for valid package names", () => {
+  assert.equal(
+    npmInstallCommandFor("dsh-usage-chart"),
+    "dsh plugin --profile web add dsh-usage-chart",
+  );
+  assert.equal(
+    npmInstallCommandFor("@scope/dsh-plugin"),
+    "dsh plugin --profile web add @scope/dsh-plugin",
+  );
+  assert.equal(
+    npmInstallCommandFor("  safe-plugin  "),
+    "dsh plugin --profile web add safe-plugin",
+  );
+});
+
+test("rejects malformed npm package names for install commands", () => {
+  assert.equal(npmInstallCommandFor(""), null);
+  assert.equal(npmInstallCommandFor("safe-plugin\nrm -rf ~"), null);
+  assert.equal(npmInstallCommandFor("safe-plugin; rm -rf ~"), null);
+  assert.equal(npmInstallCommandFor("@scope"), null);
+  assert.equal(npmInstallCommandFor("@/safe-plugin"), null);
+  assert.equal(npmInstallCommandFor("-safe-plugin"), null);
+  assert.equal(npmInstallCommandFor("a".repeat(215)), null);
+  assert.equal(npmInstallCommandFor(null), null);
 });
 
 test("maps text to all twelve categories", () => {
