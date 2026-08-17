@@ -2924,6 +2924,63 @@ html[data-theme="dark"] body {
   color: #fff;
 }
 
+.ds-hero__invite-ad {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 13px 16px 13px 18px;
+  border: 1px solid rgba(164, 180, 255, 0.3);
+  border-radius: 14px;
+  background: linear-gradient(105deg, rgba(91, 111, 255, 0.2), rgba(255, 255, 255, 0.08));
+  box-shadow: 0 12px 34px rgba(26, 31, 90, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: #fff;
+  text-align: left;
+  text-decoration: none;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.ds-hero__invite-ad:hover {
+  border-color: rgba(190, 201, 255, 0.7);
+  background: linear-gradient(105deg, rgba(103, 123, 255, 0.3), rgba(255, 255, 255, 0.12));
+  transform: translateY(-2px);
+}
+
+.ds-hero__invite-ad-copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.ds-hero__invite-ad-copy strong {
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-hero__invite-ad-copy span {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 12px;
+  line-height: 150%;
+}
+
+.ds-hero__invite-ad-cta {
+  flex: 0 0 auto;
+  padding: 8px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
 .ds-hero__inner p {
   margin: 0;
   color: rgba(255, 255, 255, 0.56);
@@ -2975,6 +3032,17 @@ html[data-theme="dark"] body {
   justify-content: center;
   gap: var(--ds-space-3);
   margin-top: var(--ds-space-3);
+}
+
+@media (max-width: 520px) {
+  .ds-hero__invite-ad {
+    align-items: flex-start;
+    padding: 12px;
+  }
+
+  .ds-hero__invite-ad-cta {
+    padding-inline: 9px;
+  }
 }
 
 .ds-hero .ds-btn--primary {

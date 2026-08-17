@@ -954,6 +954,19 @@ export function PluginHub({
               <div className="ds-hero__spotlight" aria-hidden="true" />
               <div className="ds-hero__content">
                 <div className="ds-container ds-hero__inner">
+                  <a
+                    className="ds-hero__invite-ad ds-hero-enter"
+                    href="https://opencode.ai/go?ref=X8H6YRB0RD"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={text(lang, "打开 OpenCode Go 邀请链接", "Open the OpenCode Go invite link")}
+                  >
+                    <span className="ds-hero__invite-ad-copy">
+                      <strong>{text(lang, "DeepSeek 官方涨价，找不到廉价 Token？快来点我的 OpenCode Go 邀请链接吧！", "DeepSeek prices went up and cheap tokens are hard to find? Try my OpenCode Go invite link!")}</strong>
+                      <span>{text(lang, "点开邀请链接，我们两个人都能获得 5 美元使用额度", "Click the invite link and both of us will receive $5 in usage credit")}</span>
+                    </span>
+                    <span className="ds-hero__invite-ad-cta">{text(lang, "立即领取", "Claim now")} <span aria-hidden="true">↗</span></span>
+                  </a>
                   <p className="ds-eyebrow ds-hero-enter ds-hero-enter--label">
                     <span className="ds-hero__status-dot" aria-hidden="true" />
                     DSH PLUGIN DIRECTORY · {automationLabel} · {channelLabel} · 30 MIN
