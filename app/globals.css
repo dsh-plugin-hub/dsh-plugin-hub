@@ -4991,3 +4991,129 @@ html[data-theme="dark"] body {
     gap: var(--ds-space-2);
   }
 }
+
+/* ==========================================================================
+   首页改版：目录并入首页（紧凑 hero + 首页目录 + 事实图例条）
+   ========================================================================== */
+
+/* 1. 紧凑 hero：从整屏欢迎页改为内容驱动高度 */
+.ds-hero {
+  min-height: 0;
+}
+
+.ds-hero__content {
+  padding-top: calc(72px + var(--ds-space-8));
+  padding-bottom: var(--ds-space-8);
+}
+
+.ds-hero__inner {
+  gap: var(--ds-space-4);
+}
+
+.ds-hero__search,
+.ds-hero__actions {
+  margin-top: var(--ds-space-2);
+}
+
+@media (min-width: 768px) {
+  .ds-hero {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .ds-hero__inner {
+    max-width: 880px;
+  }
+}
+
+/* 2. 首页区块收紧 + 目录区滚动锚点 */
+.ds-page[data-page="home"] .ds-section {
+  padding-block: var(--ds-space-6);
+}
+
+.ds-page[data-page="home"] .ds-section--first {
+  padding-top: var(--ds-space-4);
+  padding-bottom: var(--ds-space-5);
+}
+
+.ds-page[data-page="home"] .ds-section--facts {
+  padding-block: var(--ds-space-4);
+}
+
+.ds-page[data-page="home"] .ds-section--catalog {
+  padding-top: var(--ds-space-5);
+  padding-bottom: var(--ds-space-10);
+  scroll-margin-top: calc(72px + var(--ds-space-3));
+}
+
+.ds-section-head--catalog {
+  margin-bottom: var(--ds-space-6);
+}
+
+.ds-section-head--catalog .ds-description {
+  margin-top: var(--ds-space-2);
+  color: var(--ds-color-text-description);
+}
+
+/* 3. 事实徽章图例条（替代原大 callout，置于目录区上方） */
+.ds-facts-strip {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ds-space-4);
+  align-items: center;
+  padding: var(--ds-space-5);
+  border: 1px solid var(--ds-color-border-subtle);
+  border-radius: var(--ds-radius-card);
+  background: var(--ds-color-bg-surface-1);
+  box-shadow: var(--ds-shadow-card);
+}
+
+.ds-facts-strip__intro h2 {
+  margin: 6px 0 0;
+}
+
+.ds-facts-strip__intro p {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 160%;
+  color: var(--ds-color-text-description);
+  text-wrap: pretty;
+}
+
+.ds-facts-legend {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--ds-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-facts-legend li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.ds-facts-legend li > span:last-child {
+  font-size: 12px;
+  line-height: 150%;
+  color: var(--ds-color-text-description);
+}
+
+@media (min-width: 560px) {
+  .ds-facts-legend {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .ds-facts-strip {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: var(--ds-space-6);
+  }
+}
+

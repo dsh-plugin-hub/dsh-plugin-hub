@@ -11,7 +11,7 @@ import { installCommandFor } from "@/lib/plugin-screening.mjs";
 import { buildGrowthSeries, type GrowthPoint } from "@/lib/growth";
 import { type PointerEvent as ReactPointerEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-type PageId = "home" | "catalog" | "rank" | "submit" | "guide";
+type PageId = "home" | "rank" | "submit" | "guide";
 type SortId = "curated" | "stars" | "updated" | "added" | "name";
 type EvidenceFilter = "all" | "curated" | "topic" | "manifest" | "favorites";
 type ViewId = "list" | "cards";
@@ -25,7 +25,6 @@ type VisitStats = {
 
 const PAGES: Array<{ id: PageId; zh: string; en: string }> = [
   { id: "home", zh: "首页", en: "Home" },
-  { id: "catalog", zh: "目录", en: "Catalog" },
   { id: "rank", zh: "排行榜", en: "Leaderboard" },
   { id: "submit", zh: "收录", en: "Get listed" },
   { id: "guide", zh: "开发指南", en: "Build one" },
@@ -46,21 +45,6 @@ const CATEGORY_ORDER: CategoryId[] = [
   "market",
   "fun",
 ];
-
-const CATEGORY_HINTS: Record<CategoryId, Record<Language, string>> = {
-  ui: { zh: "侧栏、面板、交互体验", en: "Panels, navigation, interaction" },
-  theme: { zh: "主题、配色与外观", en: "Themes, colors, appearance" },
-  model: { zh: "模型与账号接入", en: "Models & providers" },
-  session: { zh: "会话、消息与历史", en: "Sessions & messages" },
-  memory: { zh: "记忆与知识库", en: "Memory & knowledge" },
-  tools: { zh: "工具与能力扩展", en: "Tools & capabilities" },
-  skill: { zh: "技能包与提示词", en: "Skills & prompts" },
-  workflow: { zh: "工作流与自动化", en: "Workflow & automation" },
-  notify: { zh: "通知与消息推送", en: "Notifications & bridges" },
-  dev: { zh: "开发、沙箱与体检", en: "Dev, sandbox, audits" },
-  market: { zh: "市场与安装器", en: "Markets & installers" },
-  fun: { zh: "桌宠、游戏与趣味", en: "Pets, games, fun" },
-};
 
 const PREFS_KEY = "dsh-plugin-hub-prefs-v2";
 
@@ -464,6 +448,7 @@ export function PluginHub({
   const loadingRef = useRef(false);
   const itemsRef = useRef<PluginRecord[]>([]);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const catalogRef = useRef<HTMLElement | null>(null);
   const heroSpotlightRef = useRef<{
     element: HTMLElement | null;
     frame: number | null;
@@ -525,10 +510,22 @@ export function PluginHub({
   }, []);
 
   useEffect(() => {
-    const onHash = () => setPage(pageFromHash());
+    // 旧 #/catalog / #catalog 深链兼容：目录已并入首页，仍定位到目录区。
+    const isLegacyCatalogHash = () => /^#\/?catalog(?:$|[/?])/iu.test(window.location.hash);
+    const scrollAfterCatalogHash = () => {
+      if (!isLegacyCatalogHash()) return;
+      window.setTimeout(() => {
+        catalogRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 0);
+    };
+    const onHash = () => {
+      setPage(pageFromHash());
+      scrollAfterCatalogHash();
+    };
     window.addEventListener("hashchange", onHash);
     const restoreTimer = window.setTimeout(() => {
       setPage(pageFromHash());
+      scrollAfterCatalogHash();
       try {
         const saved = JSON.parse(localStorage.getItem(PREFS_KEY) || "{}");
         if (saved.lang === "zh" || saved.lang === "en") setLang(saved.lang);
@@ -610,6 +607,22 @@ export function PluginHub({
     window.history.pushState(null, "", `#/${next}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  /** 目录已并入首页：hero 按钮/搜索直接滚动到目录区。 */
+  const scrollToCatalog = useCallback(() => {
+    catalogRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  /** 从其他页面回到首页并定位到目录区（例如 header 收藏按钮）。 */
+  const goToCatalog = useCallback(() => {
+    if (page === "home") {
+      scrollToCatalog();
+      return;
+    }
+    setPage("home");
+    window.history.pushState(null, "", "#/home");
+    window.setTimeout(scrollToCatalog, 60);
+  }, [page, scrollToCatalog]);
 
   const toggleFavorite = useCallback((id: string) => {
     setFavorites((current) =>
@@ -782,12 +795,17 @@ export function PluginHub({
     [catalog.loaded, catalogIsCurrent, favoritesFiltered, isFavoritesView, previewItems, visibleItems],
   );
 
-  /** 结果计数：live total 到达前用快照过滤数兜底（「共 N 个插件」） */
+  /**
+   * 结果计数：live total 到达前，未加筛选时直接用 summary.listed（避免 SSR
+   * 首屏误显示预览切片数量 60）；筛选/收藏视图仍用客户端过滤数兜底。
+   */
   const resultCount = isFavoritesView
     ? favoritesFiltered.length
     : catalogIsCurrent && catalog.loaded
       ? (evidence === "all" ? catalog.total : visibleItems.length)
-      : previewFiltered.length;
+      : evidence === "all" && !debouncedQuery.trim() && category === "all"
+        ? data.summary.listed
+        : previewFiltered.length;
 
   // 无限滚动：哨兵元素进入视口（提前 600px）自动加载下一页；「加载更多」按钮同效。
   // 稀疏证据筛选的自动补齐在 fetchPage 内部连续完成，这里只处理用户滚动触发的追加页。
@@ -816,7 +834,6 @@ export function PluginHub({
     () => preview?.topFresh ?? [...visiblePlugins].filter((plugin) => plugin.pushedAt).sort((a, b) => Date.parse(b.pushedAt || "0") - Date.parse(a.pushedAt || "0")).slice(0, 20),
     [preview?.topFresh, visiblePlugins],
   );
-  const featured = topStars.slice(0, 6);
   const growthSeries = useMemo(
     () => preview?.growthSeries ?? buildGrowthSeries(visiblePlugins, data.generatedAt),
     [data.generatedAt, preview?.growthSeries, visiblePlugins],
@@ -893,7 +910,7 @@ export function PluginHub({
               type="button"
               onClick={() => {
                 setEvidence("favorites");
-                go("catalog");
+                goToCatalog();
               }}
               title={text(lang, "查看收藏", "View favorites")}
               aria-label={text(lang, `查看收藏（${favorites.length}）`, `View favorites (${favorites.length})`)}
@@ -986,7 +1003,7 @@ export function PluginHub({
                     role="search"
                     onSubmit={(event) => {
                       event.preventDefault();
-                      go("catalog");
+                      scrollToCatalog();
                     }}
                   >
                     <SearchGlyph />
@@ -1003,7 +1020,7 @@ export function PluginHub({
                     )}
                   </form>
                   <div className="ds-hero__actions ds-hero-enter ds-hero-enter--actions">
-                    <button className="ds-btn ds-btn--primary ds-btn--m" type="button" onClick={() => go("catalog")}>
+                    <button className="ds-btn ds-btn--primary ds-btn--m" type="button" onClick={scrollToCatalog}>
                       {text(lang, "浏览插件目录", "Browse catalog")} <span aria-hidden="true">→</span>
                     </button>
                   </div>
@@ -1087,180 +1104,146 @@ export function PluginHub({
               </div>
             </section>
 
-            <section className="ds-container ds-section">
-              <div className="ds-section-head">
-                <div>
-                  <span className="ds-kicker">COMMUNITY SIGNAL</span>
-                  <h2 className="ds-text-heading1">{text(lang, "社区热度", "Community signal")}</h2>
+            <section className="ds-container ds-section ds-section--facts" aria-labelledby="ds-facts-heading">
+              <div className="ds-facts-strip">
+                <div className="ds-facts-strip__intro">
+                  <span className="ds-kicker">FACTS, NOT ENDORSEMENT</span>
+                  <h2 className="ds-text-subtitle" id="ds-facts-heading">{text(lang, "每张卡片都说明事实到哪一步", "Every card shows how far the facts go")}</h2>
+                  <p>
+                    {text(lang, "卡片徽章只记录可核查的 GitHub 公开事实：manifest、锁文件、许可证与 README。网站不安装依赖、不运行生命周期脚本，也不做安全背书。", "Card badges only record verifiable public GitHub facts: manifest, lockfile, license, and README. The hub installs no dependencies, runs no lifecycle scripts, and makes no security endorsement.")}
+                  </p>
                 </div>
-                <button className="ds-btn ds-btn--text" type="button" onClick={() => go("rank")}>
-                  {text(lang, "完整排行榜", "Full leaderboard")} <span aria-hidden="true">→</span>
-                </button>
-              </div>
-              <div className="ds-featured-grid">
-                {featured.map((plugin, index) => (
-                  <a className="ds-featured-card" key={plugin.id} href={`/p/${plugin.id}`}>
-                    <span className="ds-featured-card__rank">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="ds-featured-card__head"><strong>{plugin.name}</strong><em>★ {formatNumber(plugin.stars, lang)}</em></span>
-                    <span className="ds-featured-card__owner">{plugin.owner}</span>
-                    <span className="ds-featured-card__desc">{plugin.description[lang]}</span>
-                    <span className="ds-featured-card__foot">{categoryLabelOf(data, plugin, lang)} <span aria-hidden="true">→</span></span>
-                  </a>
-                ))}
+                <ul className="ds-facts-legend" aria-label={text(lang, "卡片事实徽章图例", "Card fact badge legend")}>
+                  <li>
+                    <span className="ds-badge ds-badge--brand">{text(lang, "manifest 已核验", "manifest verified")}</span>
+                    <span>{text(lang, "清单与锁文件已核对", "Manifest & lockfile verified")}</span>
+                  </li>
+                  <li>
+                    <span className="ds-badge">{text(lang, "有许可证", "licensed")}</span>
+                    <span>{text(lang, "仓库声明了 LICENSE", "Repository has a license")}</span>
+                  </li>
+                  <li>
+                    <span className="ds-badge">{text(lang, "有 README", "README")}</span>
+                    <span>{text(lang, "仓库有说明文档", "Repository has documentation")}</span>
+                  </li>
+                  <li>
+                    <span className="ds-badge">{text(lang, "事实待补全", "facts pending")}</span>
+                    <span>{text(lang, "暂未采集到上述事实", "Facts not collected yet")}</span>
+                  </li>
+                </ul>
               </div>
             </section>
 
-            <section className="ds-container ds-section">
-              <div className="ds-section-head">
+            <section
+              id="catalog"
+              ref={catalogRef}
+              className="ds-container ds-section ds-section--catalog"
+              aria-labelledby="ds-catalog-heading"
+            >
+              <div className="ds-section-head ds-section-head--catalog">
                 <div>
-                  <span className="ds-kicker">BROWSE</span>
-                  <h2 className="ds-text-heading1">{text(lang, "按分类逛", "Browse by category")}</h2>
+                  <span className="ds-kicker">CATALOG</span>
+                  <h2 className="ds-text-heading1" id="ds-catalog-heading">{text(lang, "插件目录", "Plugin catalog")}</h2>
+                  <p className="ds-description ds-text-caption">
+                    {text(lang, `${resultCount} 个结果 · 数据生成于 ${generatedLabel}`, `${resultCount} results · generated ${generatedLabel}`)}
+                  </p>
                 </div>
               </div>
-              <div className="ds-category-grid">
+              <div className="ds-toolbar">
+                <label className="ds-search">
+                  <SearchGlyph />
+                  <input
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    placeholder={text(lang, "搜索名称、作者、能力或包名", "Search name, author, capability, package")}
+                    aria-label={text(lang, "搜索插件", "Search plugins")}
+                  />
+                  {query && (
+                    <button className="ds-search__clear" type="button" onClick={() => setQuery("")} aria-label={text(lang, "清空搜索", "Clear search")}>
+                      ×
+                    </button>
+                  )}
+                </label>
+                <span className="ds-select-wrap">
+                  <select value={evidence} onChange={(event) => setEvidence(event.target.value as EvidenceFilter)} className="ds-select" aria-label={text(lang, "事实筛选", "Facts filter")}>
+                    <option value="all">{text(lang, "全部事实状态", "All facts")}</option>
+                    <option value="curated">{text(lang, "社区精选", "Curated list")}</option>
+                    <option value="topic">{text(lang, "已匹配 GitHub 话题", "Matched GitHub topic")}</option>
+                    <option value="manifest">{text(lang, "manifest 已核验", "Manifest verified")}</option>
+                    <option value="favorites">{text(lang, "只看收藏", "Favorites only")}</option>
+                  </select>
+                </span>
+                <span className="ds-select-wrap">
+                  <select value={sort} onChange={(event) => setSort(event.target.value as SortId)} className="ds-select" aria-label={text(lang, "排序", "Sort")}>
+                    <option value="curated">{text(lang, "精选顺序", "Curated order")}</option>
+                    <option value="stars">{text(lang, "按星标", "By stars")}</option>
+                    <option value="updated">{text(lang, "最近更新", "Recently pushed")}</option>
+                    <option value="added">{text(lang, "最近收录", "Recently added")}</option>
+                    <option value="name">{text(lang, "名称 A→Z", "Name A→Z")}</option>
+                  </select>
+                </span>
+                <div className="ds-view-switch" role="group" aria-label={text(lang, "视图", "View")}>
+                  <button className={view === "list" ? "is-active" : ""} type="button" onClick={() => setView("list")} aria-pressed={view === "list"} title={text(lang, "列表", "List")} aria-label={text(lang, "列表视图", "List view")}>☰</button>
+                  <button className={view === "cards" ? "is-active" : ""} type="button" onClick={() => setView("cards")} aria-pressed={view === "cards"} title={text(lang, "卡片", "Cards")} aria-label={text(lang, "卡片视图", "Card view")}>▦</button>
+                </div>
+              </div>
+              <div className="ds-chips" role="group" aria-label={text(lang, "分类筛选", "Category filter")} style={{ marginTop: "var(--ds-space-4)" }}>
+                <button className={category === "all" ? "ds-chip is-active" : "ds-chip"} type="button" onClick={() => setCategory("all")}>
+                  {text(lang, "全部", "All")} <small>{data.summary.listed}</small>
+                </button>
                 {CATEGORY_ORDER.map((id) => (
-                  <button
-                    className="ds-category-card"
-                    type="button"
-                    key={id}
-                    onClick={() => {
-                      setCategory(id);
-                      go("catalog");
-                    }}
-                  >
-                    <strong>{categoryCounts[id]}</strong>
-                    <span>{data.categories[id]?.[lang] ?? id}</span>
-                    <small>{CATEGORY_HINTS[id][lang]}</small>
+                  <button className={category === id ? "ds-chip is-active" : "ds-chip"} type="button" key={id} onClick={() => setCategory(id)}>
+                    {data.categories[id]?.[lang] ?? id} <small>{categoryCounts[id]}</small>
                   </button>
                 ))}
               </div>
-            </section>
-
-            <section className="ds-container ds-section ds-section--last">
-              <div className="ds-callout">
-                <div>
-                  <span className="ds-kicker">FACTS, NOT ENDORSEMENT</span>
-                  <h2 className="ds-text-heading1">{text(lang, "每张卡片都说明事实到哪一步", "Every card shows how far the facts go")}</h2>
-                  <p className="ds-description ds-text-body">
-                    {text(lang, "网站只读取公开元数据、manifest、锁文件、许可证与 README 等客观事实；不安装依赖、不运行生命周期脚本，也不对插件做安全性背书。", "The hub reads public metadata, manifests, lockfiles, licenses, and READMEs — objective facts only. It installs no dependencies, runs no lifecycle scripts, and makes no security endorsement.")}
-                  </p>
-                </div>
-                <div className="ds-process-grid">
-                  {[
-                    ["01", "LIST", text(lang, "社区精选名单", "Community curation")],
-                    ["02", "TOPIC", text(lang, "GitHub 实时元数据", "Live GitHub metadata")],
-                    ["03", "MANIFEST", text(lang, "manifest 与锁文件", "Manifest & lockfile")],
-                    ["04", "FACTS", text(lang, "事实展示，无安全判定", "Facts shown, no judgment")],
-                  ].map(([no, title, body]) => (
-                    <div className="ds-process-card" key={no}><b>{no}</b><strong>{title}</strong><p>{body}</p></div>
-                  ))}
-                </div>
+              <div style={{ marginTop: "var(--ds-space-5)" }}>
+                {page1Pending && !displayItems.length ? (
+                  <SkeletonGrid />
+                ) : displayItems.length ? (
+                  <>
+                    <div className={view === "list" ? "ds-card-grid ds-card-grid--list" : "ds-card-grid"}>
+                      {displayItems.map((plugin) => (
+                        <PluginCard
+                          key={plugin.id}
+                          plugin={plugin}
+                          lang={lang}
+                          categoryLabel={categoryLabelOf(data, plugin, lang)}
+                          favorite={favorites.includes(plugin.id)}
+                          onFavorite={() => toggleFavorite(plugin.id)}
+                          view={view}
+                          copiedId={copied}
+                          onCopy={copy}
+                        />
+                      ))}
+                    </div>
+                    {!isFavoritesView && catalogIsCurrent && catalog.loaded && catalog.hasMore && (
+                      <div
+                        ref={sentinelRef}
+                        style={{ display: "flex", justifyContent: "center", padding: "var(--ds-space-6) 0" }}
+                      >
+                        <button
+                          className="ds-btn ds-btn--ghost ds-btn--s"
+                          type="button"
+                          onClick={() => void fetchPage(catalogKey, catalog.nextPage, true)}
+                        >
+                          {text(lang, "加载更多", "Load more")}
+                        </button>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="ds-empty">
+                    <strong>{text(lang, "没有匹配的插件", "No matching plugins")}</strong>
+                    <p>{text(lang, "换个关键词或清空筛选条件。", "Try another keyword or reset the filters.")}</p>
+                    <button className="ds-btn ds-btn--ghost ds-btn--s" type="button" onClick={() => { setQuery(""); setCategory("all"); setEvidence("all"); }}>
+                      {text(lang, "清空筛选", "Reset filters")}
+                    </button>
+                  </div>
+                )}
               </div>
             </section>
           </>
-        )}
-
-        {page === "catalog" && (
-          <section className="ds-container ds-section">
-            <div className="ds-page-heading">
-              <span className="ds-kicker">CATALOG</span>
-              <h1 className="ds-text-heading1">{text(lang, "插件目录", "Plugin catalog")}</h1>
-              <p>{text(lang, `${resultCount} 个结果 · 数据生成于 ${generatedLabel}`, `${resultCount} results · generated ${generatedLabel}`)}</p>
-            </div>
-            <div className="ds-toolbar">
-              <label className="ds-search">
-                <SearchGlyph />
-                <input
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder={text(lang, "搜索名称、作者、能力或包名", "Search name, author, capability, package")}
-                  aria-label={text(lang, "搜索插件", "Search plugins")}
-                />
-                {query && (
-                  <button className="ds-search__clear" type="button" onClick={() => setQuery("")} aria-label={text(lang, "清空搜索", "Clear search")}>
-                    ×
-                  </button>
-                )}
-              </label>
-              <span className="ds-select-wrap">
-                <select value={evidence} onChange={(event) => setEvidence(event.target.value as EvidenceFilter)} className="ds-select" aria-label={text(lang, "事实筛选", "Facts filter")}>
-                  <option value="all">{text(lang, "全部事实状态", "All facts")}</option>
-                  <option value="curated">{text(lang, "社区精选", "Curated list")}</option>
-                  <option value="topic">{text(lang, "已匹配 GitHub 话题", "Matched GitHub topic")}</option>
-                  <option value="manifest">{text(lang, "manifest 已核验", "Manifest verified")}</option>
-                  <option value="favorites">{text(lang, "只看收藏", "Favorites only")}</option>
-                </select>
-              </span>
-              <span className="ds-select-wrap">
-                <select value={sort} onChange={(event) => setSort(event.target.value as SortId)} className="ds-select" aria-label={text(lang, "排序", "Sort")}>
-                  <option value="curated">{text(lang, "精选顺序", "Curated order")}</option>
-                  <option value="stars">{text(lang, "按星标", "By stars")}</option>
-                  <option value="updated">{text(lang, "最近更新", "Recently pushed")}</option>
-                  <option value="added">{text(lang, "最近收录", "Recently added")}</option>
-                  <option value="name">{text(lang, "名称 A→Z", "Name A→Z")}</option>
-                </select>
-              </span>
-              <div className="ds-view-switch" role="group" aria-label={text(lang, "视图", "View")}>
-                <button className={view === "list" ? "is-active" : ""} type="button" onClick={() => setView("list")} aria-pressed={view === "list"} title={text(lang, "列表", "List")} aria-label={text(lang, "列表视图", "List view")}>☰</button>
-                <button className={view === "cards" ? "is-active" : ""} type="button" onClick={() => setView("cards")} aria-pressed={view === "cards"} title={text(lang, "卡片", "Cards")} aria-label={text(lang, "卡片视图", "Card view")}>▦</button>
-              </div>
-            </div>
-            <div className="ds-chips" role="group" aria-label={text(lang, "分类筛选", "Category filter")} style={{ marginTop: "var(--ds-space-4)" }}>
-              <button className={category === "all" ? "ds-chip is-active" : "ds-chip"} type="button" onClick={() => setCategory("all")}>
-                {text(lang, "全部", "All")} <small>{data.summary.listed}</small>
-              </button>
-              {CATEGORY_ORDER.map((id) => (
-                <button className={category === id ? "ds-chip is-active" : "ds-chip"} type="button" key={id} onClick={() => setCategory(id)}>
-                  {data.categories[id]?.[lang] ?? id} <small>{categoryCounts[id]}</small>
-                </button>
-              ))}
-            </div>
-            <div style={{ marginTop: "var(--ds-space-5)" }}>
-              {page1Pending && !displayItems.length ? (
-                <SkeletonGrid />
-              ) : displayItems.length ? (
-                <>
-                  <div className={view === "list" ? "ds-card-grid ds-card-grid--list" : "ds-card-grid"}>
-                    {displayItems.map((plugin) => (
-                      <PluginCard
-                        key={plugin.id}
-                        plugin={plugin}
-                        lang={lang}
-                        categoryLabel={categoryLabelOf(data, plugin, lang)}
-                        favorite={favorites.includes(plugin.id)}
-                        onFavorite={() => toggleFavorite(plugin.id)}
-                        view={view}
-                        copiedId={copied}
-                        onCopy={copy}
-                      />
-                    ))}
-                  </div>
-                  {!isFavoritesView && catalogIsCurrent && catalog.loaded && catalog.hasMore && (
-                    <div
-                      ref={sentinelRef}
-                      style={{ display: "flex", justifyContent: "center", padding: "var(--ds-space-6) 0" }}
-                    >
-                      <button
-                        className="ds-btn ds-btn--ghost ds-btn--s"
-                        type="button"
-                        onClick={() => void fetchPage(catalogKey, catalog.nextPage, true)}
-                      >
-                        {text(lang, "加载更多", "Load more")}
-                      </button>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="ds-empty">
-                  <strong>{text(lang, "没有匹配的插件", "No matching plugins")}</strong>
-                  <p>{text(lang, "换个关键词或清空筛选条件。", "Try another keyword or reset the filters.")}</p>
-                  <button className="ds-btn ds-btn--ghost ds-btn--s" type="button" onClick={() => { setQuery(""); setCategory("all"); setEvidence("all"); }}>
-                    {text(lang, "清空筛选", "Reset filters")}
-                  </button>
-                </div>
-              )}
-            </div>
-          </section>
         )}
 
         {page === "rank" && (
