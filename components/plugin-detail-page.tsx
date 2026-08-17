@@ -267,6 +267,21 @@ export function PluginDetailPage({
               </>
             )}
 
+            <p className="ds-detail__install-note">
+              {text(
+                lang,
+                "# 或把下面这段提示词发给 DSH 聊天窗口，让 DSH 帮你安装",
+                "# Or send this prompt to the DSH chat window and let DSH install it for you",
+              )}
+            </p>
+            <InstallCommand
+              command={`请帮我安装 DSH 插件：https://github.com/${plugin.repo}`}
+              copiedId={copiedId}
+              id={`${plugin.id}:chat`}
+              lang={lang}
+              onCopy={copy}
+            />
+
             {!npmCommand && !githubCommand && (
               <p className="ds-muted-note">
                 {text(lang, "仓库地址无效，无法派生安装命令。", "Invalid repository path; install command unavailable.")}
