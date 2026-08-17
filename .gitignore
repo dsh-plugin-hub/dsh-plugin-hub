@@ -41,3 +41,4 @@ yarn-error.log*
 /outputs/
 /work/
 data/topic-scan-state.json
+MEMORY.md
