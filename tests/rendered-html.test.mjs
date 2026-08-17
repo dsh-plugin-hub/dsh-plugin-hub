@@ -220,7 +220,8 @@ test("keeps the generated registry internally consistent", async () => {
   ]);
   const registry = JSON.parse(generatedText);
   const ids = registry.plugins.map((plugin) => plugin.id);
-  const verified = registry.plugins.filter((plugin) => plugin.manifest?.state === "verified");
+  // manifestMatches 只计活跃（未下架）插件；removed 保留历史记录但不再计入统计
+  const verified = registry.plugins.filter((plugin) => plugin.removed !== true && plugin.manifest?.state === "verified");
   const removed = registry.plugins.filter((plugin) => plugin.removed);
 
   assert.equal(publicText, generatedText);

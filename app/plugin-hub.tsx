@@ -86,6 +86,8 @@ interface CatalogPageResponse {
   items: PluginRecord[];
   categories?: PluginRegistryData["categories"];
   summary?: PluginRegistryData["summary"];
+  /** 自动化扫描状态（服务端契约已含；live 响应与快照合并） */
+  automation?: PluginRegistryData["automation"];
 }
 
 function factsOf(plugin: PluginRecord): PluginFacts {
