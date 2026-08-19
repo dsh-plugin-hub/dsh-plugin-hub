@@ -4993,62 +4993,358 @@ html[data-theme="dark"] body {
 }
 
 /* ==========================================================================
-   首页改版：目录并入首页（紧凑 hero + 首页目录 + 事实图例条）
+   首页留存改版：紧凑价值区 + 首屏目录
    ========================================================================== */
 
-/* 1. 紧凑 hero：从整屏欢迎页改为内容驱动高度 */
-.ds-hero {
+.ds-home {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 让目录成为首屏主内容；增长和事实说明保留为浏览后的补充信息。 */
+.ds-home .ds-hero { order: 1; }
+.ds-home .ds-home-metrics { order: 2; }
+.ds-home .ds-section--catalog { order: 3; }
+.ds-home .ds-section--growth { order: 4; }
+.ds-home .ds-section--facts { order: 5; }
+
+/* 1. Hero 从整屏欢迎页收成一块高密度价值说明。 */
+.ds-home .ds-hero {
+  height: auto;
   min-height: 0;
+  max-height: none;
+  border-bottom: 1px solid rgba(144, 166, 216, 0.09);
 }
 
-.ds-hero__content {
-  padding-top: calc(72px + var(--ds-space-8));
-  padding-bottom: var(--ds-space-8);
+.ds-home .ds-hero__content {
+  padding-top: calc(72px + var(--ds-space-4));
+  padding-bottom: var(--ds-space-6);
 }
 
-.ds-hero__inner {
-  gap: var(--ds-space-4);
+.ds-home .ds-hero__inner {
+  gap: 12px;
+  max-width: 1040px;
 }
 
-.ds-hero__search,
-.ds-hero__actions {
-  margin-top: var(--ds-space-2);
+.ds-home .ds-hero__invite-ad {
+  max-width: 860px;
+  min-height: 48px;
+  padding: 9px 12px 9px 15px;
+  border-radius: 12px;
 }
 
-@media (min-width: 768px) {
-  .ds-hero {
-    height: auto;
-    min-height: 0;
-    max-height: none;
-  }
-
-  .ds-hero__inner {
-    max-width: 880px;
-  }
+.ds-home .ds-hero__invite-ad-copy strong {
+  font-size: 13px;
 }
 
-/* 2. 首页区块收紧 + 目录区滚动锚点 */
+.ds-home .ds-hero__invite-ad-copy span {
+  font-size: 11px;
+}
+
+.ds-home .ds-hero .ds-eyebrow {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.ds-home .ds-hero__status-dot {
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+}
+
+.ds-home .ds-hero__inner h1 {
+  max-width: 1000px;
+  margin-inline: auto;
+  font-size: clamp(30px, 3vw, 40px);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.ds-home .ds-hero__inner > p:last-child {
+  max-width: 980px;
+  margin-inline: auto;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.ds-home .ds-hero__streams {
+  inset: 3% -12% 4%;
+}
+
+.ds-home .ds-hero__stream {
+  height: clamp(48px, 7vw, 86px);
+}
+
+.ds-home .ds-hero__spotlight {
+  background: radial-gradient(
+    circle 250px at var(--ds-spot-x) var(--ds-spot-y),
+    var(--ds-spot-light) 0%,
+    var(--ds-spot-falloff) 48%,
+    transparent 76%
+  );
+}
+
+/* 2. 六项可信数据压成单行，既证明目录规模，也不给目录让出太多高度。 */
 .ds-page[data-page="home"] .ds-section {
   padding-block: var(--ds-space-6);
 }
 
-.ds-page[data-page="home"] .ds-section--first {
-  padding-top: var(--ds-space-4);
-  padding-bottom: var(--ds-space-5);
+.ds-page[data-page="home"] .ds-home-metrics {
+  padding-top: 12px;
+  padding-bottom: 14px;
 }
 
-.ds-page[data-page="home"] .ds-section--facts {
-  padding-block: var(--ds-space-4);
+.ds-home-metrics .ds-metrics {
+  gap: 8px;
 }
 
+.ds-home-metrics .ds-metric {
+  padding: 9px 12px;
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--ds-color-bg-surface-1) 76%, transparent);
+}
+
+.ds-home-metrics .ds-metric strong {
+  font-size: 20px;
+  line-height: 1.15;
+}
+
+.ds-home-metrics .ds-metric span {
+  margin-top: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* 3. 目录标题、搜索和分类靠拢，首排插件卡片进入常见桌面首屏。 */
 .ds-page[data-page="home"] .ds-section--catalog {
-  padding-top: var(--ds-space-5);
+  padding-top: 18px;
   padding-bottom: var(--ds-space-10);
   scroll-margin-top: calc(72px + var(--ds-space-3));
 }
 
+.ds-catalog-top {
+  display: grid;
+  gap: var(--ds-space-4);
+}
+
 .ds-section-head--catalog {
-  margin-bottom: var(--ds-space-6);
+  margin-bottom: 0;
+}
+
+.ds-section-head--catalog h2 {
+  font-size: clamp(25px, 2.4vw, 34px);
+  line-height: 1.2;
+}
+
+.ds-section--catalog .ds-toolbar {
+  gap: 8px;
+}
+
+.ds-section--catalog .ds-search,
+.ds-section--catalog .ds-select {
+  min-height: 42px;
+}
+
+.ds-section--catalog .ds-chips {
+  flex-wrap: nowrap;
+  margin-top: 12px !important;
+  padding-bottom: 3px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.ds-section--catalog .ds-chip {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 7px 13px;
+  font-size: 13px;
+}
+
+.ds-catalog-results {
+  margin-top: var(--ds-space-4);
+}
+
+@media (min-width: 980px) {
+  .ds-catalog-top {
+    grid-template-columns: minmax(248px, 0.36fr) minmax(0, 1fr);
+    align-items: end;
+  }
+
+  .ds-catalog-top .ds-toolbar {
+    flex-wrap: nowrap;
+  }
+
+  .ds-catalog-top .ds-toolbar .ds-search {
+    min-width: 210px;
+  }
+
+  .ds-catalog-top .ds-select {
+    min-width: 142px;
+  }
+}
+
+.ds-page[data-page="home"] .ds-section--growth {
+  padding-top: var(--ds-space-10);
+}
+
+.ds-page[data-page="home"] .ds-section--facts {
+  padding-block: var(--ds-space-5);
+}
+
+@media (max-width: 979px) {
+  .ds-home .ds-hero__content {
+    padding-top: 126px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ds-home .ds-hero__content {
+    padding-bottom: var(--ds-space-5);
+  }
+
+  .ds-home .ds-hero__inner h1 {
+    font-size: clamp(28px, 9vw, 36px);
+  }
+
+  .ds-home .ds-hero__inner > p:last-child {
+    font-size: 13px;
+  }
+
+  .ds-home-metrics .ds-metrics {
+    display: flex;
+    padding-bottom: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .ds-home-metrics .ds-metrics::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ds-home-metrics .ds-metric {
+    flex: 0 0 134px;
+  }
+
+  .ds-page[data-page="home"] .ds-section--catalog {
+    padding-top: 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .ds-home .ds-hero__content {
+    padding-top: 118px;
+    padding-bottom: 16px;
+  }
+
+  .ds-home .ds-hero__inner {
+    gap: 10px;
+  }
+
+  .ds-home .ds-hero__invite-ad {
+    min-height: 44px;
+    padding: 7px 8px 7px 11px;
+  }
+
+  .ds-home .ds-hero__invite-ad-copy span {
+    display: none;
+  }
+
+  .ds-home .ds-hero__invite-ad-copy strong {
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ds-home .ds-hero__invite-ad-cta {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .ds-home .ds-hero__eyebrow-detail {
+    display: none;
+  }
+
+  .ds-home .ds-hero__inner h1 {
+    font-size: 28px;
+    line-height: 1.16;
+  }
+
+  .ds-home .ds-hero__inner > p:last-child {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .ds-page[data-page="home"] .ds-home-metrics {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .ds-home-metrics .ds-metric {
+    flex-basis: 122px;
+    padding: 7px 10px;
+  }
+
+  .ds-home-metrics .ds-metric strong {
+    font-size: 18px;
+  }
+
+  .ds-home-metrics .ds-metric span {
+    margin-top: 2px;
+    font-size: 10px;
+  }
+
+  .ds-page[data-page="home"] .ds-section--catalog {
+    padding-top: 10px;
+  }
+
+  .ds-catalog-top {
+    gap: 10px;
+  }
+
+  .ds-section-head--catalog h2 {
+    font-size: 27px;
+  }
+
+  .ds-section-head--catalog .ds-description {
+    margin-top: 4px;
+  }
+
+  .ds-section--catalog .ds-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 78px;
+    gap: 8px;
+  }
+
+  .ds-section--catalog .ds-toolbar .ds-search {
+    grid-column: 1 / -1;
+  }
+
+  .ds-section--catalog .ds-select-wrap,
+  .ds-section--catalog .ds-select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ds-section--catalog .ds-select {
+    padding-left: 11px;
+    font-size: 12px;
+  }
+
+  .ds-section--catalog .ds-view-switch {
+    width: 78px;
+  }
+
+  .ds-section--catalog .ds-view-switch button {
+    width: 36px;
+  }
+
+  .ds-section--catalog .ds-chips {
+    margin-top: 9px !important;
+  }
+
+  .ds-catalog-results {
+    margin-top: 12px;
+  }
 }
 
 .ds-section-head--catalog .ds-description {
@@ -5056,7 +5352,7 @@ html[data-theme="dark"] body {
   color: var(--ds-color-text-description);
 }
 
-/* 3. 事实徽章图例条（替代原大 callout，置于目录区上方） */
+/* 4. 事实徽章图例条（浏览目录后的补充解释） */
 .ds-facts-strip {
   display: grid;
   grid-template-columns: 1fr;
@@ -5116,4 +5412,3 @@ html[data-theme="dark"] body {
     gap: var(--ds-space-6);
   }
 }
-

@@ -945,14 +945,14 @@ export function PluginHub({
 
       <main className={page === "home" ? "" : "ds-main--page"}>
         {page === "home" && (
-          <>
+          <div className="ds-home">
             <section
               className="ds-hero"
               onPointerEnter={moveHeroSpotlight}
               onPointerMove={moveHeroSpotlight}
               onPointerLeave={hideHeroSpotlight}
             >
-              {/* 插件轨道：纯 CSS 分层光带与模块流动；保留本站原有居中信息布局。 */}
+              {/* 插件轨道：纯 CSS 分层光带与模块流动；内容改为紧凑的首屏价值区。 */}
               <div
                 className="ds-hero__bg"
                 aria-hidden="true"
@@ -986,10 +986,12 @@ export function PluginHub({
                   </a>
                   <p className="ds-eyebrow ds-hero-enter ds-hero-enter--label">
                     <span className="ds-hero__status-dot" aria-hidden="true" />
-                    DSH PLUGIN DIRECTORY · {automationLabel} · {channelLabel} · 30 MIN
+                    DSH PLUGIN DIRECTORY
+                    <span className="ds-hero__eyebrow-detail"> · {automationLabel} · {channelLabel}</span>
+                    <span> · 30 MIN</span>
                   </p>
                   <h1 className="ds-text-hero ds-hero-enter ds-hero-enter--title">
-                    {text(lang, "一切皆插件。\n先看证据，再决定装不装。", "Everything is a plugin.\nCheck the evidence before you install.")}
+                    {text(lang, "一切皆插件。先看证据，再决定装不装。", "Everything is a plugin. Check the evidence before you install.")}
                   </h1>
                   <p className="ds-hero-enter ds-hero-enter--desc">
                     {text(
@@ -998,37 +1000,11 @@ export function PluginHub({
                       `${data.summary.listed} plugins are listed — ${data.summary.autoDiscovered} auto-discovered and ${data.summary.curated} community-curated; ${data.summary.manifestMatches} have a verified manifest. GitHub metadata and repository facts are checked every 30 minutes.`,
                     )}
                   </p>
-                  <form
-                    className="ds-search ds-hero__search ds-hero-enter ds-hero-enter--actions"
-                    role="search"
-                    onSubmit={(event) => {
-                      event.preventDefault();
-                      scrollToCatalog();
-                    }}
-                  >
-                    <SearchGlyph />
-                    <input
-                      value={query}
-                      onChange={(event) => setQuery(event.target.value)}
-                      placeholder={text(lang, "搜索插件名称、作者、能力或包名", "Search name, author, capability, package")}
-                      aria-label={text(lang, "搜索插件", "Search plugins")}
-                    />
-                    {query && (
-                      <button className="ds-search__clear" type="button" onClick={() => setQuery("")} aria-label={text(lang, "清空搜索", "Clear search")}>
-                        ×
-                      </button>
-                    )}
-                  </form>
-                  <div className="ds-hero__actions ds-hero-enter ds-hero-enter--actions">
-                    <button className="ds-btn ds-btn--primary ds-btn--m" type="button" onClick={scrollToCatalog}>
-                      {text(lang, "浏览插件目录", "Browse catalog")} <span aria-hidden="true">→</span>
-                    </button>
-                  </div>
                 </div>
               </div>
             </section>
 
-            <section className="ds-container ds-section ds-section--first" aria-label={text(lang, "数据概览", "Registry metrics")}>
+            <section className="ds-container ds-section ds-section--first ds-home-metrics" aria-label={text(lang, "数据概览", "Registry metrics")}>
               <div className="ds-metrics">
                 <div className="ds-metric"><strong>{formatNumber(data.summary.listed, lang)}</strong><span>{text(lang, "目录插件", "Listed plugins")}</span></div>
                 <div className="ds-metric"><strong>{formatNumber(data.summary.curated, lang)}</strong><span>{text(lang, "社区精选", "Curated")}</span></div>
@@ -1039,7 +1015,7 @@ export function PluginHub({
               </div>
             </section>
 
-            <section className="ds-container ds-section">
+            <section className="ds-container ds-section ds-section--growth">
               <div className="ds-section-head">
                 <div>
                   <span className="ds-kicker">REGISTRY GROWTH</span>
@@ -1140,51 +1116,53 @@ export function PluginHub({
               className="ds-container ds-section ds-section--catalog"
               aria-labelledby="ds-catalog-heading"
             >
-              <div className="ds-section-head ds-section-head--catalog">
-                <div>
-                  <span className="ds-kicker">CATALOG</span>
-                  <h2 className="ds-text-heading1" id="ds-catalog-heading">{text(lang, "插件目录", "Plugin catalog")}</h2>
-                  <p className="ds-description ds-text-caption">
-                    {text(lang, `${resultCount} 个结果 · 数据生成于 ${generatedLabel}`, `${resultCount} results · generated ${generatedLabel}`)}
-                  </p>
+              <div className="ds-catalog-top">
+                <div className="ds-section-head ds-section-head--catalog">
+                  <div>
+                    <span className="ds-kicker">CATALOG</span>
+                    <h2 className="ds-text-heading1" id="ds-catalog-heading">{text(lang, "插件目录", "Plugin catalog")}</h2>
+                    <p className="ds-description ds-text-caption">
+                      {text(lang, `${resultCount} 个结果 · 数据生成于 ${generatedLabel}`, `${resultCount} results · generated ${generatedLabel}`)}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="ds-toolbar">
-                <label className="ds-search">
-                  <SearchGlyph />
-                  <input
-                    value={query}
-                    onChange={(event) => setQuery(event.target.value)}
-                    placeholder={text(lang, "搜索名称、作者、能力或包名", "Search name, author, capability, package")}
-                    aria-label={text(lang, "搜索插件", "Search plugins")}
-                  />
-                  {query && (
-                    <button className="ds-search__clear" type="button" onClick={() => setQuery("")} aria-label={text(lang, "清空搜索", "Clear search")}>
-                      ×
-                    </button>
-                  )}
-                </label>
-                <span className="ds-select-wrap">
-                  <select value={evidence} onChange={(event) => setEvidence(event.target.value as EvidenceFilter)} className="ds-select" aria-label={text(lang, "事实筛选", "Facts filter")}>
-                    <option value="all">{text(lang, "全部事实状态", "All facts")}</option>
-                    <option value="curated">{text(lang, "社区精选", "Curated list")}</option>
-                    <option value="topic">{text(lang, "已匹配 GitHub 话题", "Matched GitHub topic")}</option>
-                    <option value="manifest">{text(lang, "manifest 已核验", "Manifest verified")}</option>
-                    <option value="favorites">{text(lang, "只看收藏", "Favorites only")}</option>
-                  </select>
-                </span>
-                <span className="ds-select-wrap">
-                  <select value={sort} onChange={(event) => setSort(event.target.value as SortId)} className="ds-select" aria-label={text(lang, "排序", "Sort")}>
-                    <option value="curated">{text(lang, "精选顺序", "Curated order")}</option>
-                    <option value="stars">{text(lang, "按星标", "By stars")}</option>
-                    <option value="updated">{text(lang, "最近更新", "Recently pushed")}</option>
-                    <option value="added">{text(lang, "最近收录", "Recently added")}</option>
-                    <option value="name">{text(lang, "名称 A→Z", "Name A→Z")}</option>
-                  </select>
-                </span>
-                <div className="ds-view-switch" role="group" aria-label={text(lang, "视图", "View")}>
-                  <button className={view === "list" ? "is-active" : ""} type="button" onClick={() => setView("list")} aria-pressed={view === "list"} title={text(lang, "列表", "List")} aria-label={text(lang, "列表视图", "List view")}>☰</button>
-                  <button className={view === "cards" ? "is-active" : ""} type="button" onClick={() => setView("cards")} aria-pressed={view === "cards"} title={text(lang, "卡片", "Cards")} aria-label={text(lang, "卡片视图", "Card view")}>▦</button>
+                <div className="ds-toolbar">
+                  <label className="ds-search">
+                    <SearchGlyph />
+                    <input
+                      value={query}
+                      onChange={(event) => setQuery(event.target.value)}
+                      placeholder={text(lang, "搜索名称、作者、能力或包名", "Search name, author, capability, package")}
+                      aria-label={text(lang, "搜索插件", "Search plugins")}
+                    />
+                    {query && (
+                      <button className="ds-search__clear" type="button" onClick={() => setQuery("")} aria-label={text(lang, "清空搜索", "Clear search")}>
+                        ×
+                      </button>
+                    )}
+                  </label>
+                  <span className="ds-select-wrap">
+                    <select value={evidence} onChange={(event) => setEvidence(event.target.value as EvidenceFilter)} className="ds-select" aria-label={text(lang, "事实筛选", "Facts filter")}>
+                      <option value="all">{text(lang, "全部事实状态", "All facts")}</option>
+                      <option value="curated">{text(lang, "社区精选", "Curated list")}</option>
+                      <option value="topic">{text(lang, "已匹配 GitHub 话题", "Matched GitHub topic")}</option>
+                      <option value="manifest">{text(lang, "manifest 已核验", "Manifest verified")}</option>
+                      <option value="favorites">{text(lang, "只看收藏", "Favorites only")}</option>
+                    </select>
+                  </span>
+                  <span className="ds-select-wrap">
+                    <select value={sort} onChange={(event) => setSort(event.target.value as SortId)} className="ds-select" aria-label={text(lang, "排序", "Sort")}>
+                      <option value="curated">{text(lang, "精选顺序", "Curated order")}</option>
+                      <option value="stars">{text(lang, "按星标", "By stars")}</option>
+                      <option value="updated">{text(lang, "最近更新", "Recently pushed")}</option>
+                      <option value="added">{text(lang, "最近收录", "Recently added")}</option>
+                      <option value="name">{text(lang, "名称 A→Z", "Name A→Z")}</option>
+                    </select>
+                  </span>
+                  <div className="ds-view-switch" role="group" aria-label={text(lang, "视图", "View")}>
+                    <button className={view === "list" ? "is-active" : ""} type="button" onClick={() => setView("list")} aria-pressed={view === "list"} title={text(lang, "列表", "List")} aria-label={text(lang, "列表视图", "List view")}>☰</button>
+                    <button className={view === "cards" ? "is-active" : ""} type="button" onClick={() => setView("cards")} aria-pressed={view === "cards"} title={text(lang, "卡片", "Cards")} aria-label={text(lang, "卡片视图", "Card view")}>▦</button>
+                  </div>
                 </div>
               </div>
               <div className="ds-chips" role="group" aria-label={text(lang, "分类筛选", "Category filter")} style={{ marginTop: "var(--ds-space-4)" }}>
@@ -1197,7 +1175,7 @@ export function PluginHub({
                   </button>
                 ))}
               </div>
-              <div style={{ marginTop: "var(--ds-space-5)" }}>
+              <div className="ds-catalog-results">
                 {page1Pending && !displayItems.length ? (
                   <SkeletonGrid />
                 ) : displayItems.length ? (
@@ -1243,7 +1221,7 @@ export function PluginHub({
                 )}
               </div>
             </section>
-          </>
+          </div>
         )}
 
         {page === "rank" && (

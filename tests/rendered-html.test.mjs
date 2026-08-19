@@ -104,13 +104,16 @@ test("server-renders the complete plugin hub", async () => {
   assert.doesNotMatch(html, /ds-hero__matrix/);
   assert.match(html, /ds-hero__shade/);
   assert.match(html, new RegExp(String(registry.summary.listed)));
-    // 首页改版：目录并入首页（保留事实说明，移除社区热度/按分类逛）
+    // 首页留存改版：紧凑价值区 + 数据条 + 首屏目录（保留后续事实说明）
+    assert.match(html, /class="ds-home"/);
+    assert.match(html, /ds-home-metrics/);
     assert.match(html, /id="ds-catalog-heading"/);
+    assert.match(html, /ds-catalog-results/);
     assert.match(html, /每张卡片都说明事实到哪一步/);
     assert.doesNotMatch(html, /社区热度/);
     assert.doesNotMatch(html, /按分类逛/);
   // 官网风格组件类名
-  for (const cls of ["ds-header", "ds-hero__bg", "ds-container", "ds-footer", "ds-btn--primary", "growth-chart"]) {
+  for (const cls of ["ds-header", "ds-hero__bg", "ds-container", "ds-footer", "ds-section--catalog", "growth-chart"]) {
     assert.match(html, new RegExp(`class="[^"]*${cls}`), `missing class ${cls}`);
   }
   assert.match(html, /访问量/);
