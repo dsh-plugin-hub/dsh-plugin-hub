@@ -4710,6 +4710,21 @@ html[data-theme="dark"] body {
   color: var(--ds-color-text-description);
 }
 
+.ds-detail__ai-install-label {
+  margin-top: var(--ds-space-6);
+  color: var(--ds-color-brand);
+}
+
+.ds-detail__ai-review-note {
+  margin: 0 0 var(--ds-space-3);
+  padding: 10px 12px;
+  border-left: 2px solid var(--ds-color-brand);
+  background: color-mix(in srgb, var(--ds-color-brand) 8%, transparent);
+  color: var(--ds-color-text-secondary);
+  font-size: 13px;
+  line-height: 165%;
+}
+
 .ds-detail__install-note + .ds-terminal,
 .ds-detail__install-note + p {
   margin-top: 0;

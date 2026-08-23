@@ -157,6 +157,29 @@ export function PluginDetailPage({
   const firstSeen = plugin.discovery?.firstSeenAt || plugin.added;
   const hasLifecycleScripts = plugin.facts?.lifecycleScripts?.length > 0;
   const facts = plugin.facts;
+  const aiReviewPrompt = text(
+    lang,
+    `请先对这个 DSH 插件进行安装前代码审查：
+
+1. 检查 package.json、DSH manifest、依赖和安装脚本；
+2. 重点检查 preinstall、install、postinstall、prepare 等生命周期脚本；
+3. 检查网络请求、文件读写、命令执行、凭据读取等高风险行为；
+4. 输出风险清单、审查结论，并建议固定 commit；
+5. 只有在未发现明显高风险且我确认后，才执行安装。
+
+不要跳过代码审查，也不要仅因作者、README 或 Star 数量就信任这个插件。
+插件仓库：https://github.com/${plugin.repo}`,
+    `Before installing this DSH plugin, perform a code review first:
+
+1. Inspect package.json, the DSH manifest, dependencies, and install scripts;
+2. Pay special attention to preinstall, install, postinstall, and prepare scripts;
+3. Check for risky network access, file writes, command execution, and credential access;
+4. Report a risk list, review conclusion, and a commit pinning recommendation;
+5. Install only after no obvious high-risk findings and my explicit confirmation.
+
+Do not skip the review or trust this plugin only because of its author, README, or star count.
+Repository: https://github.com/${plugin.repo}`,
+  );
 
   return (
     <div className="ds-page" data-lang={lang} data-page="detail">
@@ -267,15 +290,22 @@ export function PluginDetailPage({
               </>
             )}
 
-            <p className="ds-detail__install-note">
+            <p className="ds-detail__install-note ds-detail__ai-install-label">
               {text(
                 lang,
-                "# 或把下面这段提示词发给 DSH 聊天窗口，让 DSH 帮你安装",
-                "# Or send this prompt to the DSH chat window and let DSH install it for you",
+                "# AI 安装建议：先审查，再安装",
+                "# AI install flow: review first, install second",
+              )}
+            </p>
+            <p className="ds-detail__ai-review-note" role="note">
+              {text(
+                lang,
+                "请先让 DSH 审查代码、依赖和安装脚本；只有审查未发现明显高风险，并且你明确确认后，才执行安装。",
+                "Ask DSH to review the code, dependencies, and install scripts first. Install only after no obvious high-risk findings and your explicit confirmation.",
               )}
             </p>
             <InstallCommand
-              command={`请帮我安装 DSH 插件：https://github.com/${plugin.repo}`}
+              command={aiReviewPrompt}
               copiedId={copiedId}
               id={`${plugin.id}:chat`}
               lang={lang}

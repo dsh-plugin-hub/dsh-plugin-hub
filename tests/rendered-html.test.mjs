@@ -174,6 +174,10 @@ test("server-renders the plugin detail page for preview plugins", async () => {
   assert.match(html, new RegExp(plugin.name));
   assert.match(html, /ds-detail__plate/);
   assert.match(html, /安装/);
+  assert.match(html, /安装前代码审查/);
+  assert.match(html, /postinstall/);
+  assert.match(html, /明确确认后/);
+  assert.doesNotMatch(html, /请帮我安装 DSH 插件/);
   assert.match(html, /README/);
   assert.match(html, /仓库事实/);
 });
