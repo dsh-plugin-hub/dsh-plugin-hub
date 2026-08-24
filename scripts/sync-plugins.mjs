@@ -36,7 +36,8 @@ const previewPath = path.join(root, "data", "preview.generated.json");
 const PREVIEW_PAGE_SIZE = 60;
 const MAX_JSON_BYTES = 6_000_000;
 const MAX_TEXT_BYTES = 140_000;
-// 全量 union（curated 820 + topic ~4200）pretty-printed 约 6~13 MB；旧 820 条文件约 2.1 MB。
+// 全量 union 以紧凑 JSON 存储，避免随着 topic 插件增长被缩进空白撑大；
+// 16 MB 上限同时保护 Worker/KV/静态资源链路。
 const MAX_OUTPUT_BYTES = 16_000_000;
 const MAX_CURATED_PLUGINS = 2_000;
 
@@ -844,7 +845,9 @@ async function main() {
     plugins,
   };
 
-  const serialized = `${JSON.stringify(output, null, 2)}
+  // 全量快照只供 Worker 运行时读取，不需要 pretty-print；紧凑格式可显著降低
+  // KV 读取、静态资源传输和浏览器回退解析的成本。
+  const serialized = `${JSON.stringify(output)}
 `;
   if (Buffer.byteLength(serialized) > MAX_OUTPUT_BYTES) {
     throw new Error(`Generated registry exceeds ${MAX_OUTPUT_BYTES} bytes`);
@@ -915,4 +918,3 @@ async function mainArtifactsOnly() {
   console.error(error);
   process.exitCode = 1;
 });
-
