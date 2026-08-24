@@ -121,31 +121,51 @@ test("server-renders the complete plugin hub", async () => {
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
-test("serves the real registry through the JSON API (bundled fallback)", async () => {
+test("serves a paginated registry through the JSON API (bundled fallback)", async () => {
   const response = await request("/api/plugins", "application/json");
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^application\/json\b/i);
   assert.equal(response.headers.get("access-control-allow-origin"), "*");
-  // 测试环境无 D1 绑定 → 回退 bundled 全量格式
+  // 测试环境无 D1 绑定 → 回退 bundled 分页格式
   assert.equal(response.headers.get("x-registry-source"), "bundled-fallback");
 
   const body = await response.json();
   assert.equal(body.schemaVersion, 2);
-  assert.ok(body.plugins.length >= body.summary.listed);
-  assert.ok(body.summary.curated <= body.plugins.length);
+  assert.equal(body.page, 1);
+  assert.equal(body.pageSize, 60);
+  assert.ok(Array.isArray(body.items));
+  assert.ok(body.items.length <= body.pageSize);
+  assert.ok(body.total >= body.items.length);
   assert.ok(body.summary.topicTotal >= body.summary.curated);
   assert.ok(body.summary.manifestMatches >= 500);
   assert.equal(body.automation.schedule, "*/30 * * * *");
   assert.equal(body.sources.curated.state, "live");
   assert.equal(body.sources.topic.state, "live");
-  assert.ok(body.plugins.every((plugin) => plugin.url.startsWith("https://github.com/")));
+  assert.ok(body.items.every((plugin) => plugin.url.startsWith("https://github.com/")));
   // 新数据模型：有 facts、无 screening/installCommand
-  assert.ok(body.plugins.every((plugin) => plugin.facts && plugin.discovery));
-  assert.ok(body.plugins.every((plugin) => !("screening" in plugin) && !("screenedCommit" in plugin) && !("installCommand" in plugin)));
+  assert.ok(body.items.every((plugin) => plugin.facts && plugin.discovery));
+  assert.ok(body.items.every((plugin) => !("screening" in plugin) && !("screenedCommit" in plugin) && !("installCommand" in plugin)));
   // facts 与 manifest 一致：verified 必有 hasManifest
-  for (const plugin of body.plugins.filter((p) => p.manifest?.state === "verified")) {
+  for (const plugin of body.items.filter((p) => p.manifest?.state === "verified")) {
     assert.equal(plugin.facts.hasManifest, true, `${plugin.id} verified but facts.hasManifest false`);
   }
+});
+
+test("filters the paginated fallback response instead of returning the full snapshot", async () => {
+  const response = await request("/api/plugins?q=max-samson", "application/json");
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("x-registry-source"), "bundled-fallback");
+
+  const body = await response.json();
+  assert.ok(body.total > 0);
+  assert.ok(body.items.length <= body.pageSize);
+  assert.ok(body.items.every((plugin) => {
+    const text = [plugin.name, plugin.owner, plugin.description.en, plugin.description.zh]
+      .join(" ")
+      .toLocaleLowerCase();
+    return text.includes("max-samson");
+  }));
+  assert.equal("plugins" in body, false);
 });
 
 test("serves one complete plugin record through the detail JSON API", async () => {

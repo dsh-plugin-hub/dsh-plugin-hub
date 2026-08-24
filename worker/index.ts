@@ -2,7 +2,6 @@
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
 import {
-  pluginRegistryResponse,
   readPluginRegistry,
   syncPluginRegistry,
 } from "./plugin-registry";
@@ -49,11 +48,11 @@ function visitStatsResponse(stats: Awaited<ReturnType<typeof readVisitStats>>) {
 }
 
 // ---------------------------------------------------------------------------
-// /api/plugins：D1 惰性同步 + 服务端分页查询（P1-T5）
+// /api/plugins：D1 预同步 + 服务端分页查询（P1-T5）
 // 依据方案文档 4.2 / PLAN 6.2：KV 全量 JSON → D1 行存储，查询走 SQL。
 // 数据链路：读 KV registry（readPluginRegistry）→ 与 registry_meta 中的
-// generatedAt 比对，不一致则批量 upsert（100 条/批）→ D1 分页查询。
-// D1 绑定缺失或未就绪（迁移未应用等）→ 降级到 KV 全量 JSON（pluginRegistryResponse），
+// generatedAt 比对并由 scheduled 任务批量 upsert（100 条/批）→ D1 分页查询。
+// 用户请求不再触发全量同步；D1 不可用时使用 KV/静态快照在 Worker 内分页回退，
 // 用 X-Registry-Source 头区分数据来源（cloudflare-d1 / cloudflare-kv / bundled-fallback）。
 // ---------------------------------------------------------------------------
 
@@ -121,6 +120,7 @@ interface PluginsPageResponse {
   pageSize: number;
   items: PluginRecord[];
   categories: PluginRegistryData["categories"];
+  sources: PluginRegistryData["sources"];
   summary: PluginRegistryData["summary"];
   automation: PluginRegistryData["automation"];
 }
@@ -245,8 +245,11 @@ function registrySummary(registry: PluginRegistryData): PluginRegistryData["summ
   };
 }
 
-/** 惰性同步：registry.generatedAt 与 D1 元数据不一致时全量 upsert（100 条/批）。 */
-async function ensurePluginsSynced(db: D1Database, registry: PluginRegistryData): Promise<void> {
+/**
+ * 定时同步：registry.generatedAt 与 D1 元数据不一致时全量 upsert（100 条/批）。
+ * 该操作只在 scheduled 任务中执行，绝不阻塞用户的搜索请求。
+ */
+async function syncPluginsToD1(db: D1Database, registry: PluginRegistryData): Promise<void> {
   const meta = await db
     .prepare("SELECT value FROM registry_meta WHERE key = ?")
     .bind(PLUGIN_META_KEY)
@@ -367,19 +370,78 @@ async function queryPluginsPage(
     pageSize: query.pageSize,
     items,
     categories: registry.categories ?? ({} as PluginRegistryData["categories"]),
+    sources: registry.sources,
     summary: registrySummary(registry),
     // 前端据此显示巡检状态（live/degraded/bundled）
     automation: registry.automation,
   };
 }
 
-/** /api/plugins 处理器：D1 可用 → 惰性同步 + 分页；不可用 → KV 全量回退。 */
+function registrySource(registry: PluginRegistryData): "cloudflare-kv" | "bundled-fallback" {
+  return registry.automation?.state === "live" ? "cloudflare-kv" : "bundled-fallback";
+}
+
+/**
+ * D1 不可用时的内存分页回退。
+ * 重要的是返回与 D1 相同的分页契约，而不是把十几 MB 的全量注册表直接返回给浏览器。
+ */
+function queryRegistryPage(
+  registry: PluginRegistryData,
+  query: PluginsQuery,
+): PluginsPageResponse {
+  const normalizedQuery = query.q?.toLocaleLowerCase() ?? "";
+  const filtered = (registry.plugins ?? [])
+    .filter((plugin) => plugin.removed !== true)
+    .filter((plugin) => !query.category || plugin.category === query.category)
+    .filter((plugin) => {
+      if (!normalizedQuery) return true;
+      return [
+        plugin.name,
+        plugin.owner,
+        plugin.description?.en,
+        plugin.description?.zh,
+      ].some((value) => value?.toLocaleLowerCase().includes(normalizedQuery));
+    });
+
+  filtered.sort((left, right) => {
+    if (query.sort === "curated" && left.curated !== right.curated) {
+      return left.curated ? -1 : 1;
+    }
+    if (query.sort === "curated" || query.sort === "stars") {
+      const stars = (right.stars ?? -Infinity) - (left.stars ?? -Infinity);
+      if (stars !== 0) return stars;
+    }
+    if (query.sort === "updated") {
+      const updated = (Date.parse(right.updatedAt || "") || -Infinity)
+        - (Date.parse(left.updatedAt || "") || -Infinity);
+      if (updated !== 0) return updated;
+    }
+    if (query.sort === "added") {
+      const added = (Date.parse(right.createdAt || right.added || "") || -Infinity)
+        - (Date.parse(left.createdAt || left.added || "") || -Infinity);
+      if (added !== 0) return added;
+    }
+    return left.name.localeCompare(right.name, undefined, { sensitivity: "base" });
+  });
+
+  const offset = (query.page - 1) * query.pageSize;
+  return {
+    schemaVersion: registry.schemaVersion ?? 2,
+    generatedAt: registry.generatedAt ?? null,
+    total: filtered.length,
+    page: query.page,
+    pageSize: query.pageSize,
+    items: filtered.slice(offset, offset + query.pageSize),
+    categories: registry.categories ?? ({} as PluginRegistryData["categories"]),
+    sources: registry.sources,
+    summary: registrySummary(registry),
+    automation: registry.automation,
+  };
+}
+
+/** /api/plugins 处理器：D1 查询不再触发同步；不可用时使用分页回退。 */
 async function handlePluginsRequest(request: Request, env: Env): Promise<Response> {
   const registry = await readPluginRegistry(env);
-  const d1 = env.VISIT_METRICS;
-  if (!d1) {
-    return pluginRegistryResponse(registry);
-  }
   let query: PluginsQuery;
   try {
     query = parsePluginsQuery(new URL(request.url).searchParams);
@@ -395,16 +457,34 @@ async function handlePluginsRequest(request: Request, env: Env): Promise<Respons
       },
     );
   }
+
+  const d1 = env.VISIT_METRICS;
+  if (!d1) {
+    return Response.json(queryRegistryPage(registry, query), {
+      headers: pluginsApiHeaders(registrySource(registry)),
+    });
+  }
+
   try {
-    await ensurePluginsSynced(d1, registry);
     const body = await queryPluginsPage(d1, registry, query);
+
+    // 定时同步尚未完成时，D1 可能暂时为空。只在 D1 没有命中时使用快照回退，
+    // 既避免首轮部署显示空目录，也不会把全量快照发到浏览器。
+    if (body.total === 0 && (registry.plugins?.length ?? 0) > 0) {
+      return Response.json(queryRegistryPage(registry, query), {
+        headers: pluginsApiHeaders(registrySource(registry)),
+      });
+    }
+
     return Response.json(body, { headers: pluginsApiHeaders("cloudflare-d1") });
   } catch (error) {
     console.error(JSON.stringify({
       event: "plugins.d1.error",
       error: error instanceof Error ? error.message : String(error),
     }));
-    return pluginRegistryResponse(registry);
+    return Response.json(queryRegistryPage(registry, query), {
+      headers: pluginsApiHeaders(registrySource(registry)),
+    });
   }
 }
 
@@ -529,7 +609,22 @@ const worker = {
   },
 
   async scheduled(_controller: ScheduledController, env: Env): Promise<void> {
-    await syncPluginRegistry(env);
+    const registry = await syncPluginRegistry(env);
+    if (!registry || !env.VISIT_METRICS) return;
+    try {
+      await syncPluginsToD1(env.VISIT_METRICS, registry);
+      console.log(JSON.stringify({
+        event: "plugins.d1.sync.complete",
+        generatedAt: registry.generatedAt,
+        listed: registry.summary.listed,
+      }));
+    } catch (error) {
+      // D1 同步失败不应阻塞下一轮 KV/registry 巡检；搜索会使用分页快照回退。
+      console.error(JSON.stringify({
+        event: "plugins.d1.sync.error",
+        error: error instanceof Error ? error.message : String(error),
+      }));
+    }
   },
 };
 

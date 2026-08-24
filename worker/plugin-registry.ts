@@ -998,14 +998,3 @@ export async function syncPluginRegistry(env: PluginRegistryEnv) {
   return registry;
 }
 
-export function pluginRegistryResponse(registry: PluginRegistryData) {
-  return Response.json(registry, {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Cache-Control": "public, max-age=60, s-maxage=300, stale-while-revalidate=3600",
-      "X-Registry-Source": registry.automation?.state === "live" ? "cloudflare-kv" : "bundled-fallback",
-      "X-Content-Type-Options": "nosniff",
-    },
-  });
-}
-
