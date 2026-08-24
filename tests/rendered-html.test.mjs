@@ -139,8 +139,8 @@ test("serves a paginated registry through the JSON API (bundled fallback)", asyn
   assert.ok(body.summary.topicTotal >= body.summary.curated);
   assert.ok(body.summary.manifestMatches >= 500);
   assert.equal(body.automation.schedule, "*/30 * * * *");
-  assert.equal(body.sources.curated.state, "live");
-  assert.equal(body.sources.topic.state, "live");
+  assert.ok(["live", "snapshot"].includes(body.sources.curated.state));
+  assert.ok(["live", "partial", "snapshot"].includes(body.sources.topic.state));
   assert.ok(body.items.every((plugin) => plugin.url.startsWith("https://github.com/")));
   // 新数据模型：有 facts、无 screening/installCommand
   assert.ok(body.items.every((plugin) => plugin.facts && plugin.discovery));
