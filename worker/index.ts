@@ -75,7 +75,22 @@ const PLUGIN_ORDER_BY: Record<(typeof PLUGIN_SORTS)[number], string> = {
 const PLUGIN_DEFAULT_PAGE_SIZE = 60;
 const PLUGIN_MAX_PAGE_SIZE = 100;
 const PLUGIN_SYNC_BATCH_SIZE = 100;
+/** 单轮最多写入行数：D1 调用占 Worker 子请求配额（免费版 50/次），
+ *  全量 1.4 万行 = 137 个 batch 必超限，写入到一半就断（2026-09-02 实锤：
+ *  D1 卡在 11,936 行而注册表已有 13,703）。截断时下轮 cron 续写收敛。 */
+const PLUGIN_SYNC_MAX_ROWS_PER_RUN = 1500;
+/** 差量比对时键集分页读回现值的页大小。 */
+const PLUGIN_SYNC_READ_PAGE = 2000;
 const PLUGIN_META_KEY = "generatedAt";
+/** 无筛选查询的 total 缓存：COUNT(*) 每次冷请求全表扫 N 行，是读额度大头。 */
+const PLUGIN_TOTAL_ACTIVE_KEY = "plugins_total_active";
+// D1 同步策略：内容哈希未变 → 跳过；变了 → 差量 upsert（只写变化的行），
+// 全表比对最多每 6h 一次；新收录插件不受节流。不节流时每 30 分钟的 cron
+// 一天会写 ~65 万行，免费版限额 10 万行/天（UTC 0 点重置），数小时内打爆。
+const PLUGIN_D1_SYNC_STATE_KEY = "plugins_d1_sync_state";
+const PLUGIN_D1_SYNC_MIN_INTERVAL_MS = 6 * 60 * 60 * 1000;
+
+type RegistryPlugin = NonNullable<PluginRegistryData["plugins"]>[number];
 
 /** D1 plugins 表行（snake_case，对应 migrations/0002_plugins.sql）。 */
 interface PluginRow {
@@ -246,17 +261,135 @@ function registrySummary(registry: PluginRegistryData): PluginRegistryData["summ
 }
 
 /**
- * 定时同步：registry.generatedAt 与 D1 元数据不一致时全量 upsert（100 条/批）。
+ * 计算注册表内容的稳定指纹：只有插件数据本身变化（新增/更新/移除/热度变动）
+ * 才会改变哈希，generatedAt 每轮 cron 都会刷新，不能作为变更依据。
+ */
+async function computePluginsHash(plugins: PluginRegistryData["plugins"]): Promise<string> {
+  const canonical = (plugins ?? []).map((plugin) => [
+    plugin.id,
+    plugin.updatedAt ?? plugin.pushedAt ?? "",
+    plugin.stars ?? -1,
+    plugin.forks ?? -1,
+    plugin.openIssues ?? -1,
+    plugin.removed ? 1 : 0,
+    plugin.curated ? 1 : 0,
+    plugin.order ?? -1,
+  ].join("\u001f")).join("\u001e");
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(canonical));
+  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+/**
+ * upsert 绑定参数（列顺序固定）。写入与差量比对共用，避免两处映射漂移。
+ * 注意 updated_at 不用 generatedAt 兜底：否则缺时间戳的行每轮都会被判为「已变更」。
+ */
+function pluginUpsertParams(plugin: RegistryPlugin): (string | number | null)[] {
+  return [
+    plugin.id,
+    plugin.name,
+    plugin.owner,
+    plugin.category,
+    plugin.description?.en ?? null,
+    plugin.description?.zh ?? null,
+    plugin.stars ?? null,
+    plugin.forks ?? null,
+    plugin.openIssues ?? null,
+    plugin.pushedAt ?? null,
+    plugin.createdAt ?? plugin.added ?? null,
+    plugin.license ?? null,
+    plugin.language ?? null,
+    plugin.homepage ?? null,
+    plugin.archived ? 1 : 0,
+    plugin.curated ? 1 : 0,
+    (plugin.facts?.hasManifest || plugin.manifest?.state === "verified") ? 1 : 0,
+    plugin.facts?.hasLockfile ? 1 : 0,
+    plugin.facts?.hasLicense ? 1 : 0,
+    plugin.facts?.hasReadme ? 1 : 0,
+    JSON.stringify(plugin.facts?.lifecycleScripts ?? []),
+    plugin.removed ? 1 : 0,
+    plugin.updatedAt ?? plugin.pushedAt ?? plugin.added ?? null,
+  ];
+}
+
+/** D1 行 → 与 pluginUpsertParams 相同顺序的参数数组（列名取值，顺序必须一致）。 */
+function pluginRowParams(row: PluginRow): (string | number | null)[] {
+  return [
+    row.id, row.name, row.owner, row.category,
+    row.description_en, row.description_zh,
+    row.stars, row.forks, row.open_issues,
+    row.pushed_at, row.created_at,
+    row.license, row.language, row.homepage,
+    row.archived, row.curated,
+    row.has_manifest, row.has_lockfile, row.has_license, row.has_readme,
+    row.lifecycle_scripts, row.removed, row.updated_at,
+  ];
+}
+
+/**
+ * 键集分页读回 D1 全表现值 → { id: 行签名 }，供差量比对。
+ * 读额度（免费版 500 万行/天）余量远大于写额度，用读换写是本方案的核心取舍。
+ */
+async function readExistingRowSigs(db: D1Database): Promise<Map<string, string>> {
+  const sigs = new Map<string, string>();
+  let cursor = "";
+  for (;;) {
+    const { results } = await db
+      .prepare("SELECT * FROM plugins WHERE id > ? ORDER BY id LIMIT ?")
+      .bind(cursor, PLUGIN_SYNC_READ_PAGE)
+      .all<PluginRow>();
+    const rows = results ?? [];
+    if (rows.length === 0) break;
+    for (const row of rows) {
+      sigs.set(row.id, JSON.stringify(pluginRowParams(row)));
+      cursor = row.id;
+    }
+    if (rows.length < PLUGIN_SYNC_READ_PAGE) break;
+  }
+  return sigs;
+}
+
+/**
+ * 定时同步（差量）：读回 D1 现值逐行比对，只 upsert 真正变化的行。
+ * - 内容指纹未变且无新收录 → 跳过；全表比对最多每 6h 一次（写额度保护）。
+ * - 新收录插件（firstSeenAt ≥ 水位）不受节流，每轮都写，~30 分钟内可见。
+ * - 单轮写入行数有上限，截断时下轮 cron 续写收敛（子请求/额度双保护）。
  * 该操作只在 scheduled 任务中执行，绝不阻塞用户的搜索请求。
  */
 async function syncPluginsToD1(db: D1Database, registry: PluginRegistryData): Promise<void> {
-  const meta = await db
-    .prepare("SELECT value FROM registry_meta WHERE key = ?")
-    .bind(PLUGIN_META_KEY)
-    .first<{ value: string }>();
-  if (meta?.value === registry.generatedAt) return;
-
   const plugins = registry.plugins ?? [];
+  if (plugins.length === 0) return;
+
+  const registryHash = await computePluginsHash(plugins);
+  const stateRow = await db
+    .prepare("SELECT value FROM registry_meta WHERE key = ?")
+    .bind(PLUGIN_D1_SYNC_STATE_KEY)
+    .first<{ value: string }>();
+  let state: { hash?: string; syncedAt?: string; newSince?: string } = {};
+  if (stateRow?.value) {
+    try {
+      state = JSON.parse(stateRow.value) as typeof state;
+    } catch {
+      // 状态行损坏 → 走一次全量差量重建
+    }
+  }
+
+  const watermark = state.newSince ?? null;
+  const fresh = watermark
+    ? plugins.filter((plugin) => (plugin.discovery?.firstSeenAt ?? "") >= watermark)
+    : [];
+  if (state.hash === registryHash && fresh.length === 0) return; // 内容与水位都没变，D1 已是最新
+
+  const lastSync = state.syncedAt ? Date.parse(state.syncedAt) : Number.NaN;
+  const dueFull = !Number.isFinite(lastSync) || Date.now() - lastSync >= PLUGIN_D1_SYNC_MIN_INTERVAL_MS;
+  if (!dueFull && fresh.length === 0) {
+    console.log(JSON.stringify({
+      event: "plugins.d1.sync.skipped",
+      reason: "throttled",
+      lastSyncedAt: state.syncedAt ?? null,
+    }));
+    return;
+  }
+
   const upsertSql = `INSERT INTO plugins (
       id, name, owner, category, description_en, description_zh,
       stars, forks, open_issues, pushed_at, created_at,
@@ -275,39 +408,51 @@ async function syncPluginsToD1(db: D1Database, registry: PluginRegistryData): Pr
       has_license = excluded.has_license, has_readme = excluded.has_readme,
       lifecycle_scripts = excluded.lifecycle_scripts, removed = excluded.removed,
       updated_at = excluded.updated_at`;
-  for (let i = 0; i < plugins.length; i += PLUGIN_SYNC_BATCH_SIZE) {
-    const chunk = plugins.slice(i, i + PLUGIN_SYNC_BATCH_SIZE);
-    const statements = chunk.map((plugin) => db.prepare(upsertSql).bind(
-      plugin.id,
-      plugin.name,
-      plugin.owner,
-      plugin.category,
-      plugin.description?.en ?? null,
-      plugin.description?.zh ?? null,
-      plugin.stars ?? null,
-      plugin.forks ?? null,
-      plugin.openIssues ?? null,
-      plugin.pushedAt ?? null,
-      plugin.createdAt ?? plugin.added ?? null,
-      plugin.license ?? null,
-      plugin.language ?? null,
-      plugin.homepage ?? null,
-      plugin.archived ? 1 : 0,
-      plugin.curated ? 1 : 0,
-      (plugin.facts?.hasManifest || plugin.manifest?.state === "verified") ? 1 : 0,
-      plugin.facts?.hasLockfile ? 1 : 0,
-      plugin.facts?.hasLicense ? 1 : 0,
-      plugin.facts?.hasReadme ? 1 : 0,
-      JSON.stringify(plugin.facts?.lifecycleScripts ?? []),
-      plugin.removed ? 1 : 0,
-      plugin.updatedAt ?? plugin.pushedAt ?? plugin.added ?? registry.generatedAt,
-    ));
-    await db.batch(statements);
+  const writeChunked = async (targets: RegistryPlugin[]): Promise<number> => {
+    let written = 0;
+    for (let i = 0; i < targets.length && written < PLUGIN_SYNC_MAX_ROWS_PER_RUN; i += PLUGIN_SYNC_BATCH_SIZE) {
+      const chunk = targets.slice(i, i + PLUGIN_SYNC_BATCH_SIZE).slice(0, PLUGIN_SYNC_MAX_ROWS_PER_RUN - written);
+      await db.batch(chunk.map((plugin) => db.prepare(upsertSql).bind(...pluginUpsertParams(plugin))));
+      written += chunk.length;
+    }
+    return written;
+  };
+
+  let fullComplete = false;
+  let targets: RegistryPlugin[];
+  if (dueFull) {
+    const existing = await readExistingRowSigs(db);
+    const changed = plugins.filter((plugin) => existing.get(plugin.id) !== JSON.stringify(pluginUpsertParams(plugin)));
+    fullComplete = changed.length <= PLUGIN_SYNC_MAX_ROWS_PER_RUN;
+    targets = changed;
+  } else {
+    targets = fresh;
   }
-  await db
-    .prepare("INSERT INTO registry_meta (key, value, updated_at) VALUES (?, ?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at")
-    .bind(PLUGIN_META_KEY, registry.generatedAt, new Date().toISOString())
-    .run();
+  const written = await writeChunked(targets);
+
+  // 水位推进到当前最大 firstSeenAt：下轮只挑更新收录的行（>= 含等号，重复重写最新一行可忽略不计）
+  const newestFirstSeen = plugins.reduce((max, plugin) => {
+    const seenAt = plugin.discovery?.firstSeenAt ?? "";
+    return seenAt > max ? seenAt : max;
+  }, state.newSince ?? "");
+  const nowIso = new Date().toISOString();
+  const metaUpsert = db
+    .prepare("INSERT INTO registry_meta (key, value, updated_at) VALUES (?, ?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at");
+  await db.batch([
+    metaUpsert.bind(PLUGIN_META_KEY, registry.generatedAt, nowIso),
+    metaUpsert.bind(PLUGIN_D1_SYNC_STATE_KEY, JSON.stringify({
+      hash: fullComplete ? registryHash : state.hash,
+      syncedAt: fullComplete ? nowIso : state.syncedAt,
+      newSince: newestFirstSeen || undefined,
+    }), nowIso),
+    metaUpsert.bind(PLUGIN_TOTAL_ACTIVE_KEY, String(plugins.reduce((n, p) => n + (p.removed ? 0 : 1), 0)), nowIso),
+  ]);
+  console.log(JSON.stringify({
+    event: "plugins.d1.sync.complete",
+    mode: dueFull ? "diff" : "fresh",
+    written,
+    truncated: dueFull ? !fullComplete : false,
+  }));
 }
 
 /** 查询参数解析：白名单校验（sort/category），数值钳制（page/pageSize），q 转义。 */
@@ -351,11 +496,31 @@ async function queryPluginsPage(
   }
   const whereSql = where.join(" AND ");
   const orderBy = PLUGIN_ORDER_BY[query.sort];
-  const countRow = await db
-    .prepare(`SELECT COUNT(*) AS total FROM plugins WHERE ${whereSql}`)
-    .bind(...bindings)
-    .first<{ total: number }>();
-  const total = countRow?.total ?? 0;
+  // 无筛选查询的 total 走 registry_meta 缓存（同步时由 Worker 写入）：
+  // COUNT(*) 每次冷请求全表扫 N 行，是读额度大头；带筛选时必须实算。
+  let total: number;
+  if (!query.q && !query.category) {
+    const cached = await db
+      .prepare("SELECT value FROM registry_meta WHERE key = ?")
+      .bind(PLUGIN_TOTAL_ACTIVE_KEY)
+      .first<{ value: string }>();
+    const parsed = cached?.value ? Number.parseInt(cached.value, 10) : Number.NaN;
+    if (Number.isFinite(parsed)) {
+      total = parsed;
+    } else {
+      const countRow = await db
+        .prepare(`SELECT COUNT(*) AS total FROM plugins WHERE ${whereSql}`)
+        .bind(...bindings)
+        .first<{ total: number }>();
+      total = countRow?.total ?? 0;
+    }
+  } else {
+    const countRow = await db
+      .prepare(`SELECT COUNT(*) AS total FROM plugins WHERE ${whereSql}`)
+      .bind(...bindings)
+      .first<{ total: number }>();
+    total = countRow?.total ?? 0;
+  }
   const offset = (query.page - 1) * query.pageSize;
   const { results } = await db
     .prepare(`SELECT * FROM plugins WHERE ${whereSql} ORDER BY ${orderBy} LIMIT ? OFFSET ?`)
