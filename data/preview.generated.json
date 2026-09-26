@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-16T05:12:31.215Z",
+  "generatedAt": "2026-09-26T08:32:35.588Z",
   "automation": {
     "enabled": true,
     "schedule": "*/30 * * * *",
@@ -18,7 +18,7 @@
     "curated": {
       "url": "https://awesome-dsh-plugin.com/plugins.json",
       "repository": "https://github.com/awesome-dsh-plugin/awesome-dsh-plugin",
-      "state": "live",
+      "state": "snapshot",
       "updated": "2026-08-16",
       "count": 839
     },
@@ -26,21 +26,21 @@
       "url": "https://github.com/topics/dsh-plugin",
       "query": "topic:dsh-plugin created:YYYY-MM-DD..YYYY-MM-DD (month-bucket sweep)",
       "state": "live",
-      "total": 4301,
-      "scanned": 3159,
-      "matched": 3159,
+      "total": 16186,
+      "scanned": 13928,
+      "matched": 13928,
       "error": null
     }
   },
   "summary": {
     "curated": 820,
-    "listed": 3333,
-    "autoDiscovered": 2513,
-    "topicTotal": 4301,
-    "metadataMatches": 3159,
-    "manifestMatches": 759,
-    "owners": 2401,
-    "stars": 390587
+    "listed": 14082,
+    "autoDiscovered": 13262,
+    "topicTotal": 16186,
+    "metadataMatches": 13928,
+    "manifestMatches": 6604,
+    "owners": 8458,
+    "stars": 1042454
   },
   "categories": {
     "ui": {
@@ -108,12 +108,12 @@
       "added": "2026-08-16",
       "curated": true,
       "topic": true,
-      "stars": 0,
+      "stars": 3,
       "forks": 0,
-      "openIssues": 0,
-      "watchers": 0,
-      "pushedAt": "2026-08-16T04:36:56Z",
-      "updatedAt": "2026-08-16T04:37:03Z",
+      "openIssues": 1,
+      "watchers": 3,
+      "pushedAt": "2026-09-11T18:29:41Z",
+      "updatedAt": "2026-09-12T14:36:56Z",
       "createdAt": "2026-08-15T14:07:12Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -129,7 +129,7 @@
           "client"
         ],
         "packageName": "dsh-right-sidebar",
-        "version": "0.2.0",
+        "version": "0.4.0",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -143,14 +143,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -168,22 +168,22 @@
       "added": "2026-08-16",
       "curated": true,
       "topic": true,
-      "stars": 2,
-      "forks": 1,
+      "stars": 7,
+      "forks": 2,
       "openIssues": 1,
-      "watchers": 2,
-      "pushedAt": "2026-08-16T04:23:30Z",
-      "updatedAt": "2026-08-16T04:23:40Z",
+      "watchers": 7,
+      "pushedAt": "2026-08-16T07:20:57Z",
+      "updatedAt": "2026-09-12T05:30:48Z",
       "createdAt": "2026-08-15T18:58:07Z",
       "license": "MIT",
       "language": "TypeScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "missing",
-        "branch": null,
+        "branch": "main",
         "kinds": [],
         "packageName": null,
         "version": null,
@@ -203,7 +203,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -223,17 +223,17 @@
       "topic": true,
       "stars": 2,
       "forks": 0,
-      "openIssues": 0,
+      "openIssues": 1,
       "watchers": 2,
       "pushedAt": "2026-08-15T16:04:19Z",
-      "updatedAt": "2026-08-15T16:04:23Z",
+      "updatedAt": "2026-09-18T03:45:07Z",
       "createdAt": "2026-08-15T09:48:58Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -263,7 +263,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -281,19 +281,19 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 2,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 2,
-      "pushedAt": "2026-08-15T12:34:02Z",
-      "updatedAt": "2026-08-15T17:44:11Z",
+      "stars": 16,
+      "forks": 1,
+      "openIssues": 1,
+      "watchers": 16,
+      "pushedAt": "2026-09-04T12:53:21Z",
+      "updatedAt": "2026-09-20T10:43:34Z",
       "createdAt": "2026-08-15T10:44:04Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
-      "archived": false,
+      "archived": true,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "archived",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -302,7 +302,7 @@
           "client"
         ],
         "packageName": "dsh-message-rail",
-        "version": "0.1.3",
+        "version": "0.1.9",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -316,14 +316,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -341,12 +341,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 1,
-      "forks": 0,
-      "openIssues": 1,
-      "watchers": 1,
-      "pushedAt": "2026-08-16T02:37:38Z",
-      "updatedAt": "2026-08-16T02:29:56Z",
+      "stars": 5,
+      "forks": 4,
+      "openIssues": 0,
+      "watchers": 5,
+      "pushedAt": "2026-09-20T06:01:09Z",
+      "updatedAt": "2026-09-20T06:01:13Z",
       "createdAt": "2026-08-15T07:25:00Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -362,7 +362,7 @@
           "client"
         ],
         "packageName": "dsh-shortcuts",
-        "version": "1.1.0",
+        "version": "1.1.5",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -374,16 +374,16 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
+        "hasLockfile": true,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -401,12 +401,12 @@
       "added": "2026-08-16",
       "curated": true,
       "topic": true,
-      "stars": 1,
+      "stars": 2,
       "forks": 0,
       "openIssues": 0,
-      "watchers": 1,
-      "pushedAt": "2026-08-16T03:01:49Z",
-      "updatedAt": "2026-08-16T03:01:57Z",
+      "watchers": 2,
+      "pushedAt": "2026-09-17T16:36:57Z",
+      "updatedAt": "2026-09-18T03:45:14Z",
       "createdAt": "2026-08-15T19:32:24Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -422,7 +422,7 @@
           "client"
         ],
         "packageName": "dsh-session-hotkeys",
-        "version": "1.5.1",
+        "version": "1.9.2",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -436,14 +436,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -461,29 +461,31 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 5,
+      "stars": 28,
       "forks": 1,
-      "openIssues": 0,
-      "watchers": 5,
-      "pushedAt": "2026-08-15T13:57:13Z",
-      "updatedAt": "2026-08-16T04:04:21Z",
+      "openIssues": 2,
+      "watchers": 28,
+      "pushedAt": "2026-09-23T11:24:49Z",
+      "updatedAt": "2026-09-25T09:32:47Z",
       "createdAt": "2026-08-15T07:00:02Z",
       "license": "MIT",
-      "language": "JavaScript",
+      "language": "TypeScript",
       "homepage": null,
       "archived": false,
-      "defaultBranch": "master",
+      "defaultBranch": "main",
       "maintenance": "active",
       "manifest": {
         "state": "verified",
-        "branch": "master",
+        "branch": "main",
         "kinds": [
           "bundle",
           "client"
         ],
         "packageName": "deepseek-harness-zh_pro",
-        "version": "0.5.0",
-        "lifecycleScripts": [],
+        "version": "0.9.4",
+        "lifecycleScripts": [
+          "prepare"
+        ],
         "runtimeDependencies": 0,
         "declaredPaths": [
           "cordis.patch.yml",
@@ -496,14 +498,16 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
+        "hasReadme": true,
+        "lifecycleScripts": [
+          "prepare"
+        ]
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -520,7 +524,7 @@
       },
       "added": "2026-08-15",
       "curated": true,
-      "topic": true,
+      "topic": false,
       "stars": 0,
       "forks": 0,
       "openIssues": 0,
@@ -533,7 +537,7 @@
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "unknown",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -555,15 +559,15 @@
       "facts": {
         "hasManifest": true,
         "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
+        "hasLicense": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -581,12 +585,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 2,
+      "stars": 3,
       "forks": 0,
       "openIssues": 0,
-      "watchers": 2,
-      "pushedAt": "2026-08-15T11:54:01Z",
-      "updatedAt": "2026-08-16T00:05:21Z",
+      "watchers": 3,
+      "pushedAt": "2026-09-13T13:40:37Z",
+      "updatedAt": "2026-09-13T13:40:37Z",
       "createdAt": "2026-08-15T06:22:03Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -602,7 +606,7 @@
           "client"
         ],
         "packageName": "voco-input-sh",
-        "version": "0.2.0",
+        "version": "0.2.2",
         "lifecycleScripts": [],
         "runtimeDependencies": 1,
         "declaredPaths": [
@@ -616,14 +620,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -641,12 +645,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 2,
+      "stars": 6,
       "forks": 0,
       "openIssues": 0,
-      "watchers": 2,
-      "pushedAt": "2026-08-15T07:20:09Z",
-      "updatedAt": "2026-08-15T08:03:42Z",
+      "watchers": 6,
+      "pushedAt": "2026-09-05T07:29:11Z",
+      "updatedAt": "2026-09-18T07:33:44Z",
       "createdAt": "2026-08-15T06:32:14Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -662,7 +666,7 @@
           "client"
         ],
         "packageName": "dsh-composer-expand",
-        "version": "0.1.1",
+        "version": "0.1.4",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -674,16 +678,16 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
+        "hasLockfile": true,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -743,7 +747,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -761,12 +765,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 1,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 1,
-      "pushedAt": "2026-08-16T04:43:24Z",
-      "updatedAt": "2026-08-16T04:43:29Z",
+      "stars": 21,
+      "forks": 5,
+      "openIssues": 1,
+      "watchers": 21,
+      "pushedAt": "2026-09-26T06:54:38Z",
+      "updatedAt": "2026-09-26T06:54:42Z",
       "createdAt": "2026-08-15T03:54:09Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -781,8 +785,8 @@
           "bundle",
           "client"
         ],
-        "packageName": "@dsh-external/dsh-plugin-tts",
-        "version": "0.1.0",
+        "packageName": "@memef1f1y/dsh-plugin-tts",
+        "version": "0.6.4",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -796,14 +800,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -821,12 +825,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 2,
-      "forks": 1,
-      "openIssues": 0,
-      "watchers": 2,
-      "pushedAt": "2026-08-15T09:30:24Z",
-      "updatedAt": "2026-08-16T03:58:11Z",
+      "stars": 5,
+      "forks": 2,
+      "openIssues": 2,
+      "watchers": 5,
+      "pushedAt": "2026-08-29T12:26:13Z",
+      "updatedAt": "2026-09-18T03:45:03Z",
       "createdAt": "2026-08-15T09:10:22Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -856,9 +860,9 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
+        "hasLockfile": true,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": [
           "prepare"
         ]
@@ -867,7 +871,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -885,19 +889,19 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 3,
+      "stars": 4,
       "forks": 0,
-      "openIssues": 0,
-      "watchers": 3,
-      "pushedAt": "2026-08-15T23:29:15Z",
-      "updatedAt": "2026-08-16T03:03:56Z",
+      "openIssues": 1,
+      "watchers": 4,
+      "pushedAt": "2026-08-25T04:26:08Z",
+      "updatedAt": "2026-09-12T00:41:20Z",
       "createdAt": "2026-08-15T02:31:13Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -906,7 +910,7 @@
           "client"
         ],
         "packageName": "dsh-client-ui-writing",
-        "version": "0.5.1",
+        "version": "0.6.2",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -920,14 +924,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -947,17 +951,17 @@
       "topic": true,
       "stars": 2,
       "forks": 0,
-      "openIssues": 0,
+      "openIssues": 1,
       "watchers": 2,
-      "pushedAt": "2026-08-16T04:21:42Z",
-      "updatedAt": "2026-08-16T04:20:29Z",
+      "pushedAt": "2026-08-25T14:38:06Z",
+      "updatedAt": "2026-09-21T01:56:34Z",
       "createdAt": "2026-08-14T06:15:14Z",
       "license": "MIT",
       "language": "TypeScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -966,7 +970,7 @@
           "client"
         ],
         "packageName": "dsh-writing-pad",
-        "version": "1.1.0",
+        "version": "1.1.3",
         "lifecycleScripts": [
           "prepare"
         ],
@@ -982,7 +986,7 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": [
           "prepare"
         ]
@@ -991,7 +995,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1009,12 +1013,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 4,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 4,
-      "pushedAt": "2026-08-15T02:48:27Z",
-      "updatedAt": "2026-08-15T17:16:14Z",
+      "stars": 11,
+      "forks": 1,
+      "openIssues": 2,
+      "watchers": 11,
+      "pushedAt": "2026-09-08T13:26:12Z",
+      "updatedAt": "2026-09-13T19:27:26Z",
       "createdAt": "2026-08-15T02:10:35Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -1030,7 +1034,7 @@
           "client"
         ],
         "packageName": "dsh-global-rules",
-        "version": "0.1.0",
+        "version": "0.1.1",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -1044,14 +1048,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1069,12 +1073,12 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 4,
-      "forks": 1,
-      "openIssues": 1,
-      "watchers": 4,
-      "pushedAt": "2026-08-15T20:08:43Z",
-      "updatedAt": "2026-08-16T03:57:36Z",
+      "stars": 9,
+      "forks": 4,
+      "openIssues": 0,
+      "watchers": 9,
+      "pushedAt": "2026-09-24T14:25:57Z",
+      "updatedAt": "2026-09-24T14:26:06Z",
       "createdAt": "2026-08-14T14:17:02Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -1090,7 +1094,7 @@
           "client"
         ],
         "packageName": "dsh-web-mobile-fix",
-        "version": "1.0.1",
+        "version": "1.0.8",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -1104,14 +1108,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1129,12 +1133,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 16,
-      "forks": 1,
-      "openIssues": 2,
-      "watchers": 16,
-      "pushedAt": "2026-08-15T23:25:13Z",
-      "updatedAt": "2026-08-16T04:40:45Z",
+      "stars": 104,
+      "forks": 24,
+      "openIssues": 1,
+      "watchers": 104,
+      "pushedAt": "2026-09-26T02:45:39Z",
+      "updatedAt": "2026-09-26T02:45:40Z",
       "createdAt": "2026-08-15T00:22:16Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -1149,8 +1153,8 @@
           "bundle",
           "client"
         ],
-        "packageName": "@dsh-external/dsh-mobile-nav",
-        "version": "0.2.0",
+        "packageName": "dsh-web-mobile",
+        "version": "3.0.3",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -1164,14 +1168,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1188,23 +1192,23 @@
       },
       "added": "2026-08-15",
       "curated": true,
-      "topic": false,
-      "stars": null,
-      "forks": null,
-      "openIssues": null,
-      "watchers": null,
-      "pushedAt": null,
-      "updatedAt": null,
-      "createdAt": null,
-      "license": null,
-      "language": null,
+      "topic": true,
+      "stars": 3,
+      "forks": 1,
+      "openIssues": 1,
+      "watchers": 3,
+      "pushedAt": "2026-09-14T17:30:42Z",
+      "updatedAt": "2026-09-20T11:55:28Z",
+      "createdAt": "2026-08-14T04:04:56Z",
+      "license": "MIT",
+      "language": "JavaScript",
       "homepage": null,
       "archived": false,
-      "defaultBranch": null,
-      "maintenance": "unknown",
+      "defaultBranch": "main",
+      "maintenance": "active",
       "manifest": {
         "state": "missing",
-        "branch": null,
+        "branch": "main",
         "kinds": [],
         "packageName": null,
         "version": null,
@@ -1216,7 +1220,7 @@
       "facts": {
         "hasManifest": false,
         "hasLockfile": false,
-        "hasLicense": false,
+        "hasLicense": true,
         "hasReadme": false,
         "lifecycleScripts": []
       },
@@ -1224,7 +1228,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1242,12 +1246,12 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 6,
-      "forks": 1,
+      "stars": 35,
+      "forks": 5,
       "openIssues": 0,
-      "watchers": 6,
-      "pushedAt": "2026-08-15T20:08:47Z",
-      "updatedAt": "2026-08-16T04:53:56Z",
+      "watchers": 35,
+      "pushedAt": "2026-09-23T15:48:10Z",
+      "updatedAt": "2026-09-23T15:48:18Z",
       "createdAt": "2026-08-14T14:17:04Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -1262,7 +1266,7 @@
           "bundle"
         ],
         "packageName": "dsh-web-lan-access",
-        "version": "1.0.0",
+        "version": "1.3.3",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -1275,14 +1279,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1300,19 +1304,19 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 1,
+      "stars": 4,
       "forks": 0,
       "openIssues": 0,
-      "watchers": 1,
+      "watchers": 4,
       "pushedAt": "2026-08-15T16:09:15Z",
-      "updatedAt": "2026-08-15T23:08:10Z",
+      "updatedAt": "2026-09-12T05:31:13Z",
       "createdAt": "2026-08-15T15:37:38Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -1342,7 +1346,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1360,19 +1364,19 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 3,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 3,
+      "stars": 6,
+      "forks": 1,
+      "openIssues": 2,
+      "watchers": 6,
       "pushedAt": "2026-08-14T16:20:20Z",
-      "updatedAt": "2026-08-16T03:39:26Z",
+      "updatedAt": "2026-09-13T08:30:29Z",
       "createdAt": "2026-08-14T16:15:00Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "master",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "master",
@@ -1400,7 +1404,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1417,20 +1421,20 @@
       },
       "added": "2026-08-15",
       "curated": true,
-      "topic": false,
-      "stars": null,
-      "forks": null,
-      "openIssues": null,
-      "watchers": null,
-      "pushedAt": null,
-      "updatedAt": null,
-      "createdAt": null,
+      "topic": true,
+      "stars": 1,
+      "forks": 2,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-15T18:41:36Z",
+      "updatedAt": "2026-08-26T04:00:35Z",
+      "createdAt": "2026-08-15T12:40:44Z",
       "license": null,
-      "language": null,
+      "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "unknown",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -1451,14 +1455,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": false,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1476,12 +1480,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 3,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 3,
-      "pushedAt": "2026-08-16T04:02:50Z",
-      "updatedAt": "2026-08-16T04:02:55Z",
+      "stars": 39,
+      "forks": 3,
+      "openIssues": 11,
+      "watchers": 39,
+      "pushedAt": "2026-09-24T07:02:54Z",
+      "updatedAt": "2026-09-25T11:18:08Z",
       "createdAt": "2026-08-15T07:57:45Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -1490,28 +1494,33 @@
       "defaultBranch": "main",
       "maintenance": "active",
       "manifest": {
-        "state": "package-only",
+        "state": "verified",
         "branch": "main",
-        "kinds": [],
+        "kinds": [
+          "bundle",
+          "client"
+        ],
         "packageName": "dsh-remote",
-        "version": "0.4.9",
+        "version": "0.7.0",
         "lifecycleScripts": [],
-        "runtimeDependencies": 4,
-        "declaredPaths": [],
+        "runtimeDependencies": 5,
+        "declaredPaths": [
+          "packages/plugin/cordis.patch.yml"
+        ],
         "invalidDeclaredPaths": []
       },
       "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
+        "hasManifest": true,
+        "hasLockfile": true,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1529,19 +1538,19 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 15,
-      "forks": 1,
-      "openIssues": 2,
-      "watchers": 15,
+      "stars": 26,
+      "forks": 3,
+      "openIssues": 10,
+      "watchers": 26,
       "pushedAt": "2026-08-14T15:05:17Z",
-      "updatedAt": "2026-08-15T17:36:28Z",
+      "updatedAt": "2026-09-11T19:41:31Z",
       "createdAt": "2026-08-14T14:10:10Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -1571,7 +1580,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1589,12 +1598,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 37,
-      "forks": 3,
-      "openIssues": 1,
-      "watchers": 37,
-      "pushedAt": "2026-08-15T09:33:25Z",
-      "updatedAt": "2026-08-16T04:18:42Z",
+      "stars": 163,
+      "forks": 20,
+      "openIssues": 2,
+      "watchers": 163,
+      "pushedAt": "2026-09-26T06:36:43Z",
+      "updatedAt": "2026-09-26T06:36:46Z",
       "createdAt": "2026-08-14T01:40:02Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -1609,8 +1618,8 @@
           "bundle",
           "client"
         ],
-        "packageName": "dsh-usage-stats",
-        "version": "0.2.0",
+        "packageName": "@ychris12138/dsh-usage-stats",
+        "version": "0.3.4",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -1622,16 +1631,16 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
+        "hasLockfile": true,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1648,7 +1657,7 @@
       },
       "added": "2026-08-15",
       "curated": true,
-      "topic": true,
+      "topic": false,
       "stars": 0,
       "forks": 0,
       "openIssues": 0,
@@ -1661,7 +1670,7 @@
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "unknown",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -1670,7 +1679,7 @@
           "client"
         ],
         "packageName": "dsh-usage-meter",
-        "version": "0.1.1",
+        "version": "0.1.2",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -1683,15 +1692,15 @@
       "facts": {
         "hasManifest": true,
         "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
+        "hasLicense": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1709,12 +1718,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 12,
-      "forks": 3,
-      "openIssues": 0,
-      "watchers": 12,
-      "pushedAt": "2026-08-15T15:26:50Z",
-      "updatedAt": "2026-08-16T03:32:54Z",
+      "stars": 203,
+      "forks": 18,
+      "openIssues": 5,
+      "watchers": 203,
+      "pushedAt": "2026-09-15T06:42:08Z",
+      "updatedAt": "2026-09-26T02:49:16Z",
       "createdAt": "2026-08-14T08:32:47Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -1730,7 +1739,7 @@
           "client"
         ],
         "packageName": "dsh-tokenledger",
-        "version": "0.1.0",
+        "version": "0.1.1-blue.0",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -1742,16 +1751,16 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
+        "hasLockfile": true,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1769,19 +1778,19 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 3,
-      "forks": 3,
-      "openIssues": 5,
-      "watchers": 3,
+      "stars": 2,
+      "forks": 4,
+      "openIssues": 7,
+      "watchers": 2,
       "pushedAt": "2026-08-14T16:39:53Z",
-      "updatedAt": "2026-08-15T13:25:45Z",
+      "updatedAt": "2026-09-12T00:24:36Z",
       "createdAt": "2026-08-14T16:09:42Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -1811,7 +1820,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1828,20 +1837,20 @@
       },
       "added": "2026-08-16",
       "curated": true,
-      "topic": false,
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 0,
-      "pushedAt": "2026-08-16T02:22:34Z",
-      "updatedAt": "2026-08-16T02:22:36Z",
+      "topic": true,
+      "stars": 1,
+      "forks": 1,
+      "openIssues": 1,
+      "watchers": 1,
+      "pushedAt": "2026-09-12T05:45:19Z",
+      "updatedAt": "2026-09-12T14:39:38Z",
       "createdAt": "2026-08-15T12:17:33Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "unknown",
+      "maintenance": "active",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -1863,15 +1872,15 @@
       "facts": {
         "hasManifest": true,
         "hasLockfile": false,
-        "hasLicense": false,
-        "hasReadme": false,
+        "hasLicense": true,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1931,7 +1940,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -1949,12 +1958,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 2,
+      "stars": 4,
       "forks": 0,
       "openIssues": 0,
-      "watchers": 2,
-      "pushedAt": "2026-08-15T08:50:31Z",
-      "updatedAt": "2026-08-15T13:40:40Z",
+      "watchers": 4,
+      "pushedAt": "2026-09-18T12:22:41Z",
+      "updatedAt": "2026-09-18T12:22:44Z",
       "createdAt": "2026-08-15T06:52:14Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -1970,7 +1979,7 @@
           "client"
         ],
         "packageName": "dsh-deepseek-quota-bar",
-        "version": "0.5.0",
+        "version": "0.7.0",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -1984,14 +1993,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2009,12 +2018,12 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 42,
-      "forks": 1,
+      "stars": 1529,
+      "forks": 47,
       "openIssues": 1,
-      "watchers": 42,
-      "pushedAt": "2026-08-16T01:32:30Z",
-      "updatedAt": "2026-08-16T01:32:37Z",
+      "watchers": 1529,
+      "pushedAt": "2026-09-25T15:00:26Z",
+      "updatedAt": "2026-09-26T08:00:54Z",
       "createdAt": "2026-08-14T08:23:28Z",
       "license": "Apache-2.0",
       "language": "TypeScript",
@@ -2030,7 +2039,7 @@
           "client"
         ],
         "packageName": "dsh-context",
-        "version": "0.9.0",
+        "version": "0.56.2",
         "lifecycleScripts": [
           "prepare"
         ],
@@ -2046,7 +2055,7 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": [
           "prepare"
         ]
@@ -2055,7 +2064,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2072,7 +2081,7 @@
       },
       "added": "2026-08-14",
       "curated": true,
-      "topic": true,
+      "topic": false,
       "stars": 2,
       "forks": 0,
       "openIssues": 1,
@@ -2085,27 +2094,20 @@
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "unknown",
       "manifest": {
-        "state": "verified",
-        "branch": "main",
-        "kinds": [
-          "bundle",
-          "client"
-        ],
-        "packageName": "dsh-web-default-session",
-        "version": "1.0.0",
+        "state": "missing",
+        "branch": null,
+        "kinds": [],
+        "packageName": null,
+        "version": null,
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
-        "declaredPaths": [
-          "cordis.patch.yml",
-          "lib/index.js",
-          "lib/client.js"
-        ],
+        "declaredPaths": [],
         "invalidDeclaredPaths": []
       },
       "facts": {
-        "hasManifest": true,
+        "hasManifest": false,
         "hasLockfile": false,
         "hasLicense": false,
         "hasReadme": false,
@@ -2115,7 +2117,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2133,12 +2135,12 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 7,
-      "forks": 1,
+      "stars": 74,
+      "forks": 7,
       "openIssues": 0,
-      "watchers": 7,
-      "pushedAt": "2026-08-16T05:01:07Z",
-      "updatedAt": "2026-08-16T05:01:16Z",
+      "watchers": 74,
+      "pushedAt": "2026-09-25T14:56:17Z",
+      "updatedAt": "2026-09-25T14:56:22Z",
       "createdAt": "2026-08-13T23:21:41Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -2154,9 +2156,9 @@
           "client"
         ],
         "packageName": "dsh-prompt-enhancer",
-        "version": "2.8.3",
+        "version": "3.4.0",
         "lifecycleScripts": [],
-        "runtimeDependencies": 0,
+        "runtimeDependencies": 1,
         "declaredPaths": [
           "cordis.patch.yml",
           "lib/index.cjs",
@@ -2166,16 +2168,16 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
+        "hasLockfile": true,
+        "hasLicense": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2193,12 +2195,12 @@
       "added": "2026-08-13",
       "curated": true,
       "topic": true,
-      "stars": 175,
-      "forks": 6,
-      "openIssues": 4,
-      "watchers": 175,
-      "pushedAt": "2026-08-16T04:55:33Z",
-      "updatedAt": "2026-08-16T04:55:46Z",
+      "stars": 284,
+      "forks": 11,
+      "openIssues": 0,
+      "watchers": 284,
+      "pushedAt": "2026-09-19T15:53:03Z",
+      "updatedAt": "2026-09-25T09:43:12Z",
       "createdAt": "2026-08-13T04:20:37Z",
       "license": "Apache-2.0",
       "language": "TypeScript",
@@ -2213,9 +2215,9 @@
           "bundle"
         ],
         "packageName": "@huiliyi37/dsh-tianshu-tui",
-        "version": "0.1.2-rc.8",
+        "version": "1.0.0-rc.1",
         "lifecycleScripts": [],
-        "runtimeDependencies": 4,
+        "runtimeDependencies": 24,
         "declaredPaths": [
           "cordis.patch.yml",
           "lib/index.js"
@@ -2226,14 +2228,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-13",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2250,7 +2252,7 @@
       },
       "added": "2026-08-14",
       "curated": true,
-      "topic": true,
+      "topic": false,
       "stars": 27,
       "forks": 2,
       "openIssues": 0,
@@ -2263,10 +2265,10 @@
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "unknown",
       "manifest": {
         "state": "missing",
-        "branch": "main",
+        "branch": null,
         "kinds": [],
         "packageName": null,
         "version": null,
@@ -2278,7 +2280,7 @@
       "facts": {
         "hasManifest": false,
         "hasLockfile": false,
-        "hasLicense": true,
+        "hasLicense": false,
         "hasReadme": false,
         "lifecycleScripts": []
       },
@@ -2286,7 +2288,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2304,19 +2306,19 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 4,
+      "stars": 3,
       "forks": 0,
-      "openIssues": 0,
-      "watchers": 4,
+      "openIssues": 1,
+      "watchers": 3,
       "pushedAt": "2026-08-14T17:34:57Z",
-      "updatedAt": "2026-08-16T02:50:44Z",
+      "updatedAt": "2026-09-12T05:28:01Z",
       "createdAt": "2026-08-14T16:23:01Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -2346,7 +2348,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2363,7 +2365,7 @@
       },
       "added": "2026-08-13",
       "curated": true,
-      "topic": true,
+      "topic": false,
       "stars": 231,
       "forks": 9,
       "openIssues": 1,
@@ -2376,7 +2378,7 @@
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "unknown",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -2385,7 +2387,7 @@
           "client"
         ],
         "packageName": "dsh-at-file",
-        "version": "0.6.0",
+        "version": "0.7.0",
         "lifecycleScripts": [],
         "runtimeDependencies": 1,
         "declaredPaths": [
@@ -2397,16 +2399,16 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
+        "hasLockfile": true,
+        "hasLicense": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-13",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2423,20 +2425,20 @@
       },
       "added": "2026-08-15",
       "curated": true,
-      "topic": false,
-      "stars": null,
-      "forks": null,
-      "openIssues": null,
-      "watchers": null,
-      "pushedAt": null,
-      "updatedAt": null,
-      "createdAt": null,
-      "license": null,
-      "language": null,
+      "topic": true,
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 0,
+      "watchers": 1,
+      "pushedAt": "2026-08-15T11:57:18Z",
+      "updatedAt": "2026-09-18T03:43:52Z",
+      "createdAt": "2026-08-15T11:10:50Z",
+      "license": "MIT",
+      "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "unknown",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -2458,15 +2460,15 @@
       "facts": {
         "hasManifest": true,
         "hasLockfile": false,
-        "hasLicense": false,
-        "hasReadme": false,
+        "hasLicense": true,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2484,19 +2486,19 @@
       "added": "2026-08-13",
       "curated": true,
       "topic": true,
-      "stars": 34,
-      "forks": 2,
-      "openIssues": 4,
-      "watchers": 34,
+      "stars": 49,
+      "forks": 4,
+      "openIssues": 7,
+      "watchers": 49,
       "pushedAt": "2026-08-15T08:57:01Z",
-      "updatedAt": "2026-08-15T21:36:00Z",
+      "updatedAt": "2026-09-26T07:16:19Z",
       "createdAt": "2026-08-11T19:46:33Z",
       "license": "MIT",
       "language": "TypeScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "master",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "master",
@@ -2530,7 +2532,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-13",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2548,15 +2550,15 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 2,
+      "stars": 6,
       "forks": 0,
-      "openIssues": 0,
-      "watchers": 2,
-      "pushedAt": "2026-08-15T15:10:16Z",
-      "updatedAt": "2026-08-15T20:30:44Z",
+      "openIssues": 1,
+      "watchers": 6,
+      "pushedAt": "2026-09-10T08:04:22Z",
+      "updatedAt": "2026-09-12T13:25:39Z",
       "createdAt": "2026-08-14T12:06:38Z",
       "license": "MIT",
-      "language": "Python",
+      "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
@@ -2569,7 +2571,7 @@
           "client"
         ],
         "packageName": "dsh-whale-animation",
-        "version": "0.3.0",
+        "version": "0.7.1",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -2583,14 +2585,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2608,16 +2610,16 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 9,
-      "forks": 2,
+      "stars": 91,
+      "forks": 3,
       "openIssues": 0,
-      "watchers": 9,
-      "pushedAt": "2026-08-15T01:16:24Z",
-      "updatedAt": "2026-08-15T14:56:58Z",
+      "watchers": 91,
+      "pushedAt": "2026-09-26T03:37:51Z",
+      "updatedAt": "2026-09-26T03:37:35Z",
       "createdAt": "2026-08-13T16:39:32Z",
       "license": "MIT",
       "language": "JavaScript",
-      "homepage": null,
+      "homepage": "https://www.npmjs.com/package/dsh-status-rotator",
       "archived": false,
       "defaultBranch": "main",
       "maintenance": "active",
@@ -2629,7 +2631,7 @@
           "client"
         ],
         "packageName": "dsh-status-rotator",
-        "version": "0.2.0",
+        "version": "0.27.3",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -2643,14 +2645,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2668,19 +2670,19 @@
       "added": "2026-08-16",
       "curated": true,
       "topic": true,
-      "stars": 1,
+      "stars": 9,
       "forks": 0,
       "openIssues": 0,
-      "watchers": 1,
+      "watchers": 9,
       "pushedAt": "2026-08-15T19:27:33Z",
-      "updatedAt": "2026-08-15T19:28:00Z",
+      "updatedAt": "2026-09-16T06:31:41Z",
       "createdAt": "2026-08-15T11:50:09Z",
       "license": null,
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -2710,7 +2712,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2728,12 +2730,12 @@
       "added": "2026-08-13",
       "curated": true,
       "topic": true,
-      "stars": 87,
-      "forks": 3,
+      "stars": 179,
+      "forks": 9,
       "openIssues": 2,
-      "watchers": 87,
-      "pushedAt": "2026-08-14T14:36:17Z",
-      "updatedAt": "2026-08-16T04:43:04Z",
+      "watchers": 179,
+      "pushedAt": "2026-09-24T21:40:28Z",
+      "updatedAt": "2026-09-25T16:16:39Z",
       "createdAt": "2026-08-12T16:05:11Z",
       "license": "MIT",
       "language": "TypeScript",
@@ -2749,7 +2751,7 @@
           "client"
         ],
         "packageName": "@zseven-w/dsh-openpencil",
-        "version": "0.1.0-rc.1",
+        "version": "0.1.0-rc.10",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -2761,16 +2763,16 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
+        "hasLockfile": true,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-13",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2788,12 +2790,12 @@
       "added": "2026-08-13",
       "curated": true,
       "topic": true,
-      "stars": 127,
-      "forks": 3,
+      "stars": 270,
+      "forks": 5,
       "openIssues": 2,
-      "watchers": 127,
-      "pushedAt": "2026-08-15T15:58:20Z",
-      "updatedAt": "2026-08-16T04:43:09Z",
+      "watchers": 270,
+      "pushedAt": "2026-09-25T22:25:50Z",
+      "updatedAt": "2026-09-26T06:44:46Z",
       "createdAt": "2026-08-13T13:11:49Z",
       "license": "BSD-3-Clause",
       "language": "TypeScript",
@@ -2808,8 +2810,8 @@
           "bundle",
           "client"
         ],
-        "packageName": "@dsh-external/dsh-visualize",
-        "version": "0.1.2",
+        "packageName": "@nagi-ovo/dsh-visualize",
+        "version": "0.1.3",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -2821,16 +2823,16 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
+        "hasLockfile": true,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-13",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2848,12 +2850,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 2,
-      "forks": 0,
+      "stars": 14,
+      "forks": 3,
       "openIssues": 0,
-      "watchers": 2,
-      "pushedAt": "2026-08-15T08:15:09Z",
-      "updatedAt": "2026-08-15T09:42:30Z",
+      "watchers": 14,
+      "pushedAt": "2026-09-26T02:17:45Z",
+      "updatedAt": "2026-09-26T02:17:49Z",
       "createdAt": "2026-08-15T05:51:02Z",
       "license": "MIT",
       "language": "TypeScript",
@@ -2869,7 +2871,7 @@
           "client"
         ],
         "packageName": "dsh-diagram",
-        "version": "0.1.1",
+        "version": "0.7.0-visual.10",
         "lifecycleScripts": [],
         "runtimeDependencies": 2,
         "declaredPaths": [
@@ -2883,14 +2885,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2908,12 +2910,12 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 2,
+      "stars": 4,
       "forks": 0,
       "openIssues": 0,
-      "watchers": 2,
-      "pushedAt": "2026-08-15T11:54:52Z",
-      "updatedAt": "2026-08-15T17:35:23Z",
+      "watchers": 4,
+      "pushedAt": "2026-09-13T15:59:01Z",
+      "updatedAt": "2026-09-13T15:59:05Z",
       "createdAt": "2026-08-15T00:24:35Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -2929,7 +2931,7 @@
           "client"
         ],
         "packageName": "folder-tree-sh",
-        "version": "0.2.0",
+        "version": "0.3.0",
         "lifecycleScripts": [],
         "runtimeDependencies": 3,
         "declaredPaths": [
@@ -2943,14 +2945,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -2973,14 +2975,14 @@
       "openIssues": 1,
       "watchers": 15,
       "pushedAt": "2026-08-14T17:45:41Z",
-      "updatedAt": "2026-08-15T17:03:08Z",
+      "updatedAt": "2026-09-13T18:13:19Z",
       "createdAt": "2026-08-07T21:40:25Z",
       "license": "BSD-3-Clause",
       "language": "JavaScript",
       "homepage": null,
-      "archived": true,
+      "archived": false,
       "defaultBranch": "main",
-      "maintenance": "archived",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -3014,7 +3016,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-13",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3032,19 +3034,19 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 1,
+      "stars": 2,
       "forks": 0,
       "openIssues": 0,
-      "watchers": 1,
-      "pushedAt": "2026-08-15T06:44:23Z",
-      "updatedAt": "2026-08-15T16:56:38Z",
+      "watchers": 2,
+      "pushedAt": "2026-08-18T14:17:22Z",
+      "updatedAt": "2026-09-18T03:45:01Z",
       "createdAt": "2026-08-15T06:28:59Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "master",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "master",
@@ -3053,7 +3055,7 @@
           "client"
         ],
         "packageName": "dsh-git-graph",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "lifecycleScripts": [],
         "runtimeDependencies": 1,
         "declaredPaths": [
@@ -3067,14 +3069,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3092,19 +3094,19 @@
       "added": "2026-08-15",
       "curated": true,
       "topic": true,
-      "stars": 1,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 1,
+      "stars": 2,
+      "forks": 1,
+      "openIssues": 1,
+      "watchers": 2,
       "pushedAt": "2026-08-15T08:53:13Z",
-      "updatedAt": "2026-08-15T08:53:25Z",
+      "updatedAt": "2026-09-12T00:25:02Z",
       "createdAt": "2026-08-15T01:12:05Z",
       "license": "MIT",
       "language": "TypeScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -3132,7 +3134,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3150,19 +3152,19 @@
       "added": "2026-08-13",
       "curated": true,
       "topic": true,
-      "stars": 16,
-      "forks": 0,
-      "openIssues": 2,
-      "watchers": 16,
-      "pushedAt": "2026-08-14T10:01:53Z",
-      "updatedAt": "2026-08-15T04:07:40Z",
+      "stars": 22,
+      "forks": 1,
+      "openIssues": 0,
+      "watchers": 22,
+      "pushedAt": "2026-09-22T12:45:03Z",
+      "updatedAt": "2026-09-22T12:45:08Z",
       "createdAt": "2026-08-10T19:40:36Z",
       "license": null,
       "language": "TypeScript",
       "homepage": null,
-      "archived": false,
+      "archived": true,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "archived",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -3171,7 +3173,7 @@
           "client"
         ],
         "packageName": "@dingyi222666/dsh-focus-chat",
-        "version": "0.1.2",
+        "version": "0.7.20",
         "lifecycleScripts": [
           "prepare"
         ],
@@ -3187,7 +3189,7 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": false,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": [
           "prepare"
         ]
@@ -3196,7 +3198,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-13",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3214,16 +3216,16 @@
       "added": "2026-08-13",
       "curated": true,
       "topic": true,
-      "stars": 114,
-      "forks": 13,
-      "openIssues": 5,
-      "watchers": 114,
-      "pushedAt": "2026-08-15T20:28:46Z",
-      "updatedAt": "2026-08-16T04:39:42Z",
+      "stars": 480,
+      "forks": 52,
+      "openIssues": 2,
+      "watchers": 480,
+      "pushedAt": "2026-09-26T03:35:59Z",
+      "updatedAt": "2026-09-26T03:35:05Z",
       "createdAt": "2026-08-13T13:07:52Z",
       "license": "MIT",
       "language": "TypeScript",
-      "homepage": null,
+      "homepage": "https://omdsh-dev.github.io/dsh-genui/",
       "archived": false,
       "defaultBranch": "main",
       "maintenance": "active",
@@ -3234,10 +3236,10 @@
           "bundle",
           "client"
         ],
-        "packageName": "@omdsh-dev/dsh-genui",
-        "version": "0.8.5",
+        "packageName": "@changfenhuang/dsh-genui",
+        "version": "0.11.2-preview.1",
         "lifecycleScripts": [],
-        "runtimeDependencies": 1,
+        "runtimeDependencies": 3,
         "declaredPaths": [
           "cordis.patch.yml",
           "lib/index.js",
@@ -3249,14 +3251,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-13",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3274,12 +3276,12 @@
       "added": "2026-08-16",
       "curated": true,
       "topic": true,
-      "stars": 9,
-      "forks": 1,
-      "openIssues": 0,
-      "watchers": 9,
-      "pushedAt": "2026-08-15T20:17:56Z",
-      "updatedAt": "2026-08-16T04:14:27Z",
+      "stars": 114,
+      "forks": 13,
+      "openIssues": 1,
+      "watchers": 114,
+      "pushedAt": "2026-09-24T08:34:32Z",
+      "updatedAt": "2026-09-24T08:22:37Z",
       "createdAt": "2026-08-14T20:28:02Z",
       "license": "MIT",
       "language": "TypeScript",
@@ -3295,7 +3297,7 @@
           "client"
         ],
         "packageName": "dsh-plugin-genui",
-        "version": "0.12.2",
+        "version": "0.15.1",
         "lifecycleScripts": [],
         "runtimeDependencies": 10,
         "declaredPaths": [
@@ -3309,14 +3311,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3334,16 +3336,16 @@
       "added": "2026-08-13",
       "curated": true,
       "topic": true,
-      "stars": 57,
-      "forks": 3,
-      "openIssues": 2,
-      "watchers": 57,
-      "pushedAt": "2026-08-16T04:18:42Z",
-      "updatedAt": "2026-08-16T04:18:51Z",
+      "stars": 128,
+      "forks": 12,
+      "openIssues": 12,
+      "watchers": 128,
+      "pushedAt": "2026-09-15T05:53:20Z",
+      "updatedAt": "2026-09-25T22:51:07Z",
       "createdAt": "2026-08-10T17:36:49Z",
       "license": "MIT",
-      "language": "JavaScript",
-      "homepage": null,
+      "language": "HTML",
+      "homepage": "https://omdsh-dev.github.io/dsh-annotation/",
       "archived": false,
       "defaultBranch": "main",
       "maintenance": "active",
@@ -3354,29 +3356,29 @@
           "bundle",
           "client"
         ],
-        "packageName": "@omdsh-dev/dsh-annotation",
-        "version": "1.3.15",
+        "packageName": "@changfenhuang/dsh-annotation",
+        "version": "1.4.11-preview.1",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
           "cordis.patch.yml",
-          "index.mjs",
+          "lib/index.js",
           "client.js"
         ],
         "invalidDeclaredPaths": []
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
+        "hasLockfile": true,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-13",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3394,19 +3396,19 @@
       "added": "2026-08-13",
       "curated": true,
       "topic": true,
-      "stars": 24,
-      "forks": 2,
+      "stars": 51,
+      "forks": 1,
       "openIssues": 0,
-      "watchers": 24,
-      "pushedAt": "2026-08-15T16:43:34Z",
-      "updatedAt": "2026-08-15T16:44:01Z",
+      "watchers": 51,
+      "pushedAt": "2026-09-10T06:24:40Z",
+      "updatedAt": "2026-09-22T07:24:11Z",
       "createdAt": "2026-08-10T16:41:51Z",
       "license": "MIT",
       "language": "TypeScript",
       "homepage": null,
-      "archived": false,
+      "archived": true,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "archived",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -3415,7 +3417,7 @@
           "client"
         ],
         "packageName": "@vlln/dsh-navbar",
-        "version": "0.3.0",
+        "version": "0.4.0",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -3427,16 +3429,16 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
+        "hasLockfile": true,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-13",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3454,19 +3456,19 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 2,
+      "stars": 9,
       "forks": 0,
-      "openIssues": 0,
-      "watchers": 2,
+      "openIssues": 1,
+      "watchers": 9,
       "pushedAt": "2026-08-14T09:39:57Z",
-      "updatedAt": "2026-08-15T00:59:26Z",
+      "updatedAt": "2026-09-21T11:15:36Z",
       "createdAt": "2026-08-14T08:11:02Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "warm",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -3496,7 +3498,7 @@
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3514,12 +3516,12 @@
       "added": "2026-08-14",
       "curated": true,
       "topic": true,
-      "stars": 6,
-      "forks": 1,
+      "stars": 32,
+      "forks": 4,
       "openIssues": 0,
-      "watchers": 6,
-      "pushedAt": "2026-08-15T13:50:01Z",
-      "updatedAt": "2026-08-16T02:21:30Z",
+      "watchers": 32,
+      "pushedAt": "2026-08-26T09:26:32Z",
+      "updatedAt": "2026-09-22T13:21:17Z",
       "createdAt": "2026-08-14T16:38:22Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -3535,7 +3537,7 @@
           "client"
         ],
         "packageName": "dsh-chat-timeline",
-        "version": "0.1.0",
+        "version": "0.1.5",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -3549,14 +3551,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3573,7 +3575,7 @@
       },
       "added": "2026-08-15",
       "curated": true,
-      "topic": true,
+      "topic": false,
       "stars": 0,
       "forks": 0,
       "openIssues": 0,
@@ -3586,7 +3588,7 @@
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
+      "maintenance": "unknown",
       "manifest": {
         "state": "verified",
         "branch": "main",
@@ -3608,15 +3610,15 @@
       "facts": {
         "hasManifest": true,
         "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
+        "hasLicense": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3634,12 +3636,12 @@
       "added": "2026-08-13",
       "curated": true,
       "topic": true,
-      "stars": 10,
-      "forks": 0,
-      "openIssues": 2,
-      "watchers": 10,
-      "pushedAt": "2026-08-15T16:07:43Z",
-      "updatedAt": "2026-08-15T16:07:58Z",
+      "stars": 8,
+      "forks": 1,
+      "openIssues": 0,
+      "watchers": 8,
+      "pushedAt": "2026-08-27T08:37:30Z",
+      "updatedAt": "2026-09-12T05:26:03Z",
       "createdAt": "2026-08-10T16:41:56Z",
       "license": "MIT",
       "language": "JavaScript",
@@ -3655,7 +3657,7 @@
           "client"
         ],
         "packageName": "@vlln/dsh-task-status",
-        "version": "0.3.0",
+        "version": "0.3.1",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -3667,16 +3669,16 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
+        "hasLockfile": true,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "curated",
         "firstSeenAt": "2026-08-13",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     }
   ],
@@ -3696,12 +3698,12 @@
       "added": "2026-08-16",
       "curated": false,
       "topic": true,
-      "stars": 118935,
-      "forks": 11688,
+      "stars": 236339,
+      "forks": 28423,
       "openIssues": 0,
-      "watchers": 118935,
-      "pushedAt": "2026-08-13T13:00:21Z",
-      "updatedAt": "2026-08-16T05:03:29Z",
+      "watchers": 236339,
+      "pushedAt": "2026-09-24T14:10:21Z",
+      "updatedAt": "2026-09-26T08:22:33Z",
       "createdAt": "2026-08-13T11:56:32Z",
       "license": "MIT",
       "language": "TypeScript",
@@ -3710,12 +3712,14 @@
       "defaultBranch": "master",
       "maintenance": "active",
       "manifest": {
-        "state": "missing",
+        "state": "package-only",
         "branch": "master",
         "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
+        "packageName": "@deepseek-ai/dsh-root",
+        "version": "0.1.7-rc.2",
+        "lifecycleScripts": [
+          "postinstall"
+        ],
         "runtimeDependencies": 0,
         "declaredPaths": [],
         "invalidDeclaredPaths": []
@@ -3724,14 +3728,16 @@
         "hasManifest": false,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
+        "hasReadme": true,
+        "lifecycleScripts": [
+          "postinstall"
+        ]
       },
       "removed": false,
       "discovery": {
         "source": "topic",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -3749,16 +3755,128 @@
       "added": "2026-08-16",
       "curated": false,
       "topic": true,
-      "stars": 87047,
-      "forks": 10122,
-      "openIssues": 801,
-      "watchers": 87047,
-      "pushedAt": "2026-08-16T04:06:29Z",
-      "updatedAt": "2026-08-16T05:07:16Z",
+      "stars": 98129,
+      "forks": 11385,
+      "openIssues": 1124,
+      "watchers": 98129,
+      "pushedAt": "2026-09-26T07:42:37Z",
+      "updatedAt": "2026-09-26T08:29:57Z",
       "createdAt": "2026-04-28T04:25:20Z",
       "license": "Apache-2.0",
       "language": "TypeScript",
       "homepage": "https://open-design.ai",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "package-only",
+        "branch": "master",
+        "kinds": [],
+        "packageName": "open-design",
+        "version": "0.23.1",
+        "lifecycleScripts": [
+          "postinstall"
+        ],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": [
+          "postinstall"
+        ]
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "ruvnet/ruflo",
+      "order": 822,
+      "name": "ruflo",
+      "owner": "ruvnet",
+      "repo": "ruvnet/ruflo",
+      "url": "https://github.com/ruvnet/ruflo",
+      "category": "model",
+      "description": {
+        "zh": "🌊 The original agent harness. Deploy intelligent multi-player swarms, coordinate autonomous workflows, and build conversational AI systems. Features adaptive memory, self-learning intelligence, federation, vector RAG integration, and native Claude Code / Codex / Hermes and many more Integrated",
+        "en": "🌊 The original agent harness. Deploy intelligent multi-player swarms, coordinate autonomous workflows, and build conversational AI systems. Features adaptive memory, self-learning intelligence, federation, vector RAG integration, and native Claude Code / Codex / Hermes and many more Integrated"
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 73297,
+      "forks": 8699,
+      "openIssues": 1036,
+      "watchers": 73297,
+      "pushedAt": "2026-09-24T23:26:59Z",
+      "updatedAt": "2026-09-26T08:26:47Z",
+      "createdAt": "2025-06-02T21:24:20Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": "https://Cognitum.One",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "package-only",
+        "branch": "main",
+        "kinds": [],
+        "packageName": "claude-flow",
+        "version": "3.45.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 26,
+        "declaredPaths": [
+          "dist/index.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": true,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "tt-a1i/archify",
+      "order": 823,
+      "name": "archify",
+      "owner": "tt-a1i",
+      "repo": "tt-a1i/archify",
+      "url": "https://github.com/tt-a1i/archify",
+      "category": "session",
+      "description": {
+        "zh": "Agent skill for beautiful, verifiable architecture, workflow, sequence, data-flow, and lifecycle diagrams—self-contained HTML with motion and crisp export.",
+        "en": "Agent skill for beautiful, verifiable architecture, workflow, sequence, data-flow, and lifecycle diagrams—self-contained HTML with motion and crisp export."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 71954,
+      "forks": 4844,
+      "openIssues": 174,
+      "watchers": 71954,
+      "pushedAt": "2026-09-25T16:01:31Z",
+      "updatedAt": "2026-09-26T08:31:57Z",
+      "createdAt": "2026-04-15T05:27:37Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": "https://tt-a1i.github.io/archify/",
       "archived": false,
       "defaultBranch": "main",
       "maintenance": "active",
@@ -3784,12 +3902,12 @@
       "discovery": {
         "source": "topic",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
       "id": "volcengine/openviking",
-      "order": 822,
+      "order": 824,
       "name": "OpenViking",
       "owner": "volcengine",
       "repo": "volcengine/OpenViking",
@@ -3802,12 +3920,12 @@
       "added": "2026-08-16",
       "curated": false,
       "topic": true,
-      "stars": 28503,
-      "forks": 2257,
-      "openIssues": 441,
-      "watchers": 28503,
-      "pushedAt": "2026-08-15T08:29:46Z",
-      "updatedAt": "2026-08-16T05:10:41Z",
+      "stars": 38699,
+      "forks": 3018,
+      "openIssues": 674,
+      "watchers": 38699,
+      "pushedAt": "2026-09-26T08:30:31Z",
+      "updatedAt": "2026-09-26T08:30:38Z",
       "createdAt": "2026-01-05T07:11:17Z",
       "license": "AGPL-3.0",
       "language": "Python",
@@ -3837,152 +3955,51 @@
       "discovery": {
         "source": "topic",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
-      "id": "titanwings/colleague-skill",
-      "order": 823,
-      "name": "colleague-skill",
-      "owner": "titanwings",
-      "repo": "titanwings/colleague-skill",
-      "url": "https://github.com/titanwings/colleague-skill",
-      "category": "skill",
-      "description": {
-        "zh": "将冰冷的离别化为温暖的 Skill，欢迎加入数字生命1.0！Transforming cold farewells into warm skills? It's giving rebirth era. Welcome to Digital Life 1.0. 🫶",
-        "en": "将冰冷的离别化为温暖的 Skill，欢迎加入数字生命1.0！Transforming cold farewells into warm skills? It's giving rebirth era. Welcome to Digital Life 1.0. 🫶"
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 22550,
-      "forks": 2053,
-      "openIssues": 34,
-      "watchers": 22550,
-      "pushedAt": "2026-08-13T15:00:28Z",
-      "updatedAt": "2026-08-16T05:10:52Z",
-      "createdAt": "2026-03-30T05:22:23Z",
-      "license": "MIT",
-      "language": "Python",
-      "homepage": null,
-      "archived": false,
-      "defaultBranch": "dot-skill",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "dot-skill",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "nagi-ovo/voyager",
-      "order": 824,
-      "name": "voyager",
-      "owner": "Nagi-ovo",
-      "repo": "Nagi-ovo/voyager",
-      "url": "https://github.com/Nagi-ovo/voyager",
+      "id": "esengine/deepseek-reasonix",
+      "order": 825,
+      "name": "DeepSeek-Reasonix",
+      "owner": "esengine",
+      "repo": "esengine/DeepSeek-Reasonix",
+      "url": "https://github.com/esengine/DeepSeek-Reasonix",
       "category": "model",
       "description": {
-        "zh": "Enhancement suite for Gemini, AI Studio, Claude & ChatGPT — plus a prompt manager for any web UI, DeepSeek Harness included. / 面向 Gemini、AI Studio、Claude 与 ChatGPT 的增强套件；提示词管理器可用于任意 Web UI，含 DeepSeek Harness。",
-        "en": "Enhancement suite for Gemini, AI Studio, Claude & ChatGPT — plus a prompt manager for any web UI, DeepSeek Harness included. / 面向 Gemini、AI Studio、Claude 与 ChatGPT 的增强套件；提示词管理器可用于任意 Web UI，含 DeepSeek Harness。"
+        "zh": "DeepSeek-native AI coding agent for your terminal. Engineered around prefix-cache stability — leave it running.",
+        "en": "DeepSeek-native AI coding agent for your terminal. Engineered around prefix-cache stability — leave it running."
       },
-      "added": "2026-08-16",
+      "added": "2026-09-26",
       "curated": false,
       "topic": true,
-      "stars": 19417,
-      "forks": 646,
-      "openIssues": 17,
-      "watchers": 19417,
-      "pushedAt": "2026-08-16T00:11:26Z",
-      "updatedAt": "2026-08-16T05:05:18Z",
-      "createdAt": "2025-10-04T23:42:35Z",
-      "license": "GPL-3.0",
-      "language": "TypeScript",
-      "homepage": "https://voyager.nagi.fun/en",
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "tt-a1i/archify",
-      "order": 825,
-      "name": "archify",
-      "owner": "tt-a1i",
-      "repo": "tt-a1i/archify",
-      "url": "https://github.com/tt-a1i/archify",
-      "category": "session",
-      "description": {
-        "zh": "Agent skill for beautiful, verifiable architecture, workflow, sequence, data-flow, and lifecycle diagrams—self-contained HTML with motion and crisp export.",
-        "en": "Agent skill for beautiful, verifiable architecture, workflow, sequence, data-flow, and lifecycle diagrams—self-contained HTML with motion and crisp export."
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 13028,
-      "forks": 959,
-      "openIssues": 15,
-      "watchers": 13028,
-      "pushedAt": "2026-08-14T16:30:40Z",
-      "updatedAt": "2026-08-16T05:05:48Z",
-      "createdAt": "2026-04-15T05:27:37Z",
+      "stars": 35709,
+      "forks": 2417,
+      "openIssues": 558,
+      "watchers": 35709,
+      "pushedAt": "2026-09-26T08:21:22Z",
+      "updatedAt": "2026-09-26T08:15:53Z",
+      "createdAt": "2026-04-21T08:27:02Z",
       "license": "MIT",
-      "language": "HTML",
-      "homepage": "https://tt-a1i.github.io/archify/",
+      "language": "Go",
+      "homepage": "http://reasonix.io/",
       "archived": false,
-      "defaultBranch": "main",
+      "defaultBranch": "studio",
       "maintenance": "active",
       "manifest": {
-        "state": "missing",
+        "state": "package-only",
         "branch": "main",
         "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
+        "packageName": "reasonix",
+        "version": "0.52.0",
+        "lifecycleScripts": [
+          "postinstall",
+          "prepare"
+        ],
+        "runtimeDependencies": 36,
+        "declaredPaths": [
+          "dist/index.js"
+        ],
         "invalidDeclaredPaths": []
       },
       "facts": {
@@ -3990,13 +4007,16 @@
         "hasLockfile": false,
         "hasLicense": true,
         "hasReadme": false,
-        "lifecycleScripts": []
+        "lifecycleScripts": [
+          "postinstall",
+          "prepare"
+        ]
       },
       "removed": false,
       "discovery": {
         "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
@@ -4014,16 +4034,391 @@
       "added": "2026-08-16",
       "curated": false,
       "topic": true,
-      "stars": 10361,
-      "forks": 1237,
-      "openIssues": 9,
-      "watchers": 10361,
-      "pushedAt": "2026-07-22T16:57:36Z",
-      "updatedAt": "2026-08-16T05:05:03Z",
+      "stars": 33531,
+      "forks": 3227,
+      "openIssues": 32,
+      "watchers": 33531,
+      "pushedAt": "2026-09-24T08:01:10Z",
+      "updatedAt": "2026-09-26T07:39:16Z",
       "createdAt": "2026-04-25T09:19:13Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": "https://gpt-image2.canghe.ai",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "package-only",
+        "branch": "main",
+        "kinds": [],
+        "packageName": "awesome-gpt-image-2-site",
+        "version": "1.0.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 10,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": true,
+        "hasLicense": true,
+        "hasReadme": true,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "tencent/weknora",
+      "order": 827,
+      "name": "WeKnora",
+      "owner": "Tencent",
+      "repo": "Tencent/WeKnora",
+      "url": "https://github.com/Tencent/WeKnora",
+      "category": "model",
+      "description": {
+        "zh": "Open-source LLM knowledge platform: turn raw documents into a queryable RAG, an autonomous reasoning agent, and a self-maintaining Wiki.",
+        "en": "Open-source LLM knowledge platform: turn raw documents into a queryable RAG, an autonomous reasoning agent, and a self-maintaining Wiki."
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 30181,
+      "forks": 4052,
+      "openIssues": 510,
+      "watchers": 30181,
+      "pushedAt": "2026-09-26T08:29:55Z",
+      "updatedAt": "2026-09-26T08:31:52Z",
+      "createdAt": "2025-07-22T08:01:23Z",
+      "license": null,
+      "language": "Go",
+      "homepage": "https://weknora.weixin.qq.com",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "anywhere-labs/dsh-desktop",
+      "order": 828,
+      "name": "dsh-desktop",
+      "owner": "anywhere-labs",
+      "repo": "anywhere-labs/dsh-desktop",
+      "url": "https://github.com/anywhere-labs/dsh-desktop",
+      "category": "model",
+      "description": {
+        "zh": "为 DeepSeek Harness (DSH) 插件生态打造的现代化桌面端解决方案。万物皆「插件」，桌面本身也是「插件」。",
+        "en": "为 DeepSeek Harness (DSH) 插件生态打造的现代化桌面端解决方案。万物皆「插件」，桌面本身也是「插件」。"
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 29029,
+      "forks": 1382,
+      "openIssues": 321,
+      "watchers": 29029,
+      "pushedAt": "2026-09-25T22:27:38Z",
+      "updatedAt": "2026-09-26T08:09:41Z",
+      "createdAt": "2026-08-13T16:30:50Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": "https://dshdesktop.cn",
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "package-only",
+        "branch": "master",
+        "kinds": [],
+        "packageName": "deepseek-harness-desktop",
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": true,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "titanwings/distilly",
+      "order": 829,
+      "name": "distilly",
+      "owner": "titanwings",
+      "repo": "titanwings/distilly",
+      "url": "https://github.com/titanwings/distilly",
+      "category": "skill",
+      "description": {
+        "zh": "Distilly — Distill how they think into reusable Skills for any Agent or Bot. Formerly Colleague Skill（原同事 Skill）.",
+        "en": "Distilly — Distill how they think into reusable Skills for any Agent or Bot. Formerly Colleague Skill（原同事 Skill）."
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 25036,
+      "forks": 2173,
+      "openIssues": 67,
+      "watchers": 25036,
+      "pushedAt": "2026-09-22T14:01:08Z",
+      "updatedAt": "2026-09-26T08:22:36Z",
+      "createdAt": "2026-03-30T05:22:23Z",
+      "license": "MIT",
+      "language": "Python",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "dot-skill",
+      "maintenance": "active",
+      "manifest": {
+        "state": "package-only",
+        "branch": "master",
+        "kinds": [],
+        "packageName": "@titanwings/distilly",
+        "version": "1.0.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "nagi-ovo/voyager",
+      "order": 830,
+      "name": "voyager",
+      "owner": "Nagi-ovo",
+      "repo": "Nagi-ovo/voyager",
+      "url": "https://github.com/Nagi-ovo/voyager",
+      "category": "model",
+      "description": {
+        "zh": "Enhancement suite for Gemini, AI Studio, Claude & ChatGPT — plus a prompt manager for any web UI, DeepSeek Harness included. / 面向 Gemini、AI Studio、Claude 与 ChatGPT 的增强套件；提示词管理器可用于任意 Web UI，含 DeepSeek Harness。",
+        "en": "Enhancement suite for Gemini, AI Studio, Claude & ChatGPT — plus a prompt manager for any web UI, DeepSeek Harness included. / 面向 Gemini、AI Studio、Claude 与 ChatGPT 的增强套件；提示词管理器可用于任意 Web UI，含 DeepSeek Harness。"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 20205,
+      "forks": 674,
+      "openIssues": 17,
+      "watchers": 20205,
+      "pushedAt": "2026-09-26T01:02:34Z",
+      "updatedAt": "2026-09-26T05:35:14Z",
+      "createdAt": "2025-10-04T23:42:35Z",
+      "license": "GPL-3.0",
+      "language": "TypeScript",
+      "homepage": "https://voyager.nagi.fun/en",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "package-only",
+        "branch": "main",
+        "kinds": [],
+        "packageName": "voyager",
+        "version": "1.9.0",
+        "lifecycleScripts": [
+          "prepare"
+        ],
+        "runtimeDependencies": 19,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": true,
+        "lifecycleScripts": [
+          "prepare"
+        ]
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "awesome-dsh-plugin/awesome-dsh-plugin",
+      "order": 831,
+      "name": "awesome-dsh-plugin",
+      "owner": "awesome-dsh-plugin",
+      "repo": "awesome-dsh-plugin/awesome-dsh-plugin",
+      "url": "https://github.com/awesome-dsh-plugin/awesome-dsh-plugin",
+      "category": "model",
+      "description": {
+        "zh": "A curated list of plugins for DeepSeek Harness (dsh) · DeepSeek Harness 插件精选列表",
+        "en": "A curated list of plugins for DeepSeek Harness (dsh) · DeepSeek Harness 插件精选列表"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 16927,
+      "forks": 3293,
+      "openIssues": 107,
+      "watchers": 16927,
+      "pushedAt": "2026-09-26T02:45:44Z",
+      "updatedAt": "2026-09-26T08:13:44Z",
+      "createdAt": "2026-08-13T13:55:31Z",
+      "license": "CC0-1.0",
+      "language": "JavaScript",
+      "homepage": "https://awesome-dsh-plugin.com",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "package-only",
+        "branch": "main",
+        "kinds": [],
+        "packageName": "awesome-dsh-plugin",
+        "version": "0.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": true,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "walkinglabs/learn-harness-engineering",
+      "order": 832,
+      "name": "learn-harness-engineering",
+      "owner": "walkinglabs",
+      "repo": "walkinglabs/learn-harness-engineering",
+      "url": "https://github.com/walkinglabs/learn-harness-engineering",
+      "category": "tools",
+      "description": {
+        "zh": "Harness engineering beginner tutorial, from 0 to 1",
+        "en": "Harness engineering beginner tutorial, from 0 to 1"
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 16080,
+      "forks": 1635,
+      "openIssues": 19,
+      "watchers": 16080,
+      "pushedAt": "2026-08-26T01:08:59Z",
+      "updatedAt": "2026-09-26T08:25:07Z",
+      "createdAt": "2026-03-29T12:28:19Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": "https://walkinglabs.github.io/learn-harness-engineering/",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "warm",
+      "manifest": {
+        "state": "package-only",
+        "branch": "master",
+        "kinds": [],
+        "packageName": "learn-harness-engineering",
+        "version": "0.1.0",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 1,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "evermind-ai/everos",
+      "order": 833,
+      "name": "EverOS",
+      "owner": "EverMind-AI",
+      "repo": "EverMind-AI/EverOS",
+      "url": "https://github.com/EverMind-AI/EverOS",
+      "category": "memory",
+      "description": {
+        "zh": "One portable memory layer for every AI agent: local-first, Markdown-native, user-owned, and self-evolving across apps, tools, and workflows.",
+        "en": "One portable memory layer for every AI agent: local-first, Markdown-native, user-owned, and self-evolving across apps, tools, and workflows."
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 13205,
+      "forks": 923,
+      "openIssues": 72,
+      "watchers": 13205,
+      "pushedAt": "2026-09-24T10:31:33Z",
+      "updatedAt": "2026-09-26T08:24:22Z",
+      "createdAt": "2025-10-28T15:09:32Z",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "homepage": "https://evermind.ai/everos",
       "archived": false,
       "defaultBranch": "main",
       "maintenance": "active",
@@ -4048,35 +4443,310 @@
       "removed": false,
       "discovery": {
         "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
-      "id": "anywhere-labs/deepseek-harness-desktop",
-      "order": 827,
-      "name": "deepseek-harness-desktop",
-      "owner": "anywhere-labs",
-      "repo": "anywhere-labs/deepseek-harness-desktop",
-      "url": "https://github.com/anywhere-labs/deepseek-harness-desktop",
+      "id": "memtensor/memos",
+      "order": 834,
+      "name": "MemOS",
+      "owner": "MemTensor",
+      "repo": "MemTensor/MemOS",
+      "url": "https://github.com/MemTensor/MemOS",
       "category": "model",
       "description": {
-        "zh": "为 DeepSeek Harness (DSH) 生态打造的现代化桌面端体验",
-        "en": "为 DeepSeek Harness (DSH) 生态打造的现代化桌面端体验"
+        "zh": "Self-evolving memory OS for LLM & AI Agents: ultra-persistent memory, hybrid-retrieval, and cross-task skill reuse, with 35.24% token savings and DeepSeek Harness support.",
+        "en": "Self-evolving memory OS for LLM & AI Agents: ultra-persistent memory, hybrid-retrieval, and cross-task skill reuse, with 35.24% token savings and DeepSeek Harness support."
       },
-      "added": "2026-08-16",
+      "added": "2026-09-26",
       "curated": false,
       "topic": true,
-      "stars": 6703,
-      "forks": 293,
-      "openIssues": 89,
-      "watchers": 6703,
-      "pushedAt": "2026-08-15T16:41:18Z",
-      "updatedAt": "2026-08-16T05:03:19Z",
-      "createdAt": "2026-08-13T16:30:50Z",
+      "stars": 11594,
+      "forks": 1060,
+      "openIssues": 93,
+      "watchers": 11594,
+      "pushedAt": "2026-09-23T05:55:52Z",
+      "updatedAt": "2026-09-26T06:57:51Z",
+      "createdAt": "2025-07-06T09:51:27Z",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "homepage": "https://memos.openmem.net",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "dataelement/dsh-desktop",
+      "order": 835,
+      "name": "dsh-desktop",
+      "owner": "dataelement",
+      "repo": "dataelement/dsh-desktop",
+      "url": "https://github.com/dataelement/dsh-desktop",
+      "category": "model",
+      "description": {
+        "zh": "DSHDesktop：DeepSeek Harness Desktop / DeepSeek Harness 桌面版",
+        "en": "DSHDesktop：DeepSeek Harness Desktop / DeepSeek Harness 桌面版"
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 9452,
+      "forks": 380,
+      "openIssues": 123,
+      "watchers": 9452,
+      "pushedAt": "2026-09-26T08:04:08Z",
+      "updatedAt": "2026-09-26T08:22:13Z",
+      "createdAt": "2026-08-13T13:45:50Z",
       "license": "MIT",
       "language": "TypeScript",
-      "homepage": "https://dshdesktop.cn",
+      "homepage": "https://dshdesktop.com",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "package-only",
+        "branch": "main",
+        "kinds": [],
+        "packageName": "dsh-desktop",
+        "version": "0.1.1",
+        "lifecycleScripts": [
+          "postinstall"
+        ],
+        "runtimeDependencies": 242,
+        "declaredPaths": [
+          "out/main/index.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": true,
+        "lifecycleScripts": [
+          "postinstall"
+        ]
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "zhu1090093659/dsh-web",
+      "order": 836,
+      "name": "dsh-web",
+      "owner": "zhu1090093659",
+      "repo": "zhu1090093659/dsh-web",
+      "url": "https://github.com/zhu1090093659/dsh-web",
+      "category": "model",
+      "description": {
+        "zh": "DeepSeek Harness (DSH) Web 插件聚合生态 · 万物皆插件，通过创意工坊分发｜｜DeepSeek Harness (DSH) Web Plugin Aggregation Ecosystem · Everything is a plugin, distributed via the Creative Workshop",
+        "en": "DeepSeek Harness (DSH) Web 插件聚合生态 · 万物皆插件，通过创意工坊分发｜｜DeepSeek Harness (DSH) Web Plugin Aggregation Ecosystem · Everything is a plugin, distributed via the Creative Workshop"
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 8019,
+      "forks": 555,
+      "openIssues": 5,
+      "watchers": 8019,
+      "pushedAt": "2026-09-25T14:42:05Z",
+      "updatedAt": "2026-09-26T08:05:46Z",
+      "createdAt": "2026-08-12T05:15:20Z",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "homepage": "https://dsh-market.com",
+      "archived": false,
+      "defaultBranch": "dev",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "dev",
+        "kinds": [
+          "bundle"
+        ],
+        "packageName": "dsh-web",
+        "version": "0.4.2",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 1,
+        "declaredPaths": [
+          "packages/dsh-web-all/cordis.patch.yml"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": true,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "tencent/browserskill",
+      "order": 837,
+      "name": "BrowserSkill",
+      "owner": "Tencent",
+      "repo": "Tencent/BrowserSkill",
+      "url": "https://github.com/Tencent/BrowserSkill",
+      "category": "skill",
+      "description": {
+        "zh": "Let AI agents use your real, logged-in browser without interrupting your work. CLI + extension for browser automation across any shell-capable AI agent.",
+        "en": "Let AI agents use your real, logged-in browser without interrupting your work. CLI + extension for browser automation across any shell-capable AI agent."
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 7288,
+      "forks": 523,
+      "openIssues": 63,
+      "watchers": 7288,
+      "pushedAt": "2026-09-26T04:45:51Z",
+      "updatedAt": "2026-09-26T08:25:38Z",
+      "createdAt": "2026-06-22T07:24:40Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "package-only",
+        "branch": "master",
+        "kinds": [],
+        "packageName": "browser-skill",
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "anbeime/skill",
+      "order": 838,
+      "name": "skill",
+      "owner": "anbeime",
+      "repo": "anbeime/skill",
+      "url": "https://github.com/anbeime/skill",
+      "category": "skill",
+      "description": {
+        "zh": "收录最全、更新最快的技能Skills商店：精选原创技能包（涵盖文档处理、内容创作、编程开发、机器学习、自动化工作流），全部打包好可直接安装使用！同时自动抓取GitHub上万个Skills项目，按分类、更新时间、Star数量整理。The most comprehensive and frequently updated AI Agent skill library, featuring curated skill packs across document processing, content creation, programming, machine learning, automated workflows, and many more domains.",
+        "en": "收录最全、更新最快的技能Skills商店：精选原创技能包（涵盖文档处理、内容创作、编程开发、机器学习、自动化工作流），全部打包好可直接安装使用！同时自动抓取GitHub上万个Skills项目，按分类、更新时间、Star数量整理。The most comprehensive and frequently updated AI Agent skill library, featuring curated skill packs across document processing, content creation, programming, machine learning, automated workflows, and many more domains."
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 7226,
+      "forks": 667,
+      "openIssues": 19,
+      "watchers": 7226,
+      "pushedAt": "2026-09-26T07:10:02Z",
+      "updatedAt": "2026-09-26T07:10:05Z",
+      "createdAt": "2026-02-02T09:12:57Z",
+      "license": null,
+      "language": "Python",
+      "homepage": "https://skill.miyucaicai.cn",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "lingfengqaq/webnovel-writer",
+      "order": 839,
+      "name": "webnovel-writer",
+      "owner": "lingfengQAQ",
+      "repo": "lingfengQAQ/webnovel-writer",
+      "url": "https://github.com/lingfengQAQ/webnovel-writer",
+      "category": "model",
+      "description": {
+        "zh": "基于 Claude Code 的长篇网文辅助创作系统，解决 AI 写作中的「遗忘」和「幻觉」问题，支持 200 万字量级 连载创作。",
+        "en": "基于 Claude Code 的长篇网文辅助创作系统，解决 AI 写作中的「遗忘」和「幻觉」问题，支持 200 万字量级 连载创作。"
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 7211,
+      "forks": 1205,
+      "openIssues": 45,
+      "watchers": 7211,
+      "pushedAt": "2026-09-25T16:04:44Z",
+      "updatedAt": "2026-09-26T07:53:26Z",
+      "createdAt": "2026-01-02T15:15:58Z",
+      "license": "GPL-3.0",
+      "language": "Python",
+      "homepage": null,
       "archived": false,
       "defaultBranch": "master",
       "maintenance": "active",
@@ -4101,13 +4771,227 @@
       "removed": false,
       "discovery": {
         "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    }
+  ],
+  "topFresh": [
+    {
+      "id": "morluto/jacobian",
+      "order": 989,
+      "name": "jacobian",
+      "owner": "morluto",
+      "repo": "morluto/jacobian",
+      "url": "https://github.com/morluto/jacobian",
+      "category": "workflow",
+      "description": {
+        "zh": "Pure mathematics for agents: search for examples and counterexamples, compute exactly, and independently check what a result proves.",
+        "en": "Pure mathematics for agents: search for examples and counterexamples, compute exactly, and independently check what a result proves."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 193,
+      "forks": 14,
+      "openIssues": 380,
+      "watchers": 193,
+      "pushedAt": "2026-09-26T08:31:42Z",
+      "updatedAt": "2026-09-26T07:03:43Z",
+      "createdAt": "2026-07-23T09:08:45Z",
+      "license": "MIT",
+      "language": "Python",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "jingbiaomei/tokdash",
+      "order": 1115,
+      "name": "Tokdash",
+      "owner": "JingbiaoMei",
+      "repo": "JingbiaoMei/Tokdash",
+      "url": "https://github.com/JingbiaoMei/Tokdash",
+      "category": "model",
+      "description": {
+        "zh": "Agent Dashboard: Visualization and analytics for Sessions and Quota Usage. Track, analyze, and optimize token usage across providers with heatmaps, cost tracking, token counting and quota resets..",
+        "en": "Agent Dashboard: Visualization and analytics for Sessions and Quota Usage. Track, analyze, and optimize token usage across providers with heatmaps, cost tracking, token counting and quota resets.."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 82,
+      "forks": 17,
+      "openIssues": 5,
+      "watchers": 82,
+      "pushedAt": "2026-09-26T08:31:42Z",
+      "updatedAt": "2026-09-26T04:03:29Z",
+      "createdAt": "2026-02-24T21:20:32Z",
+      "license": "MIT",
+      "language": "Python",
+      "homepage": "https://tokdash.github.io",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "volcengine/openviking",
+      "order": 824,
+      "name": "OpenViking",
+      "owner": "volcengine",
+      "repo": "volcengine/OpenViking",
+      "url": "https://github.com/volcengine/OpenViking",
+      "category": "memory",
+      "description": {
+        "zh": "Self-evolving Context Database for AI Agents. Unify Agent Memory, Knowledge RAG and Skills.",
+        "en": "Self-evolving Context Database for AI Agents. Unify Agent Memory, Knowledge RAG and Skills."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 38699,
+      "forks": 3018,
+      "openIssues": 674,
+      "watchers": 38699,
+      "pushedAt": "2026-09-26T08:30:31Z",
+      "updatedAt": "2026-09-26T08:30:38Z",
+      "createdAt": "2026-01-05T07:11:17Z",
+      "license": "AGPL-3.0",
+      "language": "Python",
+      "homepage": "https://openviking.ai/",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "tencent/weknora",
+      "order": 827,
+      "name": "WeKnora",
+      "owner": "Tencent",
+      "repo": "Tencent/WeKnora",
+      "url": "https://github.com/Tencent/WeKnora",
+      "category": "model",
+      "description": {
+        "zh": "Open-source LLM knowledge platform: turn raw documents into a queryable RAG, an autonomous reasoning agent, and a self-maintaining Wiki.",
+        "en": "Open-source LLM knowledge platform: turn raw documents into a queryable RAG, an autonomous reasoning agent, and a self-maintaining Wiki."
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 30181,
+      "forks": 4052,
+      "openIssues": 510,
+      "watchers": 30181,
+      "pushedAt": "2026-09-26T08:29:55Z",
+      "updatedAt": "2026-09-26T08:31:52Z",
+      "createdAt": "2025-07-22T08:01:23Z",
+      "license": null,
+      "language": "Go",
+      "homepage": "https://weknora.weixin.qq.com",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": false,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
       "id": "q00/ouroboros",
-      "order": 828,
+      "order": 842,
       "name": "ouroboros",
       "owner": "Q00",
       "repo": "Q00/ouroboros",
@@ -4120,12 +5004,12 @@
       "added": "2026-08-16",
       "curated": false,
       "topic": true,
-      "stars": 5431,
-      "forks": 550,
-      "openIssues": 63,
-      "watchers": 5431,
-      "pushedAt": "2026-08-16T05:08:37Z",
-      "updatedAt": "2026-08-16T03:43:07Z",
+      "stars": 6104,
+      "forks": 612,
+      "openIssues": 111,
+      "watchers": 6104,
+      "pushedAt": "2026-09-26T08:28:38Z",
+      "updatedAt": "2026-09-26T03:13:43Z",
       "createdAt": "2026-01-14T01:14:04Z",
       "license": "MIT",
       "language": "Python",
@@ -4155,12 +5039,12 @@
       "discovery": {
         "source": "topic",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
       "id": "zseven-w/openpencil",
-      "order": 829,
+      "order": 843,
       "name": "openpencil",
       "owner": "ZSeven-W",
       "repo": "ZSeven-W/openpencil",
@@ -4173,12 +5057,12 @@
       "added": "2026-08-16",
       "curated": false,
       "topic": true,
-      "stars": 5011,
-      "forks": 461,
-      "openIssues": 12,
-      "watchers": 5011,
-      "pushedAt": "2026-08-16T04:55:07Z",
-      "updatedAt": "2026-08-16T04:18:44Z",
+      "stars": 6021,
+      "forks": 522,
+      "openIssues": 19,
+      "watchers": 6021,
+      "pushedAt": "2026-09-26T08:27:17Z",
+      "updatedAt": "2026-09-26T07:01:34Z",
       "createdAt": "2026-02-17T10:51:46Z",
       "license": "MIT",
       "language": "Rust",
@@ -4208,34 +5092,87 @@
       "discovery": {
         "source": "topic",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
-      "id": "devin-axis/ipollowork",
-      "order": 830,
-      "name": "iPolloWork",
-      "owner": "Devin-AXIS",
-      "repo": "Devin-AXIS/iPolloWork",
-      "url": "https://github.com/Devin-AXIS/iPolloWork",
+      "id": "haoyueqin/dsh-better-reasoning-effort",
+      "order": 1247,
+      "name": "dsh-better-reasoning-effort",
+      "owner": "HaoyueQin",
+      "repo": "HaoyueQin/dsh-better-reasoning-effort",
+      "url": "https://github.com/HaoyueQin/dsh-better-reasoning-effort",
       "category": "model",
       "description": {
-        "zh": "A next-generation, source-available AI workspace with a self-evolving agent runtime for editable code, design, presentations, websites, and video—a Codex alternative that integrates DeepSeek Harness for subagent delegation, combining iPolloWork’s complete AI workbench with DSH’s specialized agents and both plugin ecosystems in one workflow.",
-        "en": "A next-generation, source-available AI workspace with a self-evolving agent runtime for editable code, design, presentations, websites, and video—a Codex alternative that integrates DeepSeek Harness for subagent delegation, combining iPolloWork’s complete AI workbench with DSH’s specialized agents and both plugin ecosystems in one workflow."
+        "zh": "Reasoning-effort editing for third-party models in DeepSeek Harness: per-model thinking levels with a knowledge base + protocol inference, edited inside the official Models page card.",
+        "en": "Reasoning-effort editing for third-party models in DeepSeek Harness: per-model thinking levels with a knowledge base + protocol inference, edited inside the official Models page card."
       },
-      "added": "2026-08-16",
+      "added": "2026-09-26",
       "curated": false,
       "topic": true,
-      "stars": 4098,
-      "forks": 830,
-      "openIssues": 77,
-      "watchers": 4098,
-      "pushedAt": "2026-08-16T05:06:52Z",
-      "updatedAt": "2026-08-16T05:09:04Z",
-      "createdAt": "2025-08-25T03:57:40Z",
-      "license": null,
-      "language": "HTML",
-      "homepage": "https://www.ipollo.ai/",
+      "stars": 36,
+      "forks": 3,
+      "openIssues": 0,
+      "watchers": 36,
+      "pushedAt": "2026-09-26T08:25:26Z",
+      "updatedAt": "2026-09-26T08:25:30Z",
+      "createdAt": "2026-08-19T18:11:14Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": "https://awesome-dsh-plugin.com/p/HaoyueQin/dsh-better-reasoning-effort",
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "master",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "hashgraph-online/hol-guard",
+      "order": 896,
+      "name": "hol-guard",
+      "owner": "hashgraph-online",
+      "repo": "hashgraph-online/hol-guard",
+      "url": "https://github.com/hashgraph-online/hol-guard",
+      "category": "skill",
+      "description": {
+        "zh": "Open-source antivirus for AI agents: block risky tools, secret access, prompt injection, malicious packages, MCP servers, plugins, and skills at runtime.",
+        "en": "Open-source antivirus for AI agents: block risky tools, secret access, prompt injection, malicious packages, MCP servers, plugins, and skills at runtime."
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 668,
+      "forks": 102,
+      "openIssues": 119,
+      "watchers": 668,
+      "pushedAt": "2026-09-26T08:24:01Z",
+      "updatedAt": "2026-09-25T21:48:07Z",
+      "createdAt": "2026-03-28T19:02:15Z",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "homepage": "https://hol.org/guard",
       "archived": false,
       "defaultBranch": "main",
       "maintenance": "active",
@@ -4252,6 +5189,295 @@
       },
       "facts": {
         "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "songoao25/dsh-bottom-info-bar",
+      "order": 1240,
+      "name": "dsh-bottom-info-bar",
+      "owner": "songoao25",
+      "repo": "songoao25/dsh-bottom-info-bar",
+      "url": "https://github.com/songoao25/dsh-bottom-info-bar",
+      "category": "model",
+      "description": {
+        "zh": "Bottom Info Bar — an information bar plugin for DeepSeek Harness: provider/model, live balance, peak/off-peak pricing with countdown, and real persisted per-session spend in a single line.",
+        "en": "Bottom Info Bar — an information bar plugin for DeepSeek Harness: provider/model, live balance, peak/off-peak pricing with countdown, and real persisted per-session spend in a single line."
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 38,
+      "forks": 4,
+      "openIssues": 0,
+      "watchers": 38,
+      "pushedAt": "2026-09-26T08:23:55Z",
+      "updatedAt": "2026-09-26T06:39:39Z",
+      "createdAt": "2026-08-15T00:39:20Z",
+      "license": "MIT",
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "dsh-bottom-info-bar",
+        "version": "1.20.2",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": true,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "yinnho/aginxbrowser",
+      "order": 1278,
+      "name": "aginxbrowser",
+      "owner": "yinnho",
+      "repo": "yinnho/aginxbrowser",
+      "url": "https://github.com/yinnho/aginxbrowser",
+      "category": "model",
+      "description": {
+        "zh": "The browser built for AI agents — fetch live pages as markdown, render JS/SPAs with built-in V8, take screenshots without Chromium, meta-search 5 engines, and drive interactive login sessions. One Rust binary, stealth TLS fingerprints, MCP native for Claude Code & Cursor. Headless browser alternative to Puppeteer/Playwright.",
+        "en": "The browser built for AI agents — fetch live pages as markdown, render JS/SPAs with built-in V8, take screenshots without Chromium, meta-search 5 engines, and drive interactive login sessions. One Rust binary, stealth TLS fingerprints, MCP native for Claude Code & Cursor. Headless browser alternative to Puppeteer/Playwright."
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 31,
+      "forks": 3,
+      "openIssues": 20,
+      "watchers": 31,
+      "pushedAt": "2026-09-26T08:23:33Z",
+      "updatedAt": "2026-09-26T08:23:36Z",
+      "createdAt": "2026-06-19T03:27:07Z",
+      "license": "Apache-2.0",
+      "language": "Rust",
+      "homepage": "https://browser.aginx.net",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "missing",
+        "branch": "main",
+        "kinds": [],
+        "packageName": null,
+        "version": null,
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": false,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": false,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "chengxiucdp/dsh-plugin-advisor",
+      "order": 4487,
+      "name": "dsh-plugin-advisor",
+      "owner": "ChengxiuCDP",
+      "repo": "ChengxiuCDP/dsh-plugin-advisor",
+      "url": "https://github.com/ChengxiuCDP/dsh-plugin-advisor",
+      "category": "tools",
+      "description": {
+        "zh": "dsh-plugin-advisor",
+        "en": "dsh-plugin-advisor"
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 2,
+      "forks": 1,
+      "openIssues": 1,
+      "watchers": 2,
+      "pushedAt": "2026-09-26T08:22:48Z",
+      "updatedAt": "2026-09-26T08:22:52Z",
+      "createdAt": "2026-08-16T12:09:05Z",
+      "license": "MIT",
+      "language": "Python",
+      "homepage": "https://dsh-plugin-hub-3t7.pages.dev",
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "main",
+        "kinds": [
+          "bundle"
+        ],
+        "packageName": "dsh-plugin-advisor",
+        "version": "0.1.1",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 0,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": false,
+        "hasLicense": true,
+        "hasReadme": true,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "aa728848/dsh-chatgpt-subscription",
+      "order": 1282,
+      "name": "dsh-chatgpt-subscription",
+      "owner": "Aa728848",
+      "repo": "Aa728848/dsh-chatgpt-subscription",
+      "url": "https://github.com/Aa728848/dsh-chatgpt-subscription",
+      "category": "session",
+      "description": {
+        "zh": "dsh-chatgpt-subscription",
+        "en": "dsh-chatgpt-subscription"
+      },
+      "added": "2026-08-16",
+      "curated": false,
+      "topic": true,
+      "stars": 31,
+      "forks": 6,
+      "openIssues": 0,
+      "watchers": 31,
+      "pushedAt": "2026-09-26T08:22:28Z",
+      "updatedAt": "2026-09-26T08:22:32Z",
+      "createdAt": "2026-08-14T09:41:57Z",
+      "license": "MIT",
+      "language": "TypeScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "master",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "master",
+        "kinds": [
+          "bundle",
+          "client"
+        ],
+        "packageName": "@eddyskywalker/dsh-chatgpt-subscription",
+        "version": "0.9.6",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 2,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "lib/index.js",
+          "lib/client.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
+        "hasLockfile": true,
+        "hasLicense": true,
+        "hasReadme": true,
+        "lifecycleScripts": []
+      },
+      "removed": false,
+      "discovery": {
+        "source": "topic",
+        "firstSeenAt": "2026-08-16",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
+      }
+    },
+    {
+      "id": "hiq-ai/dingtalk-dsh-assistant",
+      "order": 2203,
+      "name": "dingtalk-dsh-assistant",
+      "owner": "HiQ-AI",
+      "repo": "HiQ-AI/dingtalk-dsh-assistant",
+      "url": "https://github.com/HiQ-AI/dingtalk-dsh-assistant",
+      "category": "model",
+      "description": {
+        "zh": "基于 DeepSeek Harness 的钉钉群聊常驻个人助理插件",
+        "en": "基于 DeepSeek Harness 的钉钉群聊常驻个人助理插件"
+      },
+      "added": "2026-09-26",
+      "curated": false,
+      "topic": true,
+      "stars": 6,
+      "forks": 1,
+      "openIssues": 1,
+      "watchers": 6,
+      "pushedAt": "2026-09-26T08:22:04Z",
+      "updatedAt": "2026-09-26T01:30:30Z",
+      "createdAt": "2026-08-25T10:36:37Z",
+      "license": null,
+      "language": "JavaScript",
+      "homepage": null,
+      "archived": false,
+      "defaultBranch": "main",
+      "maintenance": "active",
+      "manifest": {
+        "state": "verified",
+        "branch": "master",
+        "kinds": [
+          "bundle"
+        ],
+        "packageName": "dingtalk-dsh-assistant",
+        "version": "0.5.15",
+        "lifecycleScripts": [],
+        "runtimeDependencies": 2,
+        "declaredPaths": [
+          "cordis.patch.yml",
+          "index.js"
+        ],
+        "invalidDeclaredPaths": []
+      },
+      "facts": {
+        "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": false,
         "hasReadme": false,
@@ -4260,259 +5486,52 @@
       "removed": false,
       "discovery": {
         "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
-      "id": "crafter-station/petdex",
-      "order": 831,
-      "name": "petdex",
-      "owner": "crafter-station",
-      "repo": "crafter-station/petdex",
-      "url": "https://github.com/crafter-station/petdex",
+      "id": "esengine/deepseek-reasonix",
+      "order": 825,
+      "name": "DeepSeek-Reasonix",
+      "owner": "esengine",
+      "repo": "esengine/DeepSeek-Reasonix",
+      "url": "https://github.com/esengine/DeepSeek-Reasonix",
       "category": "model",
       "description": {
-        "zh": "A public gallery of animated pets for Codex, Claude Code, DeepSeek Harness, Hermes, OpenCode, Gemini CLI, and more.",
-        "en": "A public gallery of animated pets for Codex, Claude Code, DeepSeek Harness, Hermes, OpenCode, Gemini CLI, and more."
+        "zh": "DeepSeek-native AI coding agent for your terminal. Engineered around prefix-cache stability — leave it running.",
+        "en": "DeepSeek-native AI coding agent for your terminal. Engineered around prefix-cache stability — leave it running."
       },
-      "added": "2026-08-16",
+      "added": "2026-09-26",
       "curated": false,
       "topic": true,
-      "stars": 3837,
-      "forks": 181,
-      "openIssues": 20,
-      "watchers": 3837,
-      "pushedAt": "2026-08-14T11:41:27Z",
-      "updatedAt": "2026-08-16T04:55:34Z",
-      "createdAt": "2026-05-02T07:51:35Z",
+      "stars": 35709,
+      "forks": 2417,
+      "openIssues": 558,
+      "watchers": 35709,
+      "pushedAt": "2026-09-26T08:21:22Z",
+      "updatedAt": "2026-09-26T08:15:53Z",
+      "createdAt": "2026-04-21T08:27:02Z",
       "license": "MIT",
-      "language": "TypeScript",
-      "homepage": "https://petdex.dev",
+      "language": "Go",
+      "homepage": "http://reasonix.io/",
       "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "strukto-ai/mirage",
-      "order": 738,
-      "name": "mirage#dsh",
-      "owner": "strukto-ai",
-      "repo": "strukto-ai/mirage",
-      "url": "https://github.com/strukto-ai/mirage/tree/main/typescript/packages/dsh",
-      "category": "dev",
-      "description": {
-        "en": "Swaps the filesystem and bash providers for a mirage virtual workspace: file tools and shell commands run over mounted resources (RAM, S3, Redis, Slack, Gmail, Notion, Postgres) instead of the host disk, with per-mount read/write/exec modes, per-command sandbox routing (monty, pyodide, quickjs in process; docker, e2b, daytona remote), and installed CLIs (git, gh, slack, linear, ntn, gws, or one you register) as head words in the virtual terminal.",
-        "zh": "把文件系统与 bash 提供者换成 mirage 虚拟工作区：文件工具与 shell 命令作用于挂载的资源（RAM、S3、Redis、Slack、Gmail、Notion、Postgres）而非宿主磁盘，支持按挂载点设置读/写/执行模式、按命令选择沙箱（进程内 monty、pyodide、quickjs；远程 docker、e2b、daytona），并可在虚拟终端中安装 CLI（git、gh、slack、linear、ntn、gws，或自行注册的程序树）作为命令头词。"
-      },
-      "added": "2026-08-15",
-      "curated": true,
-      "topic": true,
-      "stars": 3450,
-      "forks": 255,
-      "openIssues": 105,
-      "watchers": 3450,
-      "pushedAt": "2026-08-16T04:47:53Z",
-      "updatedAt": "2026-08-16T04:48:11Z",
-      "createdAt": "2026-05-06T17:00:48Z",
-      "license": "Apache-2.0",
-      "language": "TypeScript",
-      "homepage": "https://www.strukto.ai/mirage",
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "curated",
-        "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "awesome-dsh-plugin/awesome-dsh-plugin",
-      "order": 832,
-      "name": "awesome-dsh-plugin",
-      "owner": "awesome-dsh-plugin",
-      "repo": "awesome-dsh-plugin/awesome-dsh-plugin",
-      "url": "https://github.com/awesome-dsh-plugin/awesome-dsh-plugin",
-      "category": "model",
-      "description": {
-        "zh": "A curated list of plugins for DeepSeek Harness (dsh) · DeepSeek Harness 插件精选列表",
-        "en": "A curated list of plugins for DeepSeek Harness (dsh) · DeepSeek Harness 插件精选列表"
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 3317,
-      "forks": 658,
-      "openIssues": 86,
-      "watchers": 3317,
-      "pushedAt": "2026-08-16T04:12:07Z",
-      "updatedAt": "2026-08-16T05:02:50Z",
-      "createdAt": "2026-08-13T13:55:31Z",
-      "license": "CC0-1.0",
-      "language": "Python",
-      "homepage": "https://awesome-dsh-plugin.com",
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "edison7009/echobird",
-      "order": 833,
-      "name": "EchoBird",
-      "owner": "edison7009",
-      "repo": "edison7009/EchoBird",
-      "url": "https://github.com/edison7009/EchoBird",
-      "category": "model",
-      "description": {
-        "zh": "One-click install + model switch:Claude Code,Codex CLI (OpenAI), Grok Build (xAI), DeepSeek Harness, Kimi Code (Moonshot) ,Qwen Code,Aider,OpenCode,MiMo Code (Xiaomi),ZCode (Z.AI),OpenClaw,Pi,OpenScience,Vibe-Trading,Claude Desktop (3P profile),ChatGPT desktop,OpenCode Desktop,",
-        "en": "One-click install + model switch:Claude Code,Codex CLI (OpenAI), Grok Build (xAI), DeepSeek Harness, Kimi Code (Moonshot) ,Qwen Code,Aider,OpenCode,MiMo Code (Xiaomi),ZCode (Z.AI),OpenClaw,Pi,OpenScience,Vibe-Trading,Claude Desktop (3P profile),ChatGPT desktop,OpenCode Desktop,"
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 3024,
-      "forks": 341,
-      "openIssues": 347,
-      "watchers": 3024,
-      "pushedAt": "2026-08-16T04:49:57Z",
-      "updatedAt": "2026-08-16T04:50:01Z",
-      "createdAt": "2026-02-15T12:36:33Z",
-      "license": "MIT",
-      "language": "Rust",
-      "homepage": "https://Echobird.ai",
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "zhu1090093659/dsh-web-ui",
-      "order": 103,
-      "name": "dsh-web-ui#packages/dsh-web-ui-all",
-      "owner": "zhu1090093659",
-      "repo": "zhu1090093659/dsh-web-ui",
-      "url": "https://github.com/zhu1090093659/dsh-web-ui/tree/main/packages/dsh-web-ui-all",
-      "category": "ui",
-      "description": {
-        "en": "Plugin and skin collection for the DSH Web UI: task board, Git graph, right-side panel, remote mobile UI, pet, live token stats, and a skin center.",
-        "zh": "DSH Web UI 插件与皮肤合集：任务看板、git 图、右侧面板、远程移动端 UI、桌宠、实时 token 统计与皮肤中心。"
-      },
-      "added": "2026-08-14",
-      "curated": true,
-      "topic": true,
-      "stars": 2866,
-      "forks": 163,
-      "openIssues": 36,
-      "watchers": 2866,
-      "pushedAt": "2026-08-16T04:05:13Z",
-      "updatedAt": "2026-08-16T05:00:05Z",
-      "createdAt": "2026-08-12T05:15:20Z",
-      "license": "Apache-2.0",
-      "language": "TypeScript",
-      "homepage": "https://gallery.dsh-market.com",
-      "archived": false,
-      "defaultBranch": "main",
+      "defaultBranch": "studio",
       "maintenance": "active",
       "manifest": {
         "state": "package-only",
         "branch": "main",
         "kinds": [],
-        "packageName": "dsh-web-ui",
-        "version": "0.1.1",
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
+        "packageName": "reasonix",
+        "version": "0.52.0",
+        "lifecycleScripts": [
+          "postinstall",
+          "prepare"
+        ],
+        "runtimeDependencies": 36,
+        "declaredPaths": [
+          "dist/index.js"
+        ],
         "invalidDeclaredPaths": []
       },
       "facts": {
@@ -4520,39 +5539,42 @@
         "hasLockfile": false,
         "hasLicense": true,
         "hasReadme": false,
-        "lifecycleScripts": []
+        "lifecycleScripts": [
+          "postinstall",
+          "prepare"
+        ]
       },
       "removed": false,
       "discovery": {
-        "source": "curated",
-        "firstSeenAt": "2026-08-14",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
-      "id": "foryourhealth111-pixel/vibe-skills",
-      "order": 834,
-      "name": "Vibe-Skills",
-      "owner": "foryourhealth111-pixel",
-      "repo": "foryourhealth111-pixel/Vibe-Skills",
-      "url": "https://github.com/foryourhealth111-pixel/Vibe-Skills",
-      "category": "skill",
+      "id": "tingly-dev/tingly-box",
+      "order": 949,
+      "name": "tingly-box",
+      "owner": "tingly-dev",
+      "repo": "tingly-dev/tingly-box",
+      "url": "https://github.com/tingly-dev/tingly-box",
+      "category": "workflow",
       "description": {
-        "zh": "VibeSkills is a general-purpose Skill that automatically routes local Skills and intelligently orchestrates harness workflows.",
-        "en": "VibeSkills is a general-purpose Skill that automatically routes local Skills and intelligently orchestrates harness workflows."
+        "zh": "Your Intelligence, Orchestrated. Every builder. Every team. Every agent. For Everyone.",
+        "en": "Your Intelligence, Orchestrated. Every builder. Every team. Every agent. For Everyone."
       },
-      "added": "2026-08-16",
+      "added": "2026-09-26",
       "curated": false,
       "topic": true,
-      "stars": 2824,
-      "forks": 223,
-      "openIssues": 34,
-      "watchers": 2824,
-      "pushedAt": "2026-08-11T15:42:32Z",
-      "updatedAt": "2026-08-16T04:48:26Z",
-      "createdAt": "2026-02-22T13:51:44Z",
-      "license": "Apache-2.0",
-      "language": "Python",
+      "stars": 347,
+      "forks": 42,
+      "openIssues": 79,
+      "watchers": 347,
+      "pushedAt": "2026-09-26T08:20:29Z",
+      "updatedAt": "2026-09-26T08:11:21Z",
+      "createdAt": "2025-11-21T02:32:46Z",
+      "license": "MPL-2.0",
+      "language": "Go",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
@@ -4578,174 +5600,13 @@
       "removed": false,
       "discovery": {
         "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
-    {
-      "id": "imsai-sh/zhuzhiliao",
-      "order": 835,
-      "name": "zhuzhiliao",
-      "owner": "imsai-sh",
-      "repo": "imsai-sh/zhuzhiliao",
-      "url": "https://github.com/imsai-sh/zhuzhiliao",
-      "category": "tools",
-      "description": {
-        "zh": "竹知了 —— 一转就哇哇叫的传统玩具，Web 模拟版。零依赖单文件，真实录音采样，移动端优先。",
-        "en": "竹知了 —— 一转就哇哇叫的传统玩具，Web 模拟版。零依赖单文件，真实录音采样，移动端优先。"
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 2813,
-      "forks": 343,
-      "openIssues": 18,
-      "watchers": 2813,
-      "pushedAt": "2026-08-14T14:31:41Z",
-      "updatedAt": "2026-08-16T04:47:25Z",
-      "createdAt": "2026-08-01T17:20:54Z",
-      "license": null,
-      "language": "HTML",
-      "homepage": "https://imsai.top",
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": false,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "whiteguo233/openbiliclaw",
-      "order": 836,
-      "name": "OpenBiliClaw",
-      "owner": "whiteguo233",
-      "repo": "whiteguo233/OpenBiliClaw",
-      "url": "https://github.com/whiteguo233/OpenBiliClaw",
-      "category": "model",
-      "description": {
-        "zh": "本地私有、开源的自进化跨平台 AI 内容发现 Agent：先理解你，再主动从 B站、小红书、抖音、YouTube、X、知乎、Reddit、微博等平台与开放 Web 寻找内容。（支持 deepseek harness 插件） | Local-first open-source cross-platform AI content discovery agent: understands you, then proactively finds content across Bilibili, Xiaohongshu, Douyin, YouTube, X, Zhihu, Reddit, Weibo and the open web.（support deepseek harness plugin）",
-        "en": "本地私有、开源的自进化跨平台 AI 内容发现 Agent：先理解你，再主动从 B站、小红书、抖音、YouTube、X、知乎、Reddit、微博等平台与开放 Web 寻找内容。（支持 deepseek harness 插件） | Local-first open-source cross-platform AI content discovery agent: understands you, then proactively finds content across Bilibili, Xiaohongshu, Douyin, YouTube, X, Zhihu, Reddit, Weibo and the open web.（support deepseek harness plugin）"
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 2615,
-      "forks": 125,
-      "openIssues": 29,
-      "watchers": 2615,
-      "pushedAt": "2026-08-15T19:31:34Z",
-      "updatedAt": "2026-08-16T05:09:23Z",
-      "createdAt": "2026-03-07T13:46:10Z",
-      "license": "MIT",
-      "language": "Python",
-      "homepage": "https://whiteguo233.github.io/OpenBiliClaw/",
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "xiaobright/dsh-anchored-standard",
-      "order": 837,
-      "name": "dsh-anchored-standard",
-      "owner": "xiaobright",
-      "repo": "xiaobright/dsh-anchored-standard",
-      "url": "https://github.com/xiaobright/dsh-anchored-standard",
-      "category": "model",
-      "description": {
-        "zh": "Two-phase DeepSeek Harness preset: Minimal-aligned bootstrap, then full Standard tools (Project2 98/99)",
-        "en": "Two-phase DeepSeek Harness preset: Minimal-aligned bootstrap, then full Standard tools (Project2 98/99)"
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 2416,
-      "forks": 75,
-      "openIssues": 32,
-      "watchers": 2416,
-      "pushedAt": "2026-08-15T22:55:15Z",
-      "updatedAt": "2026-08-16T05:05:10Z",
-      "createdAt": "2026-08-14T14:06:39Z",
-      "license": null,
-      "language": "JavaScript",
-      "homepage": "https://github.com/xiaobright/modeltest",
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": false,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    }
-  ],
-  "topFresh": [
     {
       "id": "ariestar/sivtr",
-      "order": 873,
+      "order": 960,
       "name": "sivtr",
       "owner": "Ariestar",
       "repo": "Ariestar/sivtr",
@@ -4758,12 +5619,12 @@
       "added": "2026-08-16",
       "curated": false,
       "topic": true,
-      "stars": 135,
-      "forks": 18,
-      "openIssues": 34,
-      "watchers": 135,
-      "pushedAt": "2026-08-16T05:09:07Z",
-      "updatedAt": "2026-08-16T04:07:38Z",
+      "stars": 278,
+      "forks": 21,
+      "openIssues": 35,
+      "watchers": 278,
+      "pushedAt": "2026-09-26T08:20:18Z",
+      "updatedAt": "2026-09-26T07:48:10Z",
       "createdAt": "2026-04-20T12:31:22Z",
       "license": "Apache-2.0",
       "language": "Rust",
@@ -4793,192 +5654,33 @@
       "discovery": {
         "source": "topic",
         "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
-      "id": "kcnyu/clawock",
-      "order": 1050,
-      "name": "clawock",
-      "owner": "KCNyu",
-      "repo": "KCNyu/clawock",
-      "url": "https://github.com/KCNyu/clawock",
-      "category": "workflow",
-      "description": {
-        "zh": "AI argues. Code settles. The losses stay on the page. A portable investment decision-workflow plugin and verifiable harness, proven on a real HK + US portfolio.",
-        "en": "AI argues. Code settles. The losses stay on the page. A portable investment decision-workflow plugin and verifiable harness, proven on a real HK + US portfolio."
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 8,
-      "forks": 1,
-      "openIssues": 14,
-      "watchers": 8,
-      "pushedAt": "2026-08-16T05:09:05Z",
-      "updatedAt": "2026-08-16T04:49:37Z",
-      "createdAt": "2026-05-16T09:21:08Z",
-      "license": "MIT",
-      "language": "Python",
-      "homepage": "https://kcnyu.github.io/clawock/",
-      "archived": false,
-      "defaultBranch": "master",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "master",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "q00/ouroboros",
-      "order": 828,
-      "name": "ouroboros",
-      "owner": "Q00",
-      "repo": "Q00/ouroboros",
-      "url": "https://github.com/Q00/ouroboros",
+      "id": "yuanzukun/dsh-plugin-cards",
+      "order": 11368,
+      "name": "dsh-plugin-cards",
+      "owner": "yuanzukun",
+      "repo": "yuanzukun/dsh-plugin-cards",
+      "url": "https://github.com/yuanzukun/dsh-plugin-cards",
       "category": "model",
       "description": {
-        "zh": "Agent OS: the agent gets smarter on its own. We just hold the line: the grading command and expected result never make it into the success contract we hand it. Interview-gated, staged evaluation, budgeted evolution loop. MCP server, 13 runtimes: Claude Code, Codex CLI, Gemini CLI, OpenCode, Copilot, Kiro and more.",
-        "en": "Agent OS: the agent gets smarter on its own. We just hold the line: the grading command and expected result never make it into the success contract we hand it. Interview-gated, staged evaluation, budgeted evolution loop. MCP server, 13 runtimes: Claude Code, Codex CLI, Gemini CLI, OpenCode, Copilot, Kiro and more."
+        "zh": "DeepSeek Harness (dsh) 设置卡片 + 对话节点插件 | Settings cards + conversation node plugin",
+        "en": "DeepSeek Harness (dsh) 设置卡片 + 对话节点插件 | Settings cards + conversation node plugin"
       },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 5431,
-      "forks": 550,
-      "openIssues": 63,
-      "watchers": 5431,
-      "pushedAt": "2026-08-16T05:08:37Z",
-      "updatedAt": "2026-08-16T03:43:07Z",
-      "createdAt": "2026-01-14T01:14:04Z",
-      "license": "MIT",
-      "language": "Python",
-      "homepage": "https://ouroboros.page/",
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "michengai/dsh-archive-manager",
-      "order": 2804,
-      "name": "dsh-archive-manager",
-      "owner": "MichengAI",
-      "repo": "MichengAI/dsh-archive-manager",
-      "url": "https://github.com/MichengAI/dsh-archive-manager",
-      "category": "model",
-      "description": {
-        "zh": "DSH Archive Manager 基于 DeepSeek Harness 的归档会话管理插件",
-        "en": "DSH Archive Manager 基于 DeepSeek Harness 的归档会话管理插件"
-      },
-      "added": "2026-08-16",
+      "added": "2026-09-26",
       "curated": false,
       "topic": true,
       "stars": 0,
       "forks": 0,
       "openIssues": 0,
       "watchers": 0,
-      "pushedAt": "2026-08-16T05:07:59Z",
-      "updatedAt": "2026-08-16T05:08:11Z",
-      "createdAt": "2026-08-16T02:35:05Z",
-      "license": "Apache-2.0",
+      "pushedAt": "2026-09-26T08:19:44Z",
+      "updatedAt": "2026-09-26T08:19:48Z",
+      "createdAt": "2026-09-25T20:53:33Z",
+      "license": "MIT",
       "language": "JavaScript",
-      "homepage": null,
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "february2015/dsh-dingo",
-      "order": 645,
-      "name": "dsh-dingo",
-      "owner": "february2015",
-      "repo": "february2015/dsh-dingo",
-      "url": "https://github.com/february2015/dsh-dingo",
-      "category": "notify",
-      "description": {
-        "en": "Sound reminders with one-click jump for concurrent sessions: the current session gets crisp dang/dang-dang tones, other sessions a soft ding/ding-ding plus a top-right card that jumps straight to the replying conversation.",
-        "zh": "多对话并行的声音提醒 + 对话直达：当前对话当/当当（crisp 清脆档），其他对话叮/叮叮（soft 柔和档）+ 右上角小卡片，点一下直达对应对话。"
-      },
-      "added": "2026-08-15",
-      "curated": true,
-      "topic": true,
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 0,
-      "pushedAt": "2026-08-16T05:07:53Z",
-      "updatedAt": "2026-08-16T02:49:02Z",
-      "createdAt": "2026-08-15T14:50:31Z",
-      "license": null,
-      "language": "TypeScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
@@ -4990,9 +5692,11 @@
           "bundle",
           "client"
         ],
-        "packageName": "dsh-dingo",
-        "version": "1.0.0",
-        "lifecycleScripts": [],
+        "packageName": "dsh-plugin-cards",
+        "version": "0.8.11",
+        "lifecycleScripts": [
+          "prepare"
+        ],
         "runtimeDependencies": 0,
         "declaredPaths": [
           "cordis.patch.yml",
@@ -5003,377 +5707,61 @@
       },
       "facts": {
         "hasManifest": true,
-        "hasLockfile": false,
-        "hasLicense": false,
-        "hasReadme": false,
-        "lifecycleScripts": []
+        "hasLockfile": true,
+        "hasLicense": true,
+        "hasReadme": true,
+        "lifecycleScripts": [
+          "prepare"
+        ]
       },
       "removed": false,
       "discovery": {
-        "source": "curated",
-        "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
-      "id": "xcnxnxnx/dsh-weekly-hot",
-      "order": 2671,
-      "name": "dsh-weekly-hot",
-      "owner": "XCNXNXNX",
-      "repo": "XCNXNXNX/dsh-weekly-hot",
-      "url": "https://github.com/XCNXNXNX/dsh-weekly-hot",
-      "category": "theme",
+      "id": "jaylor-wang/dsh-tool-lsp",
+      "order": 7575,
+      "name": "dsh-tool-lsp",
+      "owner": "Jaylor-Wang",
+      "repo": "Jaylor-Wang/dsh-tool-lsp",
+      "url": "https://github.com/Jaylor-Wang/dsh-tool-lsp",
+      "category": "model",
       "description": {
-        "zh": "DSH Web UI 每周热门插件榜单侧栏面板：7/30/90 天飙升榜 + 社区精选主题榜，一键安装，零运行时依赖。| Weekly hot DSH plugin leaderboard sidebar for the DSH Web UI: 7/30/90-day trending + curated topic boards, one-click install, zero runtime deps.",
-        "en": "DSH Web UI 每周热门插件榜单侧栏面板：7/30/90 天飙升榜 + 社区精选主题榜，一键安装，零运行时依赖。| Weekly hot DSH plugin leaderboard sidebar for the DSH Web UI: 7/30/90-day trending + curated topic boards, one-click install, zero runtime deps."
+        "zh": "LSP action surface for DeepSeek Harness: diagnostics, formatting, rename, code actions and symbols over real language servers",
+        "en": "LSP action surface for DeepSeek Harness: diagnostics, formatting, rename, code actions and symbols over real language servers"
       },
-      "added": "2026-08-16",
+      "added": "2026-09-26",
       "curated": false,
       "topic": true,
       "stars": 1,
       "forks": 0,
       "openIssues": 0,
       "watchers": 1,
-      "pushedAt": "2026-08-16T05:07:53Z",
-      "updatedAt": "2026-08-16T05:08:05Z",
-      "createdAt": "2026-08-16T03:23:04Z",
-      "license": "BSD-3-Clause",
-      "language": "TypeScript",
-      "homepage": null,
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "a735624258/dsh-skill-picker",
-      "order": 3172,
-      "name": "dsh-skill-picker",
-      "owner": "a735624258",
-      "repo": "a735624258/dsh-skill-picker",
-      "url": "https://github.com/a735624258/dsh-skill-picker",
-      "category": "model",
-      "description": {
-        "zh": "DSH 实现 workbuddy 同款选择 skill 功能 | WorkBuddy-style skill picker for DeepSeek Harness: pick a skill in the composer, insert the official /skill-name gesture, and DSH loads it with your message.",
-        "en": "DSH 实现 workbuddy 同款选择 skill 功能 | WorkBuddy-style skill picker for DeepSeek Harness: pick a skill in the composer, insert the official /skill-name gesture, and DSH loads it with your message."
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 0,
-      "pushedAt": "2026-08-16T05:07:36Z",
-      "updatedAt": "2026-08-16T05:07:40Z",
-      "createdAt": "2026-08-16T04:26:07Z",
-      "license": "MIT",
-      "language": "JavaScript",
-      "homepage": "https://github.com/a735624258/dsh-skill-picker",
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "ulabe/dsh-conversation-nav",
-      "order": 2869,
-      "name": "dsh-conversation-nav",
-      "owner": "UlaBe",
-      "repo": "UlaBe/dsh-conversation-nav",
-      "url": "https://github.com/UlaBe/dsh-conversation-nav",
-      "category": "model",
-      "description": {
-        "zh": "Conversation position navigator plugin for DeepSeek Harness: right-edge floating button + drawer listing every user message (auto-loads full history), click to jump. Install via dsh plugin add @ulabe/dsh-conversation-nav",
-        "en": "Conversation position navigator plugin for DeepSeek Harness: right-edge floating button + drawer listing every user message (auto-loads full history), click to jump. Install via dsh plugin add @ulabe/dsh-conversation-nav"
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 0,
-      "pushedAt": "2026-08-16T05:07:30Z",
-      "updatedAt": "2026-08-16T05:07:54Z",
-      "createdAt": "2026-08-15T14:00:34Z",
-      "license": null,
-      "language": "JavaScript",
-      "homepage": null,
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": false,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "ez118/dsh-ppt-composer",
-      "order": 3101,
-      "name": "dsh-ppt-composer",
-      "owner": "EZ118",
-      "repo": "EZ118/dsh-ppt-composer",
-      "url": "https://github.com/EZ118/dsh-ppt-composer",
-      "category": "theme",
-      "description": {
-        "zh": "DeepSeek Harness 的 AI PPT 生成助手 Cordis 插件。载入后，直接对话即可生成幻灯片。支持AI自定义幻灯片内容、图表、多媒体、主题和切换效果等。",
-        "en": "DeepSeek Harness 的 AI PPT 生成助手 Cordis 插件。载入后，直接对话即可生成幻灯片。支持AI自定义幻灯片内容、图表、多媒体、主题和切换效果等。"
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 0,
-      "pushedAt": "2026-08-16T05:07:09Z",
-      "updatedAt": "2026-08-16T05:07:25Z",
-      "createdAt": "2026-08-16T04:56:35Z",
+      "pushedAt": "2026-09-26T08:19:34Z",
+      "updatedAt": "2026-09-26T08:19:33Z",
+      "createdAt": "2026-09-16T08:00:44Z",
       "license": "MIT",
       "language": "JavaScript",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "agentrq/agentrq",
-      "order": 840,
-      "name": "agentrq",
-      "owner": "agentrq",
-      "repo": "agentrq/agentrq",
-      "url": "https://github.com/agentrq/agentrq",
-      "category": "model",
-      "description": {
-        "zh": "AgentRQ: Human-in-loop realtime conversational task manager for AI Agents. Self-hosted! Control your own agents from wherever you want Mobile, Web, Desktop. Designed to work well with your own Claude subscriptions and any harness.",
-        "en": "AgentRQ: Human-in-loop realtime conversational task manager for AI Agents. Self-hosted! Control your own agents from wherever you want Mobile, Web, Desktop. Designed to work well with your own Claude subscriptions and any harness."
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 1072,
-      "forks": 80,
-      "openIssues": 16,
-      "watchers": 1072,
-      "pushedAt": "2026-08-16T05:07:06Z",
-      "updatedAt": "2026-08-16T05:07:11Z",
-      "createdAt": "2026-03-24T08:35:45Z",
-      "license": "Apache-2.0",
-      "language": "Go",
-      "homepage": "https://agentrq.com",
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "xv-chang/dsh-opencode-go-usage-dock",
-      "order": 3026,
-      "name": "dsh-opencode-go-usage-dock",
-      "owner": "xv-chang",
-      "repo": "xv-chang/dsh-opencode-go-usage-dock",
-      "url": "https://github.com/xv-chang/dsh-opencode-go-usage-dock",
-      "category": "model",
-      "description": {
-        "zh": "DeepSeek Harness plugin: OpenCode Go plan usage readout docked under the composer, aligned with the input bar width",
-        "en": "DeepSeek Harness plugin: OpenCode Go plan usage readout docked under the composer, aligned with the input bar width"
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 0,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 0,
-      "pushedAt": "2026-08-16T05:07:04Z",
-      "updatedAt": "2026-08-16T05:07:12Z",
-      "createdAt": "2026-08-16T04:19:21Z",
-      "license": "MIT",
-      "language": "JavaScript",
-      "homepage": null,
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "sjh9714/dsh-win32",
-      "order": 758,
-      "name": "dsh-win32",
-      "owner": "sjh9714",
-      "repo": "sjh9714/dsh-win32",
-      "url": "https://github.com/sjh9714/dsh-win32",
-      "category": "dev",
-      "description": {
-        "en": "Makes Minimal mode work on Windows: supplies the missing win32 process inspector so the persistent Git Bash shell runs, plus a faithful minimal-windows preset and an install-trap doctor (koffi crashes, PS 5.1 fallback, localhost 403).",
-        "zh": "让 Minimal 模式在 Windows 上真正可用：补上缺失的 win32 进程探测，常驻 Git Bash shell 才能正常工作；附还原度高的 minimal-windows 预设与安装排障工具（koffi 崩溃、PS 5.1 回退、localhost 403）。"
-      },
-      "added": "2026-08-15",
-      "curated": true,
-      "topic": true,
-      "stars": 4,
-      "forks": 1,
-      "openIssues": 4,
-      "watchers": 4,
-      "pushedAt": "2026-08-16T05:06:55Z",
-      "updatedAt": "2026-08-16T05:06:59Z",
-      "createdAt": "2026-08-15T07:15:19Z",
-      "license": "MIT",
-      "language": "TypeScript",
-      "homepage": null,
-      "archived": false,
-      "defaultBranch": "master",
       "maintenance": "active",
       "manifest": {
         "state": "verified",
-        "branch": "master",
+        "branch": "main",
         "kinds": [
           "bundle"
         ],
-        "packageName": "dsh-win32",
-        "version": "0.7.0",
+        "packageName": "dsh-tool-lsp",
+        "version": "0.1.2",
         "lifecycleScripts": [],
-        "runtimeDependencies": 1,
+        "runtimeDependencies": 0,
         "declaredPaths": [
           "cordis.patch.yml",
-          "lib/index.js"
+          "index.js"
         ],
         "invalidDeclaredPaths": []
       },
@@ -5381,38 +5769,38 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
-        "source": "curated",
-        "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "source": "topic",
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
-      "id": "chaojixinren/dsh-reviewer-bot",
-      "order": 1142,
-      "name": "dsh-reviewer-bot",
-      "owner": "chaojixinren",
-      "repo": "chaojixinren/dsh-reviewer-bot",
-      "url": "https://github.com/chaojixinren/dsh-reviewer-bot",
+      "id": "hyperion2144/dsh-hashline-edittool",
+      "order": 6218,
+      "name": "dsh-hashline-edittool",
+      "owner": "hyperion2144",
+      "repo": "hyperion2144/dsh-hashline-edittool",
+      "url": "https://github.com/hyperion2144/dsh-hashline-edittool",
       "category": "model",
       "description": {
-        "zh": "原生 DeepSeek Harness 插件形态的代码评审机器人：跨代码平台、规则可插拔、可本地重放。",
-        "en": "原生 DeepSeek Harness 插件形态的代码评审机器人：跨代码平台、规则可插拔、可本地重放。"
+        "zh": "Hash-anchored read/edit/undo_last_edit tools for DeepSeek Harness (dsh)",
+        "en": "Hash-anchored read/edit/undo_last_edit tools for DeepSeek Harness (dsh)"
       },
-      "added": "2026-08-16",
+      "added": "2026-09-26",
       "curated": false,
       "topic": true,
-      "stars": 6,
-      "forks": 1,
-      "openIssues": 5,
-      "watchers": 6,
-      "pushedAt": "2026-08-16T05:06:54Z",
-      "updatedAt": "2026-08-16T05:06:58Z",
-      "createdAt": "2026-08-15T09:52:35Z",
+      "stars": 1,
+      "forks": 0,
+      "openIssues": 2,
+      "watchers": 1,
+      "pushedAt": "2026-09-26T08:19:11Z",
+      "updatedAt": "2026-09-26T08:19:14Z",
+      "createdAt": "2026-08-20T11:37:12Z",
       "license": "MIT",
       "language": "TypeScript",
       "homepage": null,
@@ -5440,140 +5828,34 @@
       "removed": false,
       "discovery": {
         "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     },
     {
-      "id": "devin-axis/ipollowork",
-      "order": 830,
-      "name": "iPolloWork",
-      "owner": "Devin-AXIS",
-      "repo": "Devin-AXIS/iPolloWork",
-      "url": "https://github.com/Devin-AXIS/iPolloWork",
+      "id": "zhaoandy821/dsh-motion-background",
+      "order": 10963,
+      "name": "dsh-motion-background",
+      "owner": "ZhaoAndy821",
+      "repo": "ZhaoAndy821/dsh-motion-background",
+      "url": "https://github.com/ZhaoAndy821/dsh-motion-background",
       "category": "model",
       "description": {
-        "zh": "A next-generation, source-available AI workspace with a self-evolving agent runtime for editable code, design, presentations, websites, and video—a Codex alternative that integrates DeepSeek Harness for subagent delegation, combining iPolloWork’s complete AI workbench with DSH’s specialized agents and both plugin ecosystems in one workflow.",
-        "en": "A next-generation, source-available AI workspace with a self-evolving agent runtime for editable code, design, presentations, websites, and video—a Codex alternative that integrates DeepSeek Harness for subagent delegation, combining iPolloWork’s complete AI workbench with DSH’s specialized agents and both plugin ecosystems in one workflow."
+        "zh": "DSH WebUI 的动态背景插件：着色器型（GLSL 实时演算）与媒体型（MP4/WebM/GIF/图片）两类效果，每个效果是 mods/ 下的一个文件夹。Dynamic backdrops for the DeepSeek Harness WebUI.",
+        "en": "DSH WebUI 的动态背景插件：着色器型（GLSL 实时演算）与媒体型（MP4/WebM/GIF/图片）两类效果，每个效果是 mods/ 下的一个文件夹。Dynamic backdrops for the DeepSeek Harness WebUI."
       },
-      "added": "2026-08-16",
+      "added": "2026-09-26",
       "curated": false,
       "topic": true,
-      "stars": 4098,
-      "forks": 830,
-      "openIssues": 77,
-      "watchers": 4098,
-      "pushedAt": "2026-08-16T05:06:52Z",
-      "updatedAt": "2026-08-16T05:09:04Z",
-      "createdAt": "2025-08-25T03:57:40Z",
-      "license": null,
-      "language": "HTML",
-      "homepage": "https://www.ipollo.ai/",
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": false,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "winter-and-you-gone/dsh-turn-fold",
-      "order": 2634,
-      "name": "dsh-turn-fold",
-      "owner": "Winter-And-You-Gone",
-      "repo": "Winter-And-You-Gone/dsh-turn-fold",
-      "url": "https://github.com/Winter-And-You-Gone/dsh-turn-fold",
-      "category": "tools",
-      "description": {
-        "zh": "dsh-turn-fold",
-        "en": "dsh-turn-fold"
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 1,
+      "stars": 0,
       "forks": 0,
       "openIssues": 0,
-      "watchers": 1,
-      "pushedAt": "2026-08-16T05:06:20Z",
-      "updatedAt": "2026-08-16T05:06:39Z",
-      "createdAt": "2026-08-15T16:55:33Z",
+      "watchers": 0,
+      "pushedAt": "2026-09-26T08:18:37Z",
+      "updatedAt": "2026-09-26T08:18:41Z",
+      "createdAt": "2026-09-26T02:16:12Z",
       "license": "MIT",
       "language": "JavaScript",
-      "homepage": null,
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "caoyiwei850/dsh-client-ui-skins",
-      "order": 213,
-      "name": "dsh-client-ui-skins",
-      "owner": "caoyiwei850",
-      "repo": "caoyiwei850/dsh-client-ui-skins",
-      "url": "https://github.com/caoyiwei850/dsh-client-ui-skins",
-      "category": "theme",
-      "description": {
-        "en": "Skin plugin for the DSH Web UI: 4 built-in skins plus custom image skins with the photo as a full-interface background and the palette following its dominant hue.",
-        "zh": "DSH Web 换肤插件：4 套内置皮肤 + 自定义图片皮肤，图片作为全界面背景，配色自动跟随图片主色调。"
-      },
-      "added": "2026-08-15",
-      "curated": true,
-      "topic": true,
-      "stars": 2,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 2,
-      "pushedAt": "2026-08-16T05:06:01Z",
-      "updatedAt": "2026-08-16T05:06:13Z",
-      "createdAt": "2026-08-15T02:12:33Z",
-      "license": "MIT",
-      "language": "Shell",
       "homepage": null,
       "archived": false,
       "defaultBranch": "main",
@@ -5585,8 +5867,8 @@
           "bundle",
           "client"
         ],
-        "packageName": "dsh-client-ui-skins",
-        "version": "0.1.7",
+        "packageName": "dsh-motion-background",
+        "version": "0.1.0",
         "lifecycleScripts": [],
         "runtimeDependencies": 0,
         "declaredPaths": [
@@ -5600,226 +5882,14 @@
         "hasManifest": true,
         "hasLockfile": false,
         "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "curated",
-        "firstSeenAt": "2026-08-15",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "yxccai/dsh-desktop",
-      "order": 2388,
-      "name": "dsh-desktop",
-      "owner": "yxccai",
-      "repo": "yxccai/dsh-desktop",
-      "url": "https://github.com/yxccai/dsh-desktop",
-      "category": "model",
-      "description": {
-        "zh": "Unofficial Windows and macOS desktop app for DeepSeek Harness, with bundled runtime and automatic reuse of existing DSH environments.",
-        "en": "Unofficial Windows and macOS desktop app for DeepSeek Harness, with bundled runtime and automatic reuse of existing DSH environments."
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 1,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 1,
-      "pushedAt": "2026-08-16T05:05:31Z",
-      "updatedAt": "2026-08-16T05:05:43Z",
-      "createdAt": "2026-08-15T09:11:11Z",
-      "license": "MIT",
-      "language": "JavaScript",
-      "homepage": null,
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
+        "hasReadme": true,
         "lifecycleScripts": []
       },
       "removed": false,
       "discovery": {
         "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "yan-zero/dsh-remote-ssh",
-      "order": 2043,
-      "name": "dsh-remote-ssh",
-      "owner": "Yan-Zero",
-      "repo": "Yan-Zero/dsh-remote-ssh",
-      "url": "https://github.com/Yan-Zero/dsh-remote-ssh",
-      "category": "model",
-      "description": {
-        "zh": "Use SSH hosts as transparent workspaces in DeepSeek Harness.",
-        "en": "Use SSH hosts as transparent workspaces in DeepSeek Harness."
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 2,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 2,
-      "pushedAt": "2026-08-16T05:04:35Z",
-      "updatedAt": "2026-08-16T05:04:40Z",
-      "createdAt": "2026-08-14T10:58:17Z",
-      "license": "Apache-2.0",
-      "language": "TypeScript",
-      "homepage": null,
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "dolorescaritasangelus/dsh-aux",
-      "order": 1760,
-      "name": "DSH-AUX",
-      "owner": "DoloresCaritasAngelus",
-      "repo": "DoloresCaritasAngelus/DSH-AUX",
-      "url": "https://github.com/DoloresCaritasAngelus/DSH-AUX",
-      "category": "model",
-      "description": {
-        "zh": "Auxiliary model system for DeepSeek Harness: unified aux-LLM routing (per-task model, timeout, concurrency, failure cooldown, main-model fallback) + vision_analyze / web_extract / compress_text tools, settings page, and session image lifecycle cleanup.",
-        "en": "Auxiliary model system for DeepSeek Harness: unified aux-LLM routing (per-task model, timeout, concurrency, failure cooldown, main-model fallback) + vision_analyze / web_extract / compress_text tools, settings page, and session image lifecycle cleanup."
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 2,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 2,
-      "pushedAt": "2026-08-16T05:04:33Z",
-      "updatedAt": "2026-08-16T05:04:59Z",
-      "createdAt": "2026-08-14T23:10:52Z",
-      "license": "MIT",
-      "language": "JavaScript",
-      "homepage": null,
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
-      }
-    },
-    {
-      "id": "21hbguo/dsh-feishu-bridge-plugin",
-      "order": 2416,
-      "name": "dsh-feishu-bridge-plugin",
-      "owner": "21hbguo",
-      "repo": "21hbguo/dsh-feishu-bridge-plugin",
-      "url": "https://github.com/21hbguo/dsh-feishu-bridge-plugin",
-      "category": "session",
-      "description": {
-        "zh": "飞书机器人 ↔ DSH 对话桥：DSH 进程内 Cordis 插件，流式卡片 / 问答卡片 / 审批卡片 / 斜杠命令",
-        "en": "飞书机器人 ↔ DSH 对话桥：DSH 进程内 Cordis 插件，流式卡片 / 问答卡片 / 审批卡片 / 斜杠命令"
-      },
-      "added": "2026-08-16",
-      "curated": false,
-      "topic": true,
-      "stars": 1,
-      "forks": 0,
-      "openIssues": 0,
-      "watchers": 1,
-      "pushedAt": "2026-08-16T05:04:21Z",
-      "updatedAt": "2026-08-16T05:04:31Z",
-      "createdAt": "2026-08-15T14:13:40Z",
-      "license": "BSD-3-Clause",
-      "language": "TypeScript",
-      "homepage": null,
-      "archived": false,
-      "defaultBranch": "main",
-      "maintenance": "active",
-      "manifest": {
-        "state": "missing",
-        "branch": "main",
-        "kinds": [],
-        "packageName": null,
-        "version": null,
-        "lifecycleScripts": [],
-        "runtimeDependencies": 0,
-        "declaredPaths": [],
-        "invalidDeclaredPaths": []
-      },
-      "facts": {
-        "hasManifest": false,
-        "hasLockfile": false,
-        "hasLicense": true,
-        "hasReadme": false,
-        "lifecycleScripts": []
-      },
-      "removed": false,
-      "discovery": {
-        "source": "topic",
-        "firstSeenAt": "2026-08-16",
-        "lastSeenAt": "2026-08-16T05:12:31.215Z"
+        "firstSeenAt": "2026-09-26",
+        "lastSeenAt": "2026-09-26T08:32:35.588Z"
       }
     }
   ],
@@ -5841,22 +5911,28 @@
     },
     {
       "date": "2026-08-16",
-      "added": 2588,
-      "total": 3333
+      "added": 1922,
+      "total": 2667
+    },
+    {
+      "date": "2026-09-26",
+      "added": 11415,
+      "total": 14082
     }
   ],
   "categoryCounts": {
-    "ui": 222,
-    "theme": 102,
-    "model": 1684,
-    "session": 182,
-    "memory": 84,
-    "tools": 545,
-    "skill": 105,
-    "workflow": 126,
-    "notify": 65,
-    "dev": 133,
-    "market": 37,
-    "fun": 48
-  }
+    "ui": 419,
+    "theme": 360,
+    "model": 7700,
+    "session": 851,
+    "memory": 259,
+    "tools": 3025,
+    "skill": 381,
+    "workflow": 478,
+    "notify": 131,
+    "dev": 255,
+    "market": 101,
+    "fun": 122
+  },
+  "detailRoutes": true
 }

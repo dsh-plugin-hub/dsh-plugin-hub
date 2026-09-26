@@ -36,9 +36,9 @@ const previewPath = path.join(root, "data", "preview.generated.json");
 const PREVIEW_PAGE_SIZE = 60;
 const MAX_JSON_BYTES = 6_000_000;
 const MAX_TEXT_BYTES = 140_000;
-// 全量 union 以紧凑 JSON 存储，避免随着 topic 插件增长被缩进空白撑大；
-// 16 MB 上限同时保护 Worker/KV/静态资源链路。
-const MAX_OUTPUT_BYTES = 16_000_000;
+// 全量 union 以紧凑 JSON 存储。Cloudflare 单个静态资源与 KV 值上限为 25 MiB；
+// 保留余量，避免快照接近平台硬上限。
+const MAX_OUTPUT_BYTES = 24_000_000;
 const MAX_CURATED_PLUGINS = 2_000;
 
 const SEARCH_PAGE_SIZE = 100;
