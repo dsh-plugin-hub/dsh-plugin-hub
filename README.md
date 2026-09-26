@@ -218,7 +218,7 @@ npm test
 
 ## 自动部署
 
-push 到 `main` 分支后，[.github/workflows/deploy.yml](.github/workflows/deploy.yml) 会自动完成：安装依赖 → 同步插件数据（`npm run data:sync`）→ 跑测试（含 lint + typecheck + build）→ 部署 Worker 到 Cloudflare → 应用 D1 migrations。另设每日定时（UTC 2:17）与 `workflow_dispatch` 手动触发。
+push 到 `main` 分支后，[.github/workflows/deploy.yml](.github/workflows/deploy.yml) 会使用仓库内已跟踪的快照完成测试（含 lint + typecheck + build），然后部署 Worker、应用 D1 migrations 并通知搜索引擎。每日 UTC 2:17 只运行构建检查，不部署；线上插件目录由 Worker Cron 每 30 分钟增量同步，并定期全量扫描。也可通过 `workflow_dispatch` 手动部署。
 
 ### 仓库 Secrets 配置
 
@@ -228,7 +228,8 @@ push 到 `main` 分支后，[.github/workflows/deploy.yml](.github/workflows/dep
 |---|---|
 | `CLOUDFLARE_API_TOKEN` | Cloudflare API Token，创建时权限模板选择 **Edit Cloudflare Workers**（含 Workers Scripts 编辑/部署权限） |
 | `CLOUDFLARE_ACCOUNT_ID` | Cloudflare 账号 ID（Dashboard 右下角查看，或 `npx wrangler whoami`） |
-| `GITHUB_TOKEN` | GitHub Actions 自动注入的仓库级 token，无需手动配置；deploy workflow 将其传给 `npm run data:sync`，用于认证 GitHub API 调用，把 Search API 限流从匿名的 10 次/分提升到认证的 30 次/分（5000 次/小时），保证数据同步稳定 |
+
+`GITHUB_TOKEN` 无需配置为部署 Secret。手动运行 `npm run data:sync` 时，可在本地设置它以提高 GitHub Search API 限额；部署 workflow 使用已跟踪的回退快照，不执行全量数据同步。
 
 ### 首次部署前（一次性手工步骤）
 

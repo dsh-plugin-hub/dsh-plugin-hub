@@ -193,7 +193,7 @@ async function loadCurated() {
 }
 
 // ---------------------------------------------------------------------------
-// GitHub Search 配额保护：sleep 限速 + 403/429 重置等待 + 断点保存
+// GitHub Search 配额保护：sleep 限速 + 403/429 重置等待 + 5xx 退避重试
 // ---------------------------------------------------------------------------
 
 let lastSearchAt = 0;
@@ -220,6 +220,12 @@ async function fetchJsonWithSearchRetry(url, retriesLeft = 2) {
         await sleep(wait + 2_000);
         return fetchJsonWithSearchRetry(url, retriesLeft - 1);
       }
+    }
+    if (error.status >= 500 && error.status < 600 && retriesLeft > 0) {
+      const waitMs = 500 * (2 ** (2 - retriesLeft));
+      console.warn(`GitHub API returned ${error.status}; retrying in ${waitMs}ms`);
+      await sleep(waitMs);
+      return fetchJsonWithSearchRetry(url, retriesLeft - 1);
     }
     throw error;
   }

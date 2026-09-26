@@ -3,7 +3,7 @@ on:
   push: { branches: [main] }
   workflow_dispatch:
   schedule:
-    - cron: '17 2 * * *'   # 每日 UTC 2:17 重建打包快照（可选）
+    - cron: '17 2 * * *'   # 每日 UTC 2:17 用已跟踪快照检查构建
 
 jobs:
   deploy:
@@ -14,28 +14,25 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: '22.19.0', cache: npm }
       - run: npm ci
-      - name: Sync data
-        run: npm run data:sync
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # 跳过逐仓库 manifest 采集：控制快照体积（完整采集会把 plugins.generated.json
-          # 撑到 ~10MB，vite-plugin-commonjs 处理时栈溢出）。facts 由 Worker cron 实时采集，
-          # 打包快照仅是回退数据。
-          DSH_SKIP_MANIFESTS: '1'
+      # 全量 topic 扫描由线上 Worker Cron 定期执行；CI 使用仓库内已跟踪的快照，
+      # 避免每次构建重新扫描历史仓库并生成超出静态资源上限的单体 JSON。
       - run: npm test        # 含 lint + typecheck + build + 集成测试
       - name: Deploy Worker
+        if: github.event_name != 'schedule'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --config dist/server/wrangler.json
       - name: Apply D1 migrations
+        if: github.event_name != 'schedule'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: d1 migrations apply dsh-plugin-hub-visits --remote --config dist/server/wrangler.json
       - name: Notify search engines (IndexNow)
+        if: github.event_name != 'schedule'
         run: node scripts/indexnow-ping.mjs
         env:
           # 可选：配置 BAIDU_PUSH_TOKEN secret 后自动启用百度主动推送
