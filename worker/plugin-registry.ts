@@ -32,8 +32,20 @@ import {
   normalizeRepositoryPath,
   sanitizeRegistryInstallEvidence,
 } from "../lib/plugin-screening.mjs";
+import {
+  createSnapshotManifest,
+  MAX_SNAPSHOT_SHARD_BYTES,
+  partitionPlugins,
+  pluginShardIndex,
+  restoreSnapshotManifest,
+  serializeSnapshotShard,
+  SNAPSHOT_SHARD_COUNT,
+} from "../lib/registry-snapshot.mjs";
 
+// Legacy monolithic key is read-only migration fallback; new writes use sharded keys.
 const REGISTRY_KEY = "registry:v2";
+const REGISTRY_MANIFEST_KEY = "registry:v3:manifest";
+const REGISTRY_SHARD_PREFIX = "registry:v3:shard:";
 const STATE_KEY = "sync-state:v2";
 export const SEARCH_PER_PAGE = 100;
 export const SEARCH_PAGE_CAP = 10;
@@ -314,18 +326,54 @@ function emptyRegistry(): PluginRegistryData {
   };
 }
 
-/**
- * 全量快照改为运行时从静态资源读取（/plugins.json，由 data:sync 双写），
- * 不再把 ~6MB 的 JSON 塞进打包产物（vite-plugin-commonjs 会栈溢出）。
- */
+interface SnapshotShardDescriptor {
+  index: number;
+  key?: string;
+  path?: string;
+  hash: string;
+  count: number;
+  bytes: number;
+}
+
+interface SnapshotShard {
+  version: number;
+  hash: string;
+  plugins: PluginRecord[];
+}
+
+interface SnapshotManifest {
+  format: string;
+  version: number;
+  shardCount: number;
+  registry: Omit<PluginRegistryData, "plugins">;
+  shards: SnapshotShardDescriptor[];
+}
+
+async function readStaticSnapshotPayload(env: PluginRegistryEnv): Promise<SnapshotManifest | PluginRegistryData> {
+  const response = await env.ASSETS?.fetch(new Request("https://dsh-plugin.store/plugins.json"));
+  if (!response?.ok) throw new Error(`Static snapshot manifest unavailable (${response?.status ?? "no binding"})`);
+  return JSON.parse(await response.text()) as SnapshotManifest | PluginRegistryData;
+}
+
+async function readStaticShard(env: PluginRegistryEnv, descriptor: SnapshotShardDescriptor) {
+  const shardPath = descriptor.path;
+  if (!shardPath?.startsWith("/plugins-snapshot-v1/") || shardPath.includes("..")) {
+    throw new Error(`Invalid static snapshot shard path for index ${descriptor.index}`);
+  }
+  const response = await env.ASSETS?.fetch(new Request(new URL(shardPath, "https://dsh-plugin.store")));
+  if (!response?.ok) throw new Error(`Static snapshot shard ${descriptor.index} unavailable`);
+  return JSON.parse(await response.text()) as SnapshotShard | PluginRecord[];
+}
+
 async function bundledRegistry(env: PluginRegistryEnv): Promise<PluginRegistryData> {
   try {
-    const response = await env.ASSETS?.fetch(new Request("https://dsh-plugin.store/plugins.json"));
-    if (response?.ok) {
-      const text = await response.text();
-      return sanitizeRegistryInstallEvidence(JSON.parse(text)) as PluginRegistryData;
+    const manifest = await readStaticSnapshotPayload(env);
+    if (!Array.isArray((manifest as PluginRegistryData).plugins) && !isSnapshotManifest(manifest)) {
+      throw new Error("Invalid static plugin snapshot manifest");
     }
-    console.error(JSON.stringify({ event: "registry.bundled.missing", status: response?.status ?? null }));
+    const registry = await restoreSnapshotManifest(manifest, (descriptor: SnapshotShardDescriptor) =>
+      readStaticShard(env, descriptor));
+    return sanitizeRegistryInstallEvidence(registry) as PluginRegistryData;
   } catch (error) {
     console.error(JSON.stringify({
       event: "registry.bundled.read.error",
@@ -333,6 +381,348 @@ async function bundledRegistry(env: PluginRegistryEnv): Promise<PluginRegistryDa
     }));
   }
   return emptyRegistry();
+}
+
+async function enqueueStaticArrayContents(
+  response: Response,
+  controller: ReadableStreamDefaultController<Uint8Array>,
+): Promise<boolean> {
+  const reader = response.body?.getReader();
+  if (!reader) throw new Error("Static snapshot shard has no response body");
+  let firstChunk = true;
+  let tail = new Uint8Array(0);
+  let hasContent = false;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    if (!value.length) continue;
+    let chunk = value;
+    if (firstChunk) {
+      if (chunk[0] !== 0x5b) throw new Error("Static snapshot shard is not a JSON array");
+      chunk = chunk.subarray(1);
+      firstChunk = false;
+    }
+    if (!chunk.length) continue;
+
+    if (chunk.length >= 2) {
+      if (tail.length) {
+        controller.enqueue(tail);
+        hasContent = true;
+      }
+      const contentEnd = chunk.length - 2;
+      if (contentEnd > 0) {
+        controller.enqueue(chunk.subarray(0, contentEnd));
+        hasContent = true;
+      }
+      tail = chunk.subarray(contentEnd);
+    } else if (tail.length === 2) {
+      controller.enqueue(tail.subarray(0, 1));
+      hasContent = true;
+      tail = new Uint8Array([tail[1], chunk[0]]);
+    } else if (tail.length === 1) {
+      tail = new Uint8Array([tail[0], chunk[0]]);
+    } else {
+      tail = chunk;
+    }
+  }
+
+  if (firstChunk || !["]", "]\n"].includes(new TextDecoder().decode(tail))) {
+    throw new Error("Static snapshot shard has an invalid JSON array boundary");
+  }
+  return hasContent;
+}
+
+/** Stream the legacy full JSON contract from raw static-array shards without parsing 19 MB. */
+export async function fullStaticSnapshotResponse(env: PluginRegistryEnv, headOnly = false): Promise<Response> {
+  const manifestResponse = await env.ASSETS?.fetch(new Request("https://dsh-plugin.store/plugins.json"));
+  if (!manifestResponse?.ok) throw new Error("Static snapshot manifest unavailable");
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Cache-Control": "public, max-age=0, s-maxage=300, stale-while-revalidate=600",
+    "Content-Type": "application/json; charset=utf-8",
+  };
+  const legacyLength = Number(manifestResponse.headers.get("content-length"));
+  if (headOnly && Number.isFinite(legacyLength) && legacyLength > 100_000) {
+    return new Response(null, { headers: { ...headers, "Content-Length": String(legacyLength) } });
+  }
+  const manifestText = await manifestResponse.text();
+  // During a rolling deploy, an older version may still expose the former full asset.
+  if (manifestText.length > 100_000) {
+    return new Response(headOnly ? null : manifestText, { headers });
+  }
+  const payload = JSON.parse(manifestText) as SnapshotManifest | PluginRegistryData;
+  if (Array.isArray((payload as PluginRegistryData).plugins)) {
+    return new Response(headOnly ? null : manifestText, { headers });
+  }
+  if (!isSnapshotManifest(payload)) throw new Error("Invalid static plugin snapshot manifest");
+  if (headOnly) return new Response(null, { headers });
+
+  const shardResponses = await Promise.all(payload.shards.map(async (descriptor) => {
+    const path = descriptor.path;
+    if (!path?.startsWith("/plugins-snapshot-v1/") || path.includes("..")) {
+      throw new Error(`Invalid static snapshot shard path for index ${descriptor.index}`);
+    }
+    const response = await env.ASSETS?.fetch(new Request(new URL(path, "https://dsh-plugin.store")));
+    if (!response?.ok) throw new Error(`Static snapshot shard ${descriptor.index} unavailable`);
+    return response;
+  }));
+
+  const metadata = JSON.stringify(payload.registry);
+  if (!metadata.endsWith("}")) throw new Error("Static snapshot metadata is invalid");
+  const encoder = new TextEncoder();
+  const body = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      try {
+        controller.enqueue(encoder.encode(`${metadata.slice(0, -1)},"plugins":[`));
+        let hasPlugin = false;
+        for (let index = 0; index < shardResponses.length; index += 1) {
+          const descriptor = payload.shards[index];
+          if (descriptor.count > 0 && hasPlugin) controller.enqueue(encoder.encode(","));
+          const hasContent = await enqueueStaticArrayContents(shardResponses[index], controller);
+          if (descriptor.count > 0 && !hasContent) throw new Error("Non-empty snapshot shard has no records");
+          if (descriptor.count === 0 && hasContent) throw new Error("Empty snapshot shard contains records");
+          if (descriptor.count > 0) hasPlugin = true;
+        }
+        controller.enqueue(encoder.encode("]}"));
+        controller.close();
+      } catch (error) {
+        controller.error(error);
+      }
+    },
+  });
+  return new Response(body, { headers });
+}
+
+async function readKvRegistry(env: PluginRegistryEnv): Promise<{
+  registry: PluginRegistryData | null;
+  manifest: SnapshotManifest | null;
+}> {
+  const kv = env.PLUGIN_REGISTRY;
+  if (!kv) return { registry: null, manifest: null };
+
+  const manifest = await kv.get<SnapshotManifest>(REGISTRY_MANIFEST_KEY, "json");
+  if (isSnapshotManifest(manifest)) {
+    try {
+      const registry = await restoreSnapshotManifest(manifest, async (descriptor: SnapshotShardDescriptor) => {
+        const expectedKey = `${REGISTRY_SHARD_PREFIX}${String(descriptor.index).padStart(2, "0")}`;
+        if (descriptor.key !== expectedKey) throw new Error(`Invalid KV snapshot key for shard ${descriptor.index}`);
+        return kv.get<SnapshotShard>(expectedKey, "json");
+      });
+      return {
+        registry: sanitizeRegistryInstallEvidence(registry) as PluginRegistryData,
+        manifest,
+      };
+    } catch (error) {
+      // A shard may be temporarily out of sync while KV writes propagate. Validate all
+      // shards as one snapshot and fall back to the old complete value/assets if so.
+      console.error(JSON.stringify({
+        event: "registry.shards.read.error",
+        error: error instanceof Error ? error.message : String(error),
+      }));
+    }
+  }
+
+  const legacy = await kv.get<PluginRegistryData>(REGISTRY_KEY, "json");
+  return {
+    registry: legacy ? sanitizeRegistryInstallEvidence(legacy) as PluginRegistryData : null,
+    manifest: null,
+  };
+}
+
+async function loadPluginRegistry(env: PluginRegistryEnv): Promise<{
+  registry: PluginRegistryData;
+  manifest: SnapshotManifest | null;
+}> {
+  if (env.PLUGIN_REGISTRY) {
+    try {
+      const stored = await readKvRegistry(env);
+      if (stored.registry) return { registry: stored.registry, manifest: stored.manifest };
+    } catch (error) {
+      console.error(JSON.stringify({
+        event: "registry.read.error",
+        error: error instanceof Error ? error.message : String(error),
+      }));
+    }
+  }
+  return { registry: await bundledRegistry(env), manifest: null };
+}
+
+function isSnapshotManifest(value: unknown): value is SnapshotManifest {
+  if (!value || typeof value !== "object") return false;
+  const candidate = value as Partial<SnapshotManifest>;
+  return candidate.format === "dsh-plugin-registry-shards"
+    && candidate.version === 1
+    && candidate.shardCount === SNAPSHOT_SHARD_COUNT
+    && candidate.registry !== undefined
+    && Array.isArray(candidate.shards)
+    && candidate.shards.length === SNAPSHOT_SHARD_COUNT
+    && candidate.shards.every((shard, index) =>
+      shard.index === index && Number.isInteger(shard.index)
+      && /^[a-f\d]{64}$/u.test(shard.hash) && Number.isInteger(shard.count) && shard.count >= 0
+      && Number.isInteger(shard.bytes) && shard.bytes >= 0)
+    && typeof candidate.registry.generatedAt === "string"
+    && candidate.registry.automation !== undefined
+    && candidate.registry.sources !== undefined
+    && candidate.registry.summary !== undefined
+    && candidate.registry.categories !== undefined;
+}
+
+async function registryAndPluginFromSnapshot(
+  payload: SnapshotManifest | PluginRegistryData,
+  id: string,
+  readShard: (descriptor: SnapshotShardDescriptor) => Promise<SnapshotShard | PluginRecord[] | null>,
+): Promise<{ registry: PluginRegistryData; plugin: PluginRecord | null }> {
+  if (Array.isArray((payload as PluginRegistryData).plugins)) {
+    const registry = sanitizeRegistryInstallEvidence(payload) as PluginRegistryData;
+    return {
+      registry,
+      plugin: registry.plugins.find((candidate) => candidate.id.toLowerCase() === id) ?? null,
+    };
+  }
+
+  const manifest = payload as SnapshotManifest;
+  const descriptor = manifest.shards.find((item) => item.index === pluginShardIndex(id));
+  if (!descriptor) {
+    return { registry: { ...manifest.registry, plugins: [] }, plugin: null };
+  }
+  const registry = await restoreSnapshotManifest(
+    { ...manifest, shardCount: 1, shards: [descriptor] },
+    (shardDescriptor: SnapshotShardDescriptor) => readShard(shardDescriptor),
+  );
+  const sanitized = sanitizeRegistryInstallEvidence(registry) as PluginRegistryData;
+  return {
+    registry: sanitized,
+    plugin: sanitized.plugins.find((candidate) => candidate.id.toLowerCase() === id) ?? null,
+  };
+}
+
+/** Metadata-only read for D1-backed list/status endpoints: one small KV/asset read. */
+export async function readPluginRegistryMetadata(env: PluginRegistryEnv): Promise<{
+  registry: PluginRegistryData;
+  source: "cloudflare-kv" | "bundled-fallback";
+}> {
+  if (env.PLUGIN_REGISTRY) {
+    try {
+      const manifest = await env.PLUGIN_REGISTRY.get<SnapshotManifest>(REGISTRY_MANIFEST_KEY, "json");
+      if (isSnapshotManifest(manifest)) {
+        return {
+          registry: sanitizeRegistryInstallEvidence({ ...manifest.registry, plugins: [] }) as PluginRegistryData,
+          source: "cloudflare-kv",
+        };
+      }
+    } catch (error) {
+      console.error(JSON.stringify({
+        event: "registry.metadata.read.error",
+        error: error instanceof Error ? error.message : String(error),
+      }));
+    }
+  }
+
+  try {
+    const payload = await readStaticSnapshotPayload(env);
+    const registry = isSnapshotManifest(payload)
+      ? { ...payload.registry, plugins: [] }
+      : { ...payload, plugins: [] };
+    return {
+      registry: sanitizeRegistryInstallEvidence(registry) as PluginRegistryData,
+      source: "bundled-fallback",
+    };
+  } catch (error) {
+    console.error(JSON.stringify({
+      event: "registry.metadata.bundled.error",
+      error: error instanceof Error ? error.message : String(error),
+    }));
+    return { registry: emptyRegistry(), source: "bundled-fallback" };
+  }
+}
+
+/** KV detail lookup reads one ID-assigned shard; static fallback validates the full snapshot. */
+export async function readPluginRecord(env: PluginRegistryEnv, id: string): Promise<{
+  registry: PluginRegistryData;
+  plugin: PluginRecord | null;
+  source: "cloudflare-kv" | "bundled-fallback";
+}> {
+  const normalizedId = id.toLowerCase();
+  if (env.PLUGIN_REGISTRY) {
+    try {
+      const manifest = await env.PLUGIN_REGISTRY.get<SnapshotManifest>(REGISTRY_MANIFEST_KEY, "json");
+      if (isSnapshotManifest(manifest)) {
+        const result = await registryAndPluginFromSnapshot(manifest, normalizedId, async (descriptor) => {
+          const expectedKey = `${REGISTRY_SHARD_PREFIX}${String(descriptor.index).padStart(2, "0")}`;
+          if (descriptor.key !== expectedKey) throw new Error(`Invalid KV snapshot key for shard ${descriptor.index}`);
+          return env.PLUGIN_REGISTRY!.get<SnapshotShard>(expectedKey, "json");
+        });
+        return { ...result, source: "cloudflare-kv" };
+      }
+
+      const legacy = await env.PLUGIN_REGISTRY.get<PluginRegistryData>(REGISTRY_KEY, "json");
+      if (legacy) {
+        const result = await registryAndPluginFromSnapshot(legacy, normalizedId, async () => null);
+        return { ...result, source: "cloudflare-kv" };
+      }
+    } catch (error) {
+      console.error(JSON.stringify({
+        event: "registry.detail.read.error",
+        error: error instanceof Error ? error.message : String(error),
+      }));
+    }
+  }
+
+  try {
+    const payload = await readStaticSnapshotPayload(env);
+    const snapshot = await restoreSnapshotManifest(payload, (descriptor: SnapshotShardDescriptor) =>
+      readStaticShard(env, descriptor));
+    const registry = sanitizeRegistryInstallEvidence(snapshot) as PluginRegistryData;
+    const plugin = registry.plugins.find((candidate) => candidate.id.toLowerCase() === normalizedId) ?? null;
+    return { registry, plugin, source: "bundled-fallback" };
+  } catch (error) {
+    console.error(JSON.stringify({
+      event: "registry.detail.bundled.error",
+      error: error instanceof Error ? error.message : String(error),
+    }));
+    return { registry: emptyRegistry(), plugin: null, source: "bundled-fallback" };
+  }
+}
+
+async function persistPluginRegistry(
+  env: PluginRegistryEnv,
+  registry: PluginRegistryData,
+  previousManifest: SnapshotManifest | null,
+): Promise<void> {
+  const kv = env.PLUGIN_REGISTRY;
+  if (!kv) throw new Error("PLUGIN_REGISTRY binding missing");
+
+  const partitions = partitionPlugins(registry.plugins, SNAPSHOT_SHARD_COUNT);
+  const descriptors: SnapshotShardDescriptor[] = [];
+  const pendingWrites: Array<Promise<void>> = [];
+  for (let index = 0; index < partitions.length; index += 1) {
+    const shard = await serializeSnapshotShard(partitions[index]);
+    if (shard.bytes > MAX_SNAPSHOT_SHARD_BYTES) {
+      throw new Error(
+        `Registry shard ${index} exceeds ${MAX_SNAPSHOT_SHARD_BYTES} bytes (${shard.bytes})`,
+      );
+    }
+    const key = `${REGISTRY_SHARD_PREFIX}${String(index).padStart(2, "0")}`;
+    descriptors.push({ index, key, hash: shard.hash, count: shard.count, bytes: shard.bytes });
+    const previous = previousManifest?.shards.find((item) => item.index === index);
+    if (previous?.hash !== shard.hash) pendingWrites.push(kv.put(key, shard.value));
+  }
+
+  // The manifest is the commit marker. Readers reject mixed generations by hash.
+  await Promise.all(pendingWrites);
+  const manifest = createSnapshotManifest(registry, descriptors) as SnapshotManifest;
+  await kv.put(REGISTRY_MANIFEST_KEY, JSON.stringify(manifest));
+  if (!previousManifest) {
+    // Retire the oversized v2 value only after all v3 shards and their manifest exist.
+    try {
+      await kv.delete(REGISTRY_KEY);
+    } catch (error) {
+      console.warn(JSON.stringify({
+        event: "registry.legacy.delete.error",
+        error: error instanceof Error ? error.message : String(error),
+      }));
+    }
+  }
 }
 
 function githubHeaders(env: PluginRegistryEnv) {
@@ -892,17 +1282,7 @@ function summarize(registry: PluginRegistryData) {
 // ---------------------------------------------------------------------------
 
 export async function readPluginRegistry(env: PluginRegistryEnv): Promise<PluginRegistryData> {
-  if (!env.PLUGIN_REGISTRY) return bundledRegistry(env);
-  try {
-    const stored = await env.PLUGIN_REGISTRY.get<PluginRegistryData>(REGISTRY_KEY, "json");
-    return stored ? sanitizeRegistryInstallEvidence(stored) as PluginRegistryData : bundledRegistry(env);
-  } catch (error) {
-    console.error(JSON.stringify({
-      event: "registry.read.error",
-      error: error instanceof Error ? error.message : String(error),
-    }));
-    return bundledRegistry(env);
-  }
+  return (await loadPluginRegistry(env)).registry;
 }
 
 export async function syncPluginRegistry(env: PluginRegistryEnv) {
@@ -912,7 +1292,9 @@ export async function syncPluginRegistry(env: PluginRegistryEnv) {
   }
 
   const now = new Date().toISOString();
-  const registry = await readPluginRegistry(env);
+  const loaded = await loadPluginRegistry(env);
+  const registry = loaded.registry;
+  const previousManifest = loaded.manifest;
   const state: SyncState = await env.PLUGIN_REGISTRY.get<SyncState>(STATE_KEY, "json") || {
     version: 2,
     lastRunAt: null,
@@ -942,7 +1324,7 @@ export async function syncPluginRegistry(env: PluginRegistryEnv) {
     // 整体降级（保留现有机制）
     const message = messageOf(error);
     registry.automation = { ...registry.automation, state: "degraded", lastRunAt: now, error: message };
-    await env.PLUGIN_REGISTRY.put(REGISTRY_KEY, JSON.stringify(registry));
+    await persistPluginRegistry(env, registry, previousManifest);
     console.error(JSON.stringify({ event: "registry.sync.error", stage: "scan", error: message }));
     return registry;
   }
@@ -985,7 +1367,7 @@ export async function syncPluginRegistry(env: PluginRegistryEnv) {
   summarize(registry);
 
   state.lastRunAt = now;
-  await env.PLUGIN_REGISTRY.put(REGISTRY_KEY, JSON.stringify(registry));
+  await persistPluginRegistry(env, registry, previousManifest);
   await env.PLUGIN_REGISTRY.put(STATE_KEY, JSON.stringify(state));
   console.log(JSON.stringify({
     event: "registry.sync.complete",
@@ -997,4 +1379,3 @@ export async function syncPluginRegistry(env: PluginRegistryEnv) {
   }));
   return registry;
 }
-

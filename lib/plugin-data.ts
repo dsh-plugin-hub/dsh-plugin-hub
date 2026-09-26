@@ -131,8 +131,8 @@ export interface PluginRegistryData {
  * SSR 预览快照（~200KB 薄切片）：data:sync 从全量注册表派生，
  * 包含 summary/categories/首屏 60 条/star 榜/新鲜榜/增长序列/分类计数。
  * 全量数据不再进打包器（历史教训：vite-plugin-commonjs 在 ~6MB 的
- * plugins.generated.json 上 String.replace 栈溢出），改为静态资源
- * /plugins.json 运行时读取。
+ * plugins.generated.json 上 String.replace 栈溢出）；线上静态快照由分片资源
+ * 支持，Worker 仍兼容地通过 /plugins.json 返回完整注册表。
  */
 export interface PreviewSnapshot extends PluginRegistryData {
   topStars: PluginRecord[];

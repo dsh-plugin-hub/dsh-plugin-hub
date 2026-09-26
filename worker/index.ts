@@ -2,7 +2,10 @@
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
 import {
+  fullStaticSnapshotResponse,
+  readPluginRecord,
   readPluginRegistry,
+  readPluginRegistryMetadata,
   syncPluginRegistry,
 } from "./plugin-registry";
 import { incrementVisit, readVisitStats } from "../lib/visit-metrics.mjs";
@@ -49,8 +52,7 @@ function visitStatsResponse(stats: Awaited<ReturnType<typeof readVisitStats>>) {
 
 // ---------------------------------------------------------------------------
 // /api/plugins：D1 预同步 + 服务端分页查询（P1-T5）
-// 依据方案文档 4.2 / PLAN 6.2：KV 全量 JSON → D1 行存储，查询走 SQL。
-// 数据链路：读 KV registry（readPluginRegistry）→ 与 registry_meta 中的
+// 数据链路：读 KV 分片 registry（readPluginRegistry）→ 与 registry_meta 中的
 // generatedAt 比对并由 scheduled 任务批量 upsert（100 条/批）→ D1 分页查询。
 // 用户请求不再触发全量同步；D1 不可用时使用 KV/静态快照在 Worker 内分页回退，
 // 用 X-Registry-Source 头区分数据来源（cloudflare-d1 / cloudflare-kv / bundled-fallback）。
@@ -89,6 +91,22 @@ const PLUGIN_TOTAL_ACTIVE_KEY = "plugins_total_active";
 // 一天会写 ~65 万行，免费版限额 10 万行/天（UTC 0 点重置），数小时内打爆。
 const PLUGIN_D1_SYNC_STATE_KEY = "plugins_d1_sync_state";
 const PLUGIN_D1_SYNC_MIN_INTERVAL_MS = 6 * 60 * 60 * 1000;
+
+/** 保持公开兼容：底层静态资产和 KV 分片对外仍呈现原有完整 JSON 快照。 */
+async function handleFullSnapshotRequest(env: Env, headOnly = false): Promise<Response> {
+  try {
+    return await fullStaticSnapshotResponse(env, headOnly);
+  } catch (error) {
+    console.error(JSON.stringify({
+      event: "registry.public-snapshot.error",
+      error: error instanceof Error ? error.message : String(error),
+    }));
+    return Response.json({ error: "Snapshot temporarily unavailable" }, {
+      status: 503,
+      headers: { "Cache-Control": "no-store" },
+    });
+  }
+}
 
 type RegistryPlugin = NonNullable<PluginRegistryData["plugins"]>[number];
 
@@ -606,7 +624,6 @@ function queryRegistryPage(
 
 /** /api/plugins 处理器：D1 查询不再触发同步；不可用时使用分页回退。 */
 async function handlePluginsRequest(request: Request, env: Env): Promise<Response> {
-  const registry = await readPluginRegistry(env);
   let query: PluginsQuery;
   try {
     query = parsePluginsQuery(new URL(request.url).searchParams);
@@ -625,20 +642,26 @@ async function handlePluginsRequest(request: Request, env: Env): Promise<Respons
 
   const d1 = env.VISIT_METRICS;
   if (!d1) {
+    const registry = await readPluginRegistry(env);
     return Response.json(queryRegistryPage(registry, query), {
       headers: pluginsApiHeaders(registrySource(registry)),
     });
   }
 
+  // A small manifest supplies response metadata; load all shards only on fallback.
+  const { registry } = await readPluginRegistryMetadata(env);
   try {
     const body = await queryPluginsPage(d1, registry, query);
 
     // 定时同步尚未完成时，D1 可能暂时为空。只在 D1 没有命中时使用快照回退，
     // 既避免首轮部署显示空目录，也不会把全量快照发到浏览器。
-    if (body.total === 0 && (registry.plugins?.length ?? 0) > 0) {
-      return Response.json(queryRegistryPage(registry, query), {
-        headers: pluginsApiHeaders(registrySource(registry)),
-      });
+    if (body.total === 0) {
+      const fallback = await readPluginRegistry(env);
+      if (fallback.plugins.length > 0) {
+        return Response.json(queryRegistryPage(fallback, query), {
+          headers: pluginsApiHeaders(registrySource(fallback)),
+        });
+      }
     }
 
     return Response.json(body, { headers: pluginsApiHeaders("cloudflare-d1") });
@@ -647,13 +670,14 @@ async function handlePluginsRequest(request: Request, env: Env): Promise<Respons
       event: "plugins.d1.error",
       error: error instanceof Error ? error.message : String(error),
     }));
-    return Response.json(queryRegistryPage(registry, query), {
-      headers: pluginsApiHeaders(registrySource(registry)),
+    const fallback = await readPluginRegistry(env);
+    return Response.json(queryRegistryPage(fallback, query), {
+      headers: pluginsApiHeaders(registrySource(fallback)),
     });
   }
 }
 
-/** /api/plugins/:owner/:repo 单插件详情：从全量注册表取完整 PluginRecord。 */
+/** /api/plugins/:owner/:repo loads only the stable ID-assigned registry shard. */
 async function handlePluginDetailRequest(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   const match = /^\/api\/plugins\/([^/]+)\/([^/]+)\/?$/u.exec(url.pathname);
@@ -682,9 +706,8 @@ async function handlePluginDetailRequest(request: Request, env: Env): Promise<Re
     });
   }
 
-  const registry = await readPluginRegistry(env);
   const id = `${owner}/${repo}`.toLowerCase();
-  const plugin = registry.plugins.find((candidate) => candidate.id.toLowerCase() === id);
+  const { registry, plugin, source } = await readPluginRecord(env, id);
   if (!plugin) {
     return Response.json({ error: "Plugin not found" }, {
       status: 404,
@@ -701,7 +724,7 @@ async function handlePluginDetailRequest(request: Request, env: Env): Promise<Re
     categories: registry.categories,
     generatedAt: registry.generatedAt,
   }, {
-    headers: pluginsApiHeaders("cloudflare-kv"),
+    headers: pluginsApiHeaders(source),
   });
 }
 
@@ -715,6 +738,10 @@ const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
+    if ((request.method === "GET" || request.method === "HEAD") && url.pathname === "/plugins.json") {
+      return withSecurityHeaders(await handleFullSnapshotRequest(env, request.method === "HEAD"));
+    }
+
     if (request.method === "GET" && url.pathname === "/api/plugins") {
       return withSecurityHeaders(await handlePluginsRequest(request, env));
     }
@@ -724,7 +751,7 @@ const worker = {
     }
 
     if (request.method === "GET" && url.pathname === "/api/registry/status") {
-      const registry = await readPluginRegistry(env);
+      const { registry } = await readPluginRegistryMetadata(env);
       return withSecurityHeaders(Response.json({
         generatedAt: registry.generatedAt,
         automation: registry.automation,

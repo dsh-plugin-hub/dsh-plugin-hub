@@ -49,7 +49,7 @@ DeepSeek Harness 的插件生态增长很快，但仓库描述、安装命令和
 | 能力 | 说明 |
 | --- | --- |
 | 真实插件数据 | 合并社区精选列表、GitHub `topic:dsh-plugin` 元数据和仓库根目录 manifest。 |
-| 自动收录 | Cloudflare Cron 每 30 分钟发现新仓库，增量检查后写入 KV。 |
+| 自动收录 | Cloudflare Cron 每 30 分钟发现新仓库，增量检查后写入 KV 分片。 |
 | 安装命令 | 为每个仓库生成 `dsh plugin --profile web add github:owner/repo` 推荐命令，不锁定 commit。 |
 | 公开事实 | 展示 manifest、许可证、锁文件与生命周期脚本等 GitHub 公开事实，不筛查、不背书，用户自行判断。 |
 | 插件浏览 | 支持搜索、分类、证据筛选、排序、卡片/列表视图和本地收藏。 |
@@ -64,7 +64,7 @@ awesome-dsh-plugin ─┐
                     ├─> 元数据归一化 ─> manifest / 仓库事实采集 ─> 插件注册表
 GitHub dsh-plugin ──┘                                          │
                                                                ├─> Web UI
-Cloudflare Cron (30 min) ─> 增量复查 ─> Cloudflare KV ──────────┼─> JSON API
+Cloudflare Cron (30 min) ─> 增量复查 ─> Cloudflare KV 分片 ────┼─> JSON API
                                                                └─> 状态接口
 
 Cloudflare 历史请求 ─> historical_root_views ─┐
@@ -92,7 +92,9 @@ Cloudflare 历史请求 ─> historical_root_views ─┐
 | [`GET /api/plugins`](https://dsh-plugin.store/api/plugins) | 当前动态注册表，优先读取 Cloudflare KV。 |
 | [`GET /api/registry/status`](https://dsh-plugin.store/api/registry/status) | 最近同步时间与收录数量汇总。 |
 | [`GET /api/visits`](https://dsh-plugin.store/api/visits) | 真实访问、历史基线、展示倍率和访问热度。响应禁止缓存。 |
-| [`GET /plugins.json`](https://dsh-plugin.store/plugins.json) | 随构建发布的静态回退快照。 |
+| [`GET /plugins.json`](https://dsh-plugin.store/plugins.json) | 向后兼容的完整注册表快照；底层由多个静态/KV 分片组装，D1 不可用时用于回退。 |
+
+快照按插件 ID 稳定分桶存储：`data/plugins.generated.json` 与 `public/plugins.json` 都是小型清单，完整记录分别位于对应的 `*-snapshot-v1/` 分片目录。Worker 校验分片后再组装；单个分片不一致时会回退，不会返回混合版本。同步器仍可读取旧版完整 JSON，并在 `npm run data:artifacts` 时迁移为分片。
 
 ```bash
 curl -sS https://dsh-plugin.store/api/registry/status
@@ -131,6 +133,7 @@ Token 只需要读取公开仓库的权限，请勿提交到 Git。
 | --- | --- |
 | `npm run dev` | 启动本地 vinext / Cloudflare Workers 开发环境。 |
 | `npm run data:sync` | 只读同步精选列表、Topic 元数据和 manifest，更新本地快照。 |
+| `npm run data:artifacts` | 从现有完整工作快照重建静态分片和 SEO 工件，不请求 GitHub。 |
 | `npm run build` | 生成 Cloudflare Workers 与前端静态资源。 |
 | `npm run lint` | 执行 ESLint。 |
 | `npm run typecheck` | 执行 TypeScript 静态检查。 |
@@ -175,8 +178,9 @@ worker/                    Cloudflare Worker 入口与增量插件注册表
 lib/                       数据类型和插件静态筛查逻辑
 migrations/                D1 访问计数表迁移
 scripts/sync-plugins.mjs   本地只读数据同步
-data/                      精选回退与构建时注册表
-public/plugins.json        对外静态快照
+data/                      精选回退与构建时注册表清单/分片
+public/plugins.json        对外快照清单
+public/plugins-snapshot-v1/ 对外静态注册表分片
 tests/                     筛查规则、SSR、API 与一致性测试
 prototype/                 最初的设计原型，保留作视觉对照
 ```

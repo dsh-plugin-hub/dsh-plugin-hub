@@ -16,6 +16,11 @@ const localBindingConfig = {
       binding: "PLUGIN_REGISTRY",
     },
   ],
+  // /plugins.json remains a Worker-assembled compatibility endpoint; all shard
+  // assets keep the default asset-first fast path.
+  assets: {
+    run_worker_first: ["/plugins.json"],
+  },
   d1_databases: [
     {
       binding: "VISIT_METRICS",

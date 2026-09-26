@@ -1,33 +1,45 @@
 import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
+import { restoreSnapshotManifest } from "../lib/registry-snapshot.mjs";
 
 const root = new URL("../", import.meta.url);
 
-// Worker 的 bundled 回退改为从静态资源 /plugins.json 读取（不再打包进产物），
-// 测试环境用磁盘上的全量快照模拟 ASSETS 绑定。
-let assetsJsonCache = null;
-async function assetsResponse() {
-  if (!assetsJsonCache) {
-    assetsJsonCache = await readFile(new URL("public/plugins.json", root), "utf8");
+// Worker bundled 回退通过 manifest 读取静态分片；测试环境用磁盘工件模拟 ASSETS。
+const assetsCache = new Map();
+async function assetsResponse(pathname) {
+  const relativePath = pathname === "/plugins.json" ? "public/plugins.json" : `public/${pathname.slice(1)}`;
+  try {
+    if (!assetsCache.has(relativePath)) {
+      assetsCache.set(relativePath, await readFile(new URL(relativePath, root), "utf8"));
+    }
+    return new Response(assetsCache.get(relativePath), { headers: { "content-type": "application/json" } });
+  } catch {
+    return new Response("Not found", { status: 404 });
   }
-  return new Response(assetsJsonCache, { headers: { "content-type": "application/json" } });
 }
 
-async function request(path = "/", accept = "text/html", envOverrides = {}) {
+async function generatedRegistry() {
+  const manifest = JSON.parse(await readFile(new URL("data/plugins.generated.json", root), "utf8"));
+  return restoreSnapshotManifest(manifest, async (descriptor) => {
+    const filename = `${String(descriptor.index).padStart(2, "0")}.json`;
+    return JSON.parse(await readFile(new URL(`data/plugins-snapshot-v1/${filename}`, root), "utf8"));
+  });
+}
+
+async function request(path = "/", accept = "text/html", envOverrides = {}, method = "GET") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${Math.random()}`);
   const { default: worker } = await import(workerUrl.href);
 
   const pending = [];
   const response = await worker.fetch(
-    new Request(`http://localhost${path}`, { headers: { accept } }),
+    new Request(`http://localhost${path}`, { method, headers: { accept } }),
     {
       ASSETS: {
         fetch: async (input) => {
           const url = new URL(typeof input === "string" ? input : input.url);
-          if (url.pathname === "/plugins.json") return assetsResponse();
-          return new Response("Not found", { status: 404 });
+          return assetsResponse(url.pathname);
         },
       },
       ...envOverrides,
@@ -76,7 +88,7 @@ function visitDatabase({ historical = 100, tracked = 5, cutoff = "2026-08-15T00:
 }
 
 test("server-renders the complete plugin hub", async () => {
-  const registry = JSON.parse(await readFile(new URL("data/plugins.generated.json", root), "utf8"));
+  const registry = await generatedRegistry();
   const response = await request();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
@@ -169,7 +181,7 @@ test("filters the paginated fallback response instead of returning the full snap
 });
 
 test("serves one complete plugin record through the detail JSON API", async () => {
-  const registry = JSON.parse(await readFile(new URL("data/plugins.generated.json", root), "utf8"));
+  const registry = await generatedRegistry();
   const expected = registry.plugins.find((plugin) => plugin.id === "max-samson/dsh-usage-chart");
   assert.ok(expected, "fixture plugin should exist in the registry");
 
@@ -203,7 +215,7 @@ test("server-renders the plugin detail page for preview plugins", async () => {
 });
 
 test("serves a compact public registry status endpoint", async () => {
-  const registry = JSON.parse(await readFile(new URL("data/plugins.generated.json", root), "utf8"));
+  const registry = await generatedRegistry();
   const response = await request("/api/registry/status", "application/json");
   assert.equal(response.status, 200);
   const body = await response.json();
@@ -244,19 +256,46 @@ test("serves multiplied visit heat while preserving the real total", async () =>
   assert.equal(nextBody.displayCount, 318);
 });
 
+test("serves /plugins.json as the legacy flat registry over sharded assets", async () => {
+  const response = await request("/plugins.json", "application/json");
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^application\/json\b/iu);
+  assert.match(response.headers.get("cache-control") ?? "", /s-maxage=300/u);
+  const registry = await response.json();
+  assert.ok(Array.isArray(registry.plugins));
+  assert.ok(registry.plugins.length > 10_000);
+  assert.equal(registry.summary.listed, registry.plugins.filter((plugin) => !plugin.removed).length);
+  assert.ok(registry.plugins.every((plugin, index) => plugin.order === index));
+
+  const head = await request("/plugins.json", "application/json", {}, "HEAD");
+  assert.equal(head.status, 200);
+  assert.equal(await head.text(), "");
+});
+
 test("keeps the generated registry internally consistent", async () => {
-  const [generatedText, publicText, packageText] = await Promise.all([
+  const [registry, generatedManifestText, publicText, packageText, wranglerText] = await Promise.all([
+    generatedRegistry(),
     readFile(new URL("data/plugins.generated.json", root), "utf8"),
     readFile(new URL("public/plugins.json", root), "utf8"),
     readFile(new URL("package.json", root), "utf8"),
+    readFile(new URL("dist/server/wrangler.json", root), "utf8"),
   ]);
-  const registry = JSON.parse(generatedText);
   const ids = registry.plugins.map((plugin) => plugin.id);
   // manifestMatches 只计活跃（未下架）插件；removed 保留历史记录但不再计入统计
   const verified = registry.plugins.filter((plugin) => plugin.removed !== true && plugin.manifest?.state === "verified");
   const removed = registry.plugins.filter((plugin) => plugin.removed);
 
-  assert.equal(publicText, generatedText);
+  const publicManifest = JSON.parse(publicText);
+  const publicRegistry = await restoreSnapshotManifest(publicManifest, async (descriptor) => {
+    const relativePath = `public/${descriptor.path.slice(1)}`;
+    return JSON.parse(await readFile(new URL(relativePath, root), "utf8"));
+  });
+  assert.deepEqual(publicRegistry, registry);
+  assert.ok(generatedManifestText.length < 10_000, "data/plugins.generated.json should stay a small manifest");
+  assert.ok(publicText.length < 10_000, "public/plugins.json should stay a small manifest");
+  assert.equal(publicManifest.shards.length, 4);
+  assert.ok(publicManifest.shards.every((shard) => shard.bytes < 16_000_000));
+  assert.deepEqual(JSON.parse(wranglerText).assets.run_worker_first, ["/plugins.json"]);
   assert.equal(new Set(ids).size, ids.length);
   assert.equal(verified.length, registry.summary.manifestMatches);
   // 新数据模型：无筛查字段，facts 与 manifest 一致

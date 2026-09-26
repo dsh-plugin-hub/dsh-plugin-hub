@@ -12,7 +12,7 @@
 //   与上次 generated 快照 diff，消失的插件标记 removed=true（完整扫描成功时才做 diff）；
 // - 保留：curated 精选加载（含 curated.snapshot.json 回退）、raw package.json 事实采集
 //   （mapLimit 并发、失败跳过）、GITHUB_TOKEN 可选、DSH_SKIP_MANIFESTS=1 逃生门、
-//   双写 data/plugins.generated.json + public/plugins.json。
+//   写入本地完整数据快照，并将 public 快照拆成 manifest + 多个插件分片。
 
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -25,20 +25,29 @@ import {
   manifestSummary,
   sanitizeRegistryInstallEvidence,
 } from "../lib/plugin-screening.mjs";
+import {
+  createSnapshotManifest,
+  MAX_SNAPSHOT_SHARD_BYTES,
+  partitionPlugins,
+  partitionPluginsByOrder,
+  restoreSnapshotManifest,
+  serializeStaticSnapshotShard,
+  serializeSnapshotShard,
+  SNAPSHOT_SHARD_COUNT,
+} from "../lib/registry-snapshot.mjs";
 import { hasPluginDetailRoutes, writeSeoArtifacts } from "./seo-artifacts.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const snapshotPath = path.join(root, "data", "curated.snapshot.json");
 const scanStatePath = path.join(root, "data", "topic-scan-state.json");
 const generatedPath = path.join(root, "data", "plugins.generated.json");
+const generatedShardsDir = path.join(root, "data", "plugins-snapshot-v1");
 const publicPath = path.join(root, "public", "plugins.json");
+const publicShardsDir = path.join(root, "public", "plugins-snapshot-v1");
 const previewPath = path.join(root, "data", "preview.generated.json");
 const PREVIEW_PAGE_SIZE = 60;
 const MAX_JSON_BYTES = 6_000_000;
 const MAX_TEXT_BYTES = 140_000;
-// 全量 union 以紧凑 JSON 存储。Cloudflare 单个静态资源与 KV 值上限为 25 MiB；
-// 保留余量，避免快照接近平台硬上限。
-const MAX_OUTPUT_BYTES = 24_000_000;
 const MAX_CURATED_PLUGINS = 2_000;
 
 const SEARCH_PAGE_SIZE = 100;
@@ -64,8 +73,8 @@ const publicCuratedUrl = (() => {
 })();
 const githubToken = process.env.GITHUB_TOKEN?.trim();
 const skipManifests = process.env.DSH_SKIP_MANIFESTS === "1";
-// --artifacts-only：不扫 GitHub，只基于现有 data/*.generated.json 重建 SEO 工件
-// （sitemap.xml / llms.txt / indexnow-urls.txt），用于本地快速验证与测试。
+// --artifacts-only：不扫 GitHub，只基于现有 data/*.generated.json 重建分片快照
+// 与 SEO 工件，用于本地快速验证与测试。
 const artifactsOnly = process.argv.includes("--artifacts-only");
 // 匿名 Search API 10 次/分 -> 6.5s 间隔；带 token 30 次/分 -> 2.2s 间隔（各留 ~8% 余量）。
 const SEARCH_INTERVAL_MS = githubToken ? 2_200 : 6_500;
@@ -685,10 +694,73 @@ function buildGrowthSeries(plugins, generatedAt) {
   return series;
 }
 
+async function writeShardedSnapshot(registry, manifestPath, shardsDir, pathPrefix) {
+  const isStaticAssets = pathPrefix.startsWith("/");
+  const partitions = isStaticAssets
+    ? partitionPluginsByOrder(registry.plugins, SNAPSHOT_SHARD_COUNT)
+    : partitionPlugins(registry.plugins, SNAPSHOT_SHARD_COUNT);
+  const files = [];
+  const descriptors = [];
+  for (let index = 0; index < partitions.length; index += 1) {
+    const shard = isStaticAssets
+      ? await serializeStaticSnapshotShard(partitions[index])
+      : await serializeSnapshotShard(partitions[index]);
+    if (shard.bytes > MAX_SNAPSHOT_SHARD_BYTES) {
+      throw new Error(
+        `Plugin snapshot shard ${index} exceeds ${MAX_SNAPSHOT_SHARD_BYTES} bytes (${shard.bytes})`,
+      );
+    }
+    const filename = `${String(index).padStart(2, "0")}.json`;
+    files.push({ path: path.join(shardsDir, filename), value: `${shard.value}\n` });
+    descriptors.push({
+      index,
+      path: `${pathPrefix}${filename}`,
+      hash: shard.hash,
+      count: shard.count,
+      bytes: shard.bytes,
+    });
+  }
+
+  const manifest = createSnapshotManifest(registry, descriptors);
+  const manifestText = `${JSON.stringify(manifest)}\n`;
+  await mkdir(shardsDir, { recursive: true });
+  await Promise.all(files.map(({ path: filePath, value }) => writeFile(filePath, value)));
+  // Publish the manifest last: it is the pointer to this complete set of shards.
+  await writeFile(manifestPath, manifestText);
+  console.log(
+    `snapshot ${path.relative(root, manifestPath)}: ${registry.plugins.length} plugins across ${partitions.length} files ` +
+      `(${Math.max(...descriptors.map((shard) => shard.bytes)).toLocaleString()} byte max shard)`,
+  );
+}
+
+async function writeSnapshots(registry) {
+  await writeShardedSnapshot(
+    registry,
+    generatedPath,
+    generatedShardsDir,
+    "plugins-snapshot-v1/",
+  );
+  await writeShardedSnapshot(
+    registry,
+    publicPath,
+    publicShardsDir,
+    "/plugins-snapshot-v1/",
+  );
+}
+
+async function readGeneratedSnapshot() {
+  const manifest = await readJson(generatedPath, null);
+  if (!manifest) return null;
+  return restoreSnapshotManifest(manifest, async (descriptor) => {
+    const filename = `${String(descriptor.index).padStart(2, "0")}.json`;
+    return readJson(path.join(generatedShardsDir, filename), null);
+  });
+}
+
 async function main() {
   await mkdir(path.dirname(generatedPath), { recursive: true });
   // 用 lib 的字段白名单清洗上次快照（剔除旧 screening/installCommand 等字段）。
-  const previous = sanitizeRegistryInstallEvidence(await readJson(generatedPath, {}));
+  const previous = sanitizeRegistryInstallEvidence(await readGeneratedSnapshot() || {});
   const previousById = new Map((previous.plugins || []).map((plugin) => [plugin.id, plugin]));
 
   const { registry, state: curatedState } = await loadCurated();
@@ -851,15 +923,8 @@ async function main() {
     plugins,
   };
 
-  // 全量快照只供 Worker 运行时读取，不需要 pretty-print；紧凑格式可显著降低
-  // KV 读取、静态资源传输和浏览器回退解析的成本。
-  const serialized = `${JSON.stringify(output)}
-`;
-  if (Buffer.byteLength(serialized) > MAX_OUTPUT_BYTES) {
-    throw new Error(`Generated registry exceeds ${MAX_OUTPUT_BYTES} bytes`);
-  }
-  await writeFile(generatedPath, serialized);
-  await writeFile(publicPath, serialized);
+  // 本地与线上快照都使用 manifest + 多个受单文件大小保护的插件分片。
+  await writeSnapshots(output);
 
   // SSR 预览快照（薄切片）：全量 JSON 不再进打包器，避免 vite-plugin-commonjs
   // 在 ~6MB 字符串上栈溢出；预览只含首屏所需聚合与榜单。
@@ -906,10 +971,11 @@ async function main() {
 }
 
 async function mainArtifactsOnly() {
-  const output = await readJson(generatedPath, null);
+  const output = await readGeneratedSnapshot();
   if (!output?.plugins?.length) {
     throw new Error("data/plugins.generated.json missing or empty — run a full data:sync first");
   }
+  await writeSnapshots(output);
   const plugins = output.plugins.filter((plugin) => plugin.removed !== true);
   await writeSeoArtifacts({
     plugins,
@@ -917,7 +983,7 @@ async function mainArtifactsOnly() {
     summary: output.summary,
     categories: output.categories,
   });
-  console.log(`artifacts-only: rebuilt SEO artifacts from ${plugins.length} live plugins`);
+  console.log(`artifacts-only: rebuilt sharded snapshot and SEO artifacts from ${plugins.length} live plugins`);
 }
 
 (artifactsOnly ? mainArtifactsOnly() : main()).catch((error) => {
